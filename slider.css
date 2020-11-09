@@ -1,0 +1,44 @@
+body,
+html{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.slideshow {
+	width: 200px;
+	height: 50vh;
+	background: lightgray;
+	position: relative;
+	overflow: hidden;
+}
+
+	.feed {
+		display: flex;
+		height: 100%;
+	}
+
+		.slide {
+			min-width: 100%;
+			position: relative;
+		}
+
+	.controls {
+		position: absolute;
+		width: 80%;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		display: flex;
+		justify-content: space-between;
+	}
+
+		.forward,
+		.backward {
+			font-size: 200%;
+			line-height: .75;
+			font-weight: bold;
+			margin: 0;
+			cursor: pointer;
+			color: white;
+		}
