@@ -2,7 +2,7 @@ const slideshow = document.querySelector('.slideshow');
 const feed = slideshow.querySelector('.feed');
 const forward = slideshow.querySelector('.forward');
 const backward = slideshow.querySelector('.backward');
-const interval = 1000;
+const interval = 3000;
 
 let slides = document.querySelectorAll('.slide');
 let index = 1;
@@ -15,7 +15,7 @@ lastClone.id = 'last-clone';
 feed.append(firstClone);
 feed.prepend(lastClone);
 
-const slideWidth = slideshow.clientWidth;
+let slideWidth = slideshow.clientWidth;
 
 feed.style.transform = `translateX(${-slideWidth * index}px)`;
 
@@ -34,7 +34,6 @@ feed.addEventListener('transitionend', () => {
 		index = 1;
 		feed.style.transform = `translateX(${-slideWidth * index}px)`;
 	}
-
 	if (slides[index].id === lastClone.id) {
 		feed.style.transition = 'none';
 		index = slides.length - 2;
@@ -46,22 +45,32 @@ const up = () => {
 	slides = getSlides();
 	if (index >= slides.length - 1) return;
 	index++;
-	feed.style.transition = '.7s ease-out';
-	feed.style.transform = `translateX(${-slideWidth * index}px)`;
+	set();
 };
 
 const down = () => {
 	if (index <= 0) return;
 	index--;
-	feed.style.transition = '.7s ease-out';
-	feed.style.transform = `translateX(${-slideWidth * index}px)`;
+	set();
 };
 
-slideshow.addEventListener('mouseenter', () => {
-	clearInterval(rotate);
-});
+const set = () => {
+	clear();
+	slides = getSlides();
+	slideWidth = slideshow.clientWidth;
+	feed.style.transition = '.7s ease-out';
+	feed.style.transform = `translateX(${-slideWidth * index}px)`;
+	init();
+}
 
+const clear = () => {
+	clearInterval(rotate);
+}
+
+slideshow.addEventListener('mouseenter', clear);
 slideshow.addEventListener('mouseleave', init);
+slideshow.addEventListener("resize", set);
+
 forward.addEventListener('click', up);
 backward.addEventListener('click', down);
 

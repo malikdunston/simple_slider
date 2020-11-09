@@ -6,7 +6,7 @@ html{
 }
 
 .slideshow {
-	width: 200px;
+	width: 50vw;
 	height: 50vh;
 	background: lightgray;
 	position: relative;
