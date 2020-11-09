@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="app" ng-controller="appCtrl as app">
 
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>	
 	<link rel="stylesheet" href="slider.css" />
 	<title>Simple Slider</title>
 </head>
@@ -11,40 +12,12 @@
 <body>
 
 	<h1>Simple Slider</h1>
+	<p>AngularJS version</p>
 
-	<div class="slideshow">
-		<div class="feed">
-			<section class="slide">
-				<h4>Section 1</h4>
-				<p>Here's some sample text to get you started!!!!!!</p>
-			</section>
-			<section class="slide">
-				<h4>Section 2</h4>
-				<p>Here's some sample text to get you started!!!!!!</p>
-			</section>
-			<section class="slide">
-				<h4>Section 3</h4>
-				<p>Here's some sample text to get you started!!!!!!</p>
-			</section>
-			<section class="slide">
-				<h4>Section 4</h4>
-				<p>Here's some sample text to get you started!!!!!!</p>
-			</section>
-			<section class="slide">
-				<h4>Section 5</h4>
-				<p>Here's some sample text to get you started!!!!!!</p>
-			</section>
-		</div>
-		<div class="controls">
-			<div class="backward">
-				<
-			</div>
-			<div class="forward">
-				>
-			</div>
-		</div>
-	</div>
-	<script src="slider.js"></script>
+	<slider feed="app.data"></slider>
+
+	<script src="app.js"></script>
+
 </body>
 
 </html>

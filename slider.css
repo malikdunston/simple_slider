@@ -5,7 +5,8 @@ html{
 	box-sizing: border-box;
 }
 
-.slideshow {
+slider{
+	display: block;
 	width: 50vw;
 	height: 50vh;
 	background: lightgray;
