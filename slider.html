@@ -3,16 +3,16 @@
 	style="">
 	<section 
 		class="slide"
-		ng-repeat="slide in slider.feed">
+		ng-repeat="slide in feed">
 		<h4>{{slide.title}}</h4>
 		<p>{{slide.desc}}</p>
 	</section>
 </div>
 <div class="controls">
-	<div ng-click="slider.down()" class="backward">
+	<div ng-click="down()" class="backward">
 		<
 	</div>
-	<div ng-click="slider.up()" class="forward">
+	<div ng-click="up()" class="forward">
 		>
 	</div>
 </div>
