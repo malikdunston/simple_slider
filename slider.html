@@ -3,7 +3,8 @@
 	style="">
 	<section 
 		class="slide"
-		ng-repeat="slide in feed">
+		ng-repeat="slide in allSlides track by $index">
+		<h1>{{slide.id}}</h1>
 		<h4>{{slide.title}}</h4>
 		<p>{{slide.desc}}</p>
 	</section>
