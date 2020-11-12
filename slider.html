@@ -4,6 +4,7 @@
 	<section 
 		class="slide"
 		ng-repeat="slide in allSlides track by $index">
+		<h1>{{$index}}</h1>
 		<h1>{{slide.id}}</h1>
 		<h4>{{slide.title}}</h4>
 		<p>{{slide.desc}}</p>
