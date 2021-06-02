@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -29,6 +28,22 @@
 				}
 			},
 		]
+		window.cats = [
+			{
+				img: "assets/img/siamese.jpg",
+				content: {
+					title: "Siamese",
+					content: ";lkasjdfasdfajklj;aslkdfas;dlkfja"
+				}
+			},
+			{
+				img: "assets/img/bengal.jpg",
+				content: {
+					title: "Bengal",
+					content: ";lkasjdfasdfajklj;aslkdfas;dlkfja"
+				}
+			}
+		]
 	</script>
 	<style class="optional-styles">
 		@import "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css";
@@ -38,25 +53,38 @@
 		body{
 			background: rgb(234, 234, 234);
 		}
-		.slider.dogs{
+		.slider{
+			margin-top:  1rem;
 			width: 100%;
-			height: 12rem;
+			height: 9rem;
 			background: rgba(0, 0, 0, .5);
+		}
+		.slider .feed{
+			background: red;
 		}
 	</style>
 	<script class="slider-js">
+		const makeSlider = function(elem){
+			elem.appendChild(makeFeed(elem));
+			function makeFeed(elem){
+				return  Object.assign(
+					document.createElement("div"),
+					{classList: ["feed"]},
+					{style: "display: flex; height: 100%;"},
+					{innerHTML: "button"}
+				)
+			}
+			console.log(elem);
+		}
 		window.addEventListener("load", function(){
 			document.querySelectorAll(".slider").forEach(function(slider){
-				console.dir(slider)
+				makeSlider(slider);
 			});
 		});
 	</script>
 </head>
-
 <body>
-
 	<div class="slider dogs" data="dogs"></div>
-
+	<div class="slider cats" data="cats"></div>
 </body>
-
 </html>
