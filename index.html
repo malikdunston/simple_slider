@@ -60,22 +60,59 @@
 			background: rgba(0, 0, 0, .5);
 		}
 		.slider .feed{
+			background: purple;
+		}
+		.slider .feed .slide{
 			background: red;
 		}
 	</style>
 	<script class="slider-js">
 		const makeSlider = function(elem){
-			elem.appendChild(makeFeed(elem));
-			function makeFeed(elem){
-				return  Object.assign(
+			let data = window[elem.attributes["data"].value];
+			elem.style = "position: relative; overflow: hidden;";
+			elem.appendChild(makeFeed(elem, data));
+			function makeFeed(elem, data){
+				let feed = Object.assign(
 					document.createElement("div"),
-					{classList: ["feed"]},
-					{style: "display: flex; height: 100%;"},
-					{innerHTML: "button"}
+					{
+						classList: ["feed"],
+						style: "display: flex; height: 100%;"
+					}
 				)
+				data.forEach(function(obj){
+					feed.appendChild(makeSlides(obj));
+				})
+				return feed;
 			}
+			function makeSlides(obj){
+				let slide = Object.assign(
+					document.createElement("div"),
+					{
+						style: "min-width: 100%; position: relative;"
+					}
+				)
+				let img = Object.assign(
+					document.createElement("img"),
+					{
+						src: obj.img,
+						style: "object-fit: cover; width: 100%; height: 100%; position: absolute"
+					}
+				)
+				let content = Object.assign(
+					document.createElement("div"),
+					{
+						style: "width: 100%; position: absolute",
+						innerHTML: [obj.content.title, obj.content.content].join("</br>")
+					}
+				)
+				slide.appendChild(img);
+				slide.appendChild(content);
+				return slide;
+			}
+			console.dir(elem);
 			console.log(elem);
 		}
+
 		window.addEventListener("load", function(){
 			document.querySelectorAll(".slider").forEach(function(slider){
 				makeSlider(slider);
@@ -84,7 +121,7 @@
 	</script>
 </head>
 <body>
-	<div class="slider dogs" data="dogs"></div>
-	<div class="slider cats" data="cats"></div>
+	<div class="slider" data="dogs"></div>
+	<div class="slider" data="cats"></div>
 </body>
 </html>
