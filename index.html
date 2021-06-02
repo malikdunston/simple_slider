@@ -4,47 +4,59 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link rel="stylesheet" href="slider.css" />
-	<title>Simple Slider</title>
+	<title>Slider</title>
+	<script class="data">
+		window.dogs = [
+			{
+				img: "assets/img/doberman.jpg",
+				content: {
+					title: "Doberman Pinscer",
+					content: ";lkasjdfasdfajklj;aslkdfas;dlkfja"
+				}
+			},
+			{
+				img: "assets/img/husky.jpg",
+				content: {
+					title: "Siberian Husky",
+					content: ";lkasjdfasdfajklj;aslkdfas;dlkfja"
+				}
+			},
+			{
+				img: "assets/img/pitbull.jpg",
+				content: {
+					title: "American Pit Bull Terrier",
+					content: ";lkasjdfasdfajklj;aslkdfas;dlkfja"
+				}
+			},
+		]
+	</script>
+	<style class="optional-styles">
+		@import "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css";
+		:root{
+			font-size: 30px;
+		}
+		body{
+			background: rgb(234, 234, 234);
+		}
+		.slider.dogs{
+			width: 100%;
+			height: 12rem;
+			background: rgba(0, 0, 0, .5);
+		}
+	</style>
+	<script class="slider-js">
+		window.addEventListener("load", function(){
+			document.querySelectorAll(".slider").forEach(function(slider){
+				console.dir(slider)
+			});
+		});
+	</script>
 </head>
 
 <body>
 
-	<h1>Simple Slider</h1>
+	<div class="slider dogs" data="dogs"></div>
 
-	<div class="slideshow">
-		<div class="feed">
-			<section class="slide">
-				<h4>Section 1</h4>
-				<p>Here's some sample text to get you started!!!!!!</p>
-			</section>
-			<section class="slide">
-				<h4>Section 2</h4>
-				<p>Here's some sample text to get you started!!!!!!</p>
-			</section>
-			<section class="slide">
-				<h4>Section 3</h4>
-				<p>Here's some sample text to get you started!!!!!!</p>
-			</section>
-			<section class="slide">
-				<h4>Section 4</h4>
-				<p>Here's some sample text to get you started!!!!!!</p>
-			</section>
-			<section class="slide">
-				<h4>Section 5</h4>
-				<p>Here's some sample text to get you started!!!!!!</p>
-			</section>
-		</div>
-		<div class="controls">
-			<div class="backward">
-				<
-			</div>
-			<div class="forward">
-				>
-			</div>
-		</div>
-	</div>
-	<script src="slider.js"></script>
 </body>
 
 </html>
