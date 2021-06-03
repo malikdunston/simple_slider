@@ -10,7 +10,6 @@ https://www.youtube.com/watch?v=DqkH_PV5cto&t=29s
 
 	-	Inputs:
 		-	data = array of objects
-		-	script src="slider.js"
 		-	<elem class="slider" data="your-array">
 			-	optional attrs:
 				-	speed? (def = 3s)
