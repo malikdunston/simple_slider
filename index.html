@@ -47,31 +47,16 @@
 	</script>
 	<style class="optional-styles">
 		@import "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css";
-		:root{
-			font-size: 30px;
-		}
-		body{
-			background: rgb(234, 234, 234);
-		}
 		.slider{
-			margin-top:  1rem;
 			width: 100%;
-			height: 9rem;
-			background: rgba(0, 0, 0, .5);
-		}
-		.slider .feed{
-			background: purple;
-		}
-		.slider .feed .slide{
-			background: red;
+			height: 200px;
 		}
 	</style>
 	<script class="slider-js">
-		const makeSlider = function(elem){
-			let data = window[elem.attributes["data"].value];
-			elem.style = "position: relative; overflow: hidden;";
-			elem.appendChild(makeFeed(elem, data));
-			function makeFeed(elem, data){
+		function render(slider){
+			slider.html.style = "position: relative; overflow: hidden;";
+			slider.html.appendChild(makeFeed(slider));
+			function makeFeed(slider){
 				let feed = Object.assign(
 					document.createElement("div"),
 					{
@@ -79,7 +64,7 @@
 						style: "display: flex; height: 100%;"
 					}
 				)
-				data.forEach(function(obj){
+				slider.data.forEach(function(obj){
 					feed.appendChild(makeSlides(obj));
 				})
 				return feed;
@@ -101,7 +86,7 @@
 				let content = Object.assign(
 					document.createElement("div"),
 					{
-						style: "width: 100%; position: absolute",
+						style: "width: 100%; position: absolute; bottom: 0",
 						innerHTML: [obj.content.title, obj.content.content].join("</br>")
 					}
 				)
@@ -109,19 +94,37 @@
 				slide.appendChild(content);
 				return slide;
 			}
-			console.dir(elem);
-			console.log(elem);
+		}
+		function move(slider){
+			slider.html.querySelector("*:first-child").style.transform = `translate${slider.direction}(${-slider.html.clientWidth * slider.offset}px)`;
 		}
 
 		window.addEventListener("load", function(){
-			document.querySelectorAll(".slider").forEach(function(slider){
-				makeSlider(slider);
+			document.querySelectorAll(".slider").forEach(function(elem){
+
+
+				slider = {
+					html: elem,
+					data: window[elem.attributes.data.value],
+					direction: hasProp("dir", "X"),
+					offset: parseInt(hasProp("offset", "1"))
+				}
+
+				function hasProp(name, def){
+					return elem.attributes.hasOwnProperty(name) ? elem.attributes[name].value : def
+				}
+
+
+				console.log(slider);
+
+				render(slider);
+				move(slider);
 			});
 		});
 	</script>
 </head>
 <body>
 	<div class="slider" data="dogs"></div>
-	<div class="slider" data="cats"></div>
+	<div class="slider" data="cats" offset="2"></div>
 </body>
 </html>
