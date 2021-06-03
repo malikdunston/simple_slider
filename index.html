@@ -47,12 +47,24 @@
 	</script>
 	<style class="optional-styles">
 		@import "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css";
-		.slider{
-			width: 100%;
+		.slider-js{
+			width: 50%;
 			height: 200px;
 		}
 	</style>
-	<script class="slider-js">
+	<script>
+
+
+
+
+
+
+
+
+
+
+
+
 		function render(slider){
 			slider.html.style = "position: relative; overflow: hidden;";
 			slider.html.appendChild(makeFeed(slider));
@@ -61,70 +73,63 @@
 					document.createElement("div"),
 					{
 						classList: ["feed"],
-						style: "display: flex; height: 100%;"
+						style: `display: flex; height: 100%; transition: ${slider.transition + "ms"}; flex-direction: ${slider.direction == "Y" ? "column" : "row"}`
 					}
 				)
 				slider.data.forEach(function(obj){
-					feed.appendChild(makeSlides(obj));
+					feed.appendChild(makeSlides(slider, obj));
 				})
 				return feed;
 			}
-			function makeSlides(obj){
+			function makeSlides(slider, obj){
 				let slide = Object.assign(
 					document.createElement("div"),
 					{
-						style: "min-width: 100%; position: relative;"
+						style: `${slider.direction == "Y" ? "min-height": "min-width"}: 100%; position: relative;`
 					}
 				)
-				let img = Object.assign(
+				slide.appendChild(Object.assign(
 					document.createElement("img"),
 					{
 						src: obj.img,
 						style: "object-fit: cover; width: 100%; height: 100%; position: absolute"
 					}
-				)
-				let content = Object.assign(
+				));
+				slide.appendChild(Object.assign(
 					document.createElement("div"),
 					{
 						style: "width: 100%; position: absolute; bottom: 0",
 						innerHTML: [obj.content.title, obj.content.content].join("</br>")
 					}
-				)
-				slide.appendChild(img);
-				slide.appendChild(content);
+				));
 				return slide;
 			}
 		}
 		function move(slider){
-			slider.html.querySelector("*:first-child").style.transform = `translate${slider.direction}(${-slider.html.clientWidth * slider.offset}px)`;
+			slider.html.querySelector("*:first-child").style.transform = `translate${slider.direction}(-${(slider.direction == "Y" ? slider.html.clientHeight : slider.html.clientWidth) * slider.offset}px)`;
+		// if you haven't reached the end yet....
+			slider.offset++;
 		}
-
 		window.addEventListener("load", function(){
-			document.querySelectorAll(".slider").forEach(function(elem){
-
-
-				slider = {
+			document.querySelectorAll(".slider-js").forEach(function(elem){
+				let slider = {
 					html: elem,
 					data: window[elem.attributes.data.value],
-					direction: hasProp("dir", "X"),
-					offset: parseInt(hasProp("offset", "1"))
+					direction: setDefault("direction", "X"),
+					offset: parseInt(setDefault("offset", "1")),
+					transition: setDefault("transition", "0")
 				}
-
-				function hasProp(name, def){
+				function setDefault(name, def){
 					return elem.attributes.hasOwnProperty(name) ? elem.attributes[name].value : def
 				}
-
-
-				console.log(slider);
-
 				render(slider);
-				move(slider);
+				setInterval(function(){move(slider);}, 2000)
 			});
 		});
 	</script>
 </head>
 <body>
-	<div class="slider" data="dogs"></div>
-	<div class="slider" data="cats" offset="2"></div>
+	<div class="slider-js" data="dogs" direction="Y" transition="300"></div>
+	<div class="slider-js" data="cats" offset="1" transition="200"></div>
 </body>
 </html>
