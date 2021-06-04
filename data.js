@@ -37,3 +37,26 @@ window.cats = [
 		}
 	}
 ]
+window.old = [
+	{
+		img: "",
+		content: {
+			title: "Section 1",
+			content: "Here's some sample text to get you started!!!!!!"
+		}
+	},
+	{
+		img: "",
+		content: {
+			title: "Section 2",
+			content: "Here's some sample text to get you started!!!!!!"
+		}
+	},
+	{
+		img: "",
+		content: {
+			title: "Section 3",
+			content: "Here's some sample text to get you started!!!!!!"
+		}
+	},
+]

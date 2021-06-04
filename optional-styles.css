@@ -1,31 +1,39 @@
 @import "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css";
 
-
-body,
-html{
-/* 	margin: 0;
-	padding: 0;
-	box-sizing: border-box; */
-}
-
-.slideshow {
+.slideshow,
+*[slider-js] {
 	width: 80vw;
-	height: 50vh;
+	margin-top: 20px;
+	height: 30vh;
 	background: lightgray;
 	position: relative;
 	overflow: hidden;
 }
 
-	.feed {
+	.feed,
+	.slider-feed {
 		display: flex;
 		height: 100%;
 	}
 
-		.slide {
+		.slide,
+		.slider-feed > div {
 			min-width: 100%;
 /* 			position: relative; */
 		}
-.slide:nth-of-type(even){background: gray}
+
+.slide:nth-of-type(even),
+.slider-feed > div:nth-of-type(even){background: gray}
+
+
+
+
+
+
+
+
+
+
 
 	.controls {
 		position: absolute;
@@ -52,7 +60,7 @@ html{
 
 
 
-body{
+/* body{
 	font-family: "Roboto";
 	background: lightgray;
 }
@@ -65,7 +73,7 @@ body{
 	background: rgba(0, 0, 0, .25);
 	color: white;
 	padding: 1rem;
-}
+} */
 
 
 

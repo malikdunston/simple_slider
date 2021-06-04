@@ -1,4 +1,4 @@
-window.addEventListener("load", function(){
+function sliderJS(){
 
 	const slideshow = document.querySelector('.slideshow');
 	const feed = slideshow.querySelector('.feed');
@@ -8,7 +8,6 @@ window.addEventListener("load", function(){
 
 	let slides = document.querySelectorAll('.slide');
 	let index = 1;
-	let slideId;
 
 	const firstClone = slides[0].cloneNode(true);
 	const lastClone = slides[slides.length - 1].cloneNode(true);
@@ -77,5 +76,75 @@ window.addEventListener("load", function(){
 	backward.addEventListener('click', down);
 
 	init();
+
+	console.log(slideshow);
+};
+
+
+
+window.addEventListener("load", function(){
+	sliderJS();
+
+
+
+
+
+	function render(slider){
+		// slider.html.innerHTML = "";
+		slider.html.style = "position: relative; overflow: hidden;";
+		slider.html.appendChild(makeFeed(slider));
+		function makeFeed(slider){
+			let feed = Object.assign(
+				document.createElement("div"),
+				{
+					classList: ["slider-feed"],
+					style: `display: flex; height: 100%; transition: ${slider.transition + "ms"}; flex-direction: ${slider.direction == "Y" ? "column" : "row"};`
+				}
+			)
+			slider.data.forEach(function(obj){
+				feed.appendChild(makeSlides(slider, obj));
+			})
+			return feed;
+			function makeSlides(slider, obj){
+				let slide = Object.assign(
+					document.createElement("div"),
+					{
+						style: `${slider.direction == "Y" ? "min-height": "min-width"}: 100%; position: relative;`
+					}
+				)
+				// slide.appendChild(Object.assign(
+				// 	document.createElement("img"),
+				// 	{
+				// 		src: obj.img,
+				// 		style: "object-fit: cover; width: 100%; height: 100%; position: absolute"
+				// 	}
+				// ));
+				slide.appendChild(Object.assign(
+					document.createElement("div"),
+					{
+						classList: ["slider-content"],
+						// style: "width: 100%; position: absolute; bottom: 0",
+						innerHTML: [obj.content.title, obj.content.content].join("</br>")
+					}
+				));
+				return slide;
+			}
+		}
+	}
+
+
+	document.querySelectorAll("*[slider-js]").forEach(function(elem){
+		let slider = {
+			html: elem,
+			data: window[elem.attributes["slider-js"].value] || [
+				{img: "", content: {title: 1, content: "slide one"}}, 
+				{img: "", content: {title: 2, content: "slide two"}}
+			],
+		}
+		console.log(slider, slider.html);
+		render(slider);
+	});
+
+
 
 });
