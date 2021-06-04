@@ -1,4 +1,3 @@
-"use strict";
 
 function render(slider){
 	if (!slider.html.style.height) slider.html.style.height = "10em";
@@ -102,7 +101,11 @@ function setDefault(elem, name, def){
 	return elem.attributes.hasOwnProperty(name) ? elem.attributes[name].value : def
 }
 
+
+
 window.sliderJSByMalikDunston = function(){
+	"use strict";
+
 	document.querySelectorAll("*[slider-js]").forEach(function(elem){
 		let slider = {
 			html: elem,
@@ -121,12 +124,30 @@ window.sliderJSByMalikDunston = function(){
 
 window.addEventListener("load", sliderJSByMalikDunston);
 
-
-let malik = {
-	hey: "hello", 
-	whoThis: function (){
-		console.log(this);
-	}
+function x(){
+	console.log(this);
 }
 
-malik.whoThis();
+function add(){
+	console.log(this.one + this.two)
+	return this.one + this.two
+}
+
+let obj = {
+	one: 7,
+	two: 40,
+	that: "a",
+	b: "sumthin",
+	prop: this,
+	do: function(){
+		return this
+	},
+	sumelse: function(){
+		console.log(this);
+	}
+};
+
+let addUpObject = add.bind(obj);
+
+console.log(addUpObject()); // f()
+addUpObject(); // 47
