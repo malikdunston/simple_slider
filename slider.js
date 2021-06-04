@@ -5,7 +5,8 @@ function render(slider){
 		let feed = Object.assign(
 			document.createElement("div"),
 			{
-				style: `display: flex; height: 100%; transition: ${slider.transition + "ms"}; flex-direction: ${slider.direction == "Y" ? "column" : "row"}`
+				classList: ["slider-feed"],
+				style: `display: flex; height: 100%; flex-direction: ${slider.direction == "Y" ? "column" : "row"}`
 			}
 		)
 	// from old!!!!!!
@@ -14,6 +15,18 @@ function render(slider){
 		slider.data.forEach(function(obj){
 			feed.appendChild(makeSlides(slider, obj));
 		})
+		feed.addEventListener('transitionend', function(){
+			if (slider.index == slider.data.length -1) {
+				feed.style.transition = "none";
+				slider.index = 1;
+				feed.style.transform = `translate${slider.direction}(${-(slider.direction == "Y" ? slider.html.clientHeight : slider.html.clientWidth) * slider.index}px)`;
+			};
+			if (slider.index == 0) {
+				feed.style.transition = "none";
+				slider.index = slider.data.length - 2;
+				feed.style.transform = `translate${slider.direction}(${-(slider.direction == "Y" ? slider.html.clientHeight : slider.html.clientWidth) * slider.index}px)`;
+			};
+		});
 		return feed;
 	}
 	function makeSlides(slider, obj){
@@ -41,26 +54,68 @@ function render(slider){
 		return slide;
 	}
 }
-function move(slider){
-	slider.html.querySelector("*:first-child").style.transform = `translate${slider.direction}(-${(slider.direction == "Y" ? slider.html.clientHeight : slider.html.clientWidth) * slider.index}px)`;
+
+// up() and down()
+function increment(slider, forBack){
+	switch(forBack){
+		case"forward":
+			if (slider.index >= slider.data.length - 1) return;
+			slider.index ++;
+			break;
+		case "backward":
+			if (slider.index <= 0) return;
+			slider.index --;
+			break;
+	}
+	set(slider);
 }
+
+function set(slider){
+	animation(slider, "stop");
+	slider.html.querySelector(".slider-feed").style.transition = `${slider.transition + "ms"}`;
+	slider.html.querySelector(".slider-feed").style.transform = `translate${slider.direction}(${-(slider.direction == "Y" ? slider.html.clientHeight : slider.html.clientWidth) * slider.index}px)`;
+	animation(slider, "start");
+}
+
+// init() and clear()
+function animation(slider, startStop){
+	switch(startStop){
+		case"start":
+			slider.rotation = setInterval(function(){
+				increment(slider, "forward");
+			}, slider.interval)
+			break;
+		case "stop":
+			clearInterval(slider.rotation);
+			break;
+	}
+}
+
+function makeDataList(arr){
+	return [arr[arr.length - 1], ...arr, arr[0]] || [
+		{
+			
+		}
+	]
+}
+function setDefault(elem, name, def){
+	return elem.attributes.hasOwnProperty(name) ? elem.attributes[name].value : def
+}
+
+
+
 window.addEventListener("load", function(){
-	document.querySelectorAll(".slider-js").forEach(function(elem){
+	document.querySelectorAll("*[slider-js]").forEach(function(elem){
 		let slider = {
 			html: elem,
-			data: makeDataList(window[elem.attributes.data.value]),
-			direction: setDefault("direction", "X"),
-			offset: parseInt(setDefault("offset", "1")),
-			index: parseInt(setDefault("offset", "1")),
-			transition: setDefault("transition", "0"),
-			interval: setDefault("interval", "3000")
-		}
-		function makeDataList(arr){
-			return [arr[arr.length - 1], ...arr, arr[0]]
-		}
-		function setDefault(name, def){
-			return elem.attributes.hasOwnProperty(name) ? elem.attributes[name].value : def
+			data: makeDataList(window[elem.attributes["slider-js"].value]),
+			direction: setDefault(elem, "direction", "X"),
+			offset: parseInt(setDefault(elem, "offset", "1")),
+			index: parseInt(setDefault(elem, "offset", "1")),
+			transition: setDefault(elem, "transition", "0"),
+			interval: setDefault(elem, "interval", "1000")
 		}
 		render(slider);
+		animation(slider, "start");
 	});
 });
