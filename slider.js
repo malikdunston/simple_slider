@@ -11,7 +11,13 @@ window.sliderJSByMalikDunston = function(){
 			interval: setDefault(elem, "interval", "1000")
 		}
 		render(slider);
+	// once content is loaded in all the slides (images, etc)
+	// then start the animation!!!!!!!
 		animation(slider, "start");
+		window.addEventListener("resize", function(){
+			console.log("adsfasdfa");
+			set(slider);
+		})
 	});
 	function increment(slider, forBack){
 		switch(forBack){
@@ -60,8 +66,10 @@ window.sliderJSByMalikDunston = function(){
 		return elem.attributes.hasOwnProperty(name) ? elem.attributes[name].value : def
 	}
 	function render(slider){
+		if (!slider.html.style.height) slider.html.style.height = "200px";
 		slider.html.style.cssText += "position: relative; overflow: hidden; ";
 		slider.html.appendChild(makeFeed(slider));
+	// should this go here?
 		function makeFeed(slider){
 			let feed = Object.assign(
 				document.createElement("div"),
@@ -115,4 +123,4 @@ window.sliderJSByMalikDunston = function(){
 	}
 }
 window.addEventListener("load", sliderJSByMalikDunston);
-console.log("%cgithub.com/malikdunston", "color: yellow; font-style: italic; background-color: blue;padding: 10px");
+console.log("%cgithub.com/malikdunston", "color: yellow; font-style: italic; background-color: blue;padding: 20px 10px");
