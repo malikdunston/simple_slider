@@ -4,10 +4,10 @@ window.sliderJSByMalikDunston = function(){
 		let slider = {
 			html: elem,
 			data: makeDataList(window[elem.attributes["slider-js"].value]),
-			direction: setDefault(elem, "direction", "X"),
-			offset: parseInt(setDefault(elem, "offset", "1")),
+			axis: setDefault(elem, "axis", "X"),
+			direction: setDefault(elem, "direction", "forward"),
 			index: parseInt(setDefault(elem, "offset", "1")),
-			transition: setDefault(elem, "transition", "1ms"),
+			transition: setDefault(elem, "transition", "100ms"),
 			interval: setDefault(elem, "interval", "4000")
 		}
 		render(slider);
@@ -35,14 +35,14 @@ window.sliderJSByMalikDunston = function(){
 	function set(slider){
 		animation(slider, "stop");
 		slider.html.querySelector(".slider-feed").style.transition = `${slider.transition}`;
-		slider.html.querySelector(".slider-feed").style.transform = `translate${slider.direction}(${-(slider.direction == "Y" ? slider.html.clientHeight : slider.html.clientWidth) * slider.index}px)`;
+		slider.html.querySelector(".slider-feed").style.transform = `translate${slider.axis}(${-(slider.axis == "Y" ? slider.html.clientHeight : slider.html.clientWidth) * slider.index}px)`;
 		animation(slider, "start");
 	}
 	function animation(slider, startStop){
 		switch(startStop){
 			case"start":
 				slider.rotation = setInterval(function(){
-					increment(slider, "forward");
+					increment(slider, slider.direction);
 				}, slider.interval)
 				break;
 			case "stop":
@@ -68,17 +68,18 @@ window.sliderJSByMalikDunston = function(){
 	function render(slider){
 		if (!slider.html.style.height) slider.html.style.height = "500px";
 		slider.html.style.cssText += "position: relative; overflow: hidden; ";
-		slider.html.appendChild(makeFeed(slider));
+		slider.html.prepend(makeFeed(slider));
 	// should this go here?
 		function makeFeed(slider){
 			let feed = Object.assign(
 				document.createElement("div"),
 				{
 					classList: ["slider-feed"],
-					style: `display: flex; height: 100%; flex-direction: ${slider.direction == "Y" ? "column" : "row"}`
+					style: `display: flex; height: 100%; flex-direction: ${slider.axis == "Y" ? "column" : "row"}`
 				}
 			)
-			feed.style.transform = `translate${slider.direction}(${-(slider.direction == "Y" ? slider.html.clientHeight : slider.html.clientWidth) * slider.index}px)`;
+		// same as set()
+			feed.style.transform = `translate${slider.axis}(${-(slider.axis == "Y" ? slider.html.clientHeight : slider.html.clientWidth) * slider.index}px)`;
 			slider.data.forEach(function(obj){
 				feed.appendChild(makeSlides(slider, obj));
 			})
@@ -86,19 +87,19 @@ window.sliderJSByMalikDunston = function(){
 				if (slider.index == slider.data.length -1) {
 					feed.style.transition = "none";
 					slider.index = 1;
-					feed.style.transform = `translate${slider.direction}(${-(slider.direction == "Y" ? slider.html.clientHeight : slider.html.clientWidth) * slider.index}px)`;
+					feed.style.transform = `translate${slider.axis}(${-(slider.axis == "Y" ? slider.html.clientHeight : slider.html.clientWidth) * slider.index}px)`;
 				};
 				if (slider.index == 0) {
 					feed.style.transition = "none";
 					slider.index = slider.data.length - 2;
-					feed.style.transform = `translate${slider.direction}(${-(slider.direction == "Y" ? slider.html.clientHeight : slider.html.clientWidth) * slider.index}px)`;
+					feed.style.transform = `translate${slider.axis}(${-(slider.axis == "Y" ? slider.html.clientHeight : slider.html.clientWidth) * slider.index}px)`;
 				};
 			});
 			function makeSlides(slider, obj){
 				let slide = Object.assign(
 					document.createElement("div"),
 					{
-						style: `${slider.direction == "Y" ? "min-height": "min-width"}: 100%; position: relative;`
+						style: `${slider.axis == "Y" ? "min-height": "min-width"}: 100%; position: relative;`
 					}
 				)
 				slide.appendChild(Object.assign(
