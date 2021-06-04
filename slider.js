@@ -1,5 +1,12 @@
 function render(slider){
-	slider.html.style = "position: relative; overflow: hidden;";
+	// console.log(slider.html.style);
+	slider.html.style.cssText += "position: relative; overflow: hidden;";
+	// slider.html.style.position = "relative";
+	// slider.html.style.overflow = "hidden";
+	// slider.html.style = {
+	// 	position: "relative",
+	// 	overflow: "hidden"
+	// }
 	slider.html.appendChild(makeFeed(slider));
 	function makeFeed(slider){
 		let feed = Object.assign(
@@ -98,7 +105,8 @@ function makeDataList(arr){
 function setDefault(elem, name, def){
 	return elem.attributes.hasOwnProperty(name) ? elem.attributes[name].value : def
 }
-window.addEventListener("load", function(){
+
+window.sliderJSByMalikDunston = function(){
 	document.querySelectorAll("*[slider-js]").forEach(function(elem){
 		let slider = {
 			html: elem,
@@ -112,4 +120,6 @@ window.addEventListener("load", function(){
 		render(slider);
 		animation(slider, "start");
 	});
-});
+}
+
+window.addEventListener("load", sliderJSByMalikDunston);
