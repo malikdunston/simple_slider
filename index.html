@@ -9,8 +9,14 @@
 	<link rel="stylesheet" href="optional-styles.css">
 </head>
 <body>
-	<section slider-js="" direction="X" transition="300ms" interval="3000"></section>
-	<div slider-js="dogs" direction="Y" transition="300ms" interval="3000" style="height: 100vh;"></div>
+	<section slider-js="birds" direction="X" transition="300ms" interval="3000"></section>
+	<script>
+		birds = [
+			...window.dogs,
+			...window.cats
+		];
+	</script>
+	<div slider-js="dogs" direction="Y" transition="300ms" ></div>
 	<div slider-js="cats" direction="X" transition="100ms" interval="2000"></div>
 </body>
 </html>

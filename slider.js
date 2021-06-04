@@ -8,7 +8,7 @@ window.sliderJSByMalikDunston = function(){
 			offset: parseInt(setDefault(elem, "offset", "1")),
 			index: parseInt(setDefault(elem, "offset", "1")),
 			transition: setDefault(elem, "transition", "1ms"),
-			interval: setDefault(elem, "interval", "1000")
+			interval: setDefault(elem, "interval", "4000")
 		}
 		render(slider);
 	// once content is loaded in all the slides (images, etc)
