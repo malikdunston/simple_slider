@@ -8,6 +8,9 @@ function render(slider){
 				style: `display: flex; height: 100%; transition: ${slider.transition + "ms"}; flex-direction: ${slider.direction == "Y" ? "column" : "row"}`
 			}
 		)
+	// from old!!!!!!
+		feed.style.transform = `translate${slider.direction}(${-(slider.direction == "Y" ? slider.html.clientHeight : slider.html.clientWidth) * slider.index}px)`;
+	// move the feed above, then add data....
 		slider.data.forEach(function(obj){
 			feed.appendChild(makeSlides(slider, obj));
 		})
@@ -37,21 +40,9 @@ function render(slider){
 		));
 		return slide;
 	}
-	console.log(slider.index);
-	setTimeout(function(){move(slider);}, slider.interval);
 }
 function move(slider){
 	slider.html.querySelector("*:first-child").style.transform = `translate${slider.direction}(-${(slider.direction == "Y" ? slider.html.clientHeight : slider.html.clientWidth) * slider.index}px)`;
-	endOfList(slider);
-	render(slider);
-}
-function endOfList(slider){
-	// if(slider.index == slider.data.length){
-	// 	slider.html.innerHTML = "";
-	// 	slider.index = slider.offset;
-	// }else{
-		slider.index++;
-	// }
 }
 window.addEventListener("load", function(){
 	document.querySelectorAll(".slider-js").forEach(function(elem){
@@ -65,7 +56,7 @@ window.addEventListener("load", function(){
 			interval: setDefault("interval", "3000")
 		}
 		function makeDataList(arr){
-			return arr
+			return [arr[arr.length - 1], ...arr, arr[0]]
 		}
 		function setDefault(name, def){
 			return elem.attributes.hasOwnProperty(name) ? elem.attributes[name].value : def
