@@ -25,31 +25,31 @@ function render(slider){
 				feed.style.transform = `translate${slider.direction}(${-(slider.direction == "Y" ? slider.html.clientHeight : slider.html.clientWidth) * slider.index}px)`;
 			};
 		});
+		function makeSlides(slider, obj){
+			let slide = Object.assign(
+				document.createElement("div"),
+				{
+					style: `${slider.direction == "Y" ? "min-height": "min-width"}: 100%; position: relative;`
+				}
+			)
+			slide.appendChild(Object.assign(
+				document.createElement("img"),
+				{
+					src: obj.img,
+					style: "object-fit: cover; width: 100%; height: 100%; position: absolute"
+				}
+			));
+			slide.appendChild(Object.assign(
+				document.createElement("div"),
+				{
+					classList: ["slider-content"],
+					style: "width: 100%; position: absolute; bottom: 0",
+					innerHTML: [obj.content.title, obj.content.content].join("</br>")
+				}
+			));
+			return slide;
+		}
 		return feed;
-	}
-	function makeSlides(slider, obj){
-		let slide = Object.assign(
-			document.createElement("div"),
-			{
-				style: `${slider.direction == "Y" ? "min-height": "min-width"}: 100%; position: relative;`
-			}
-		)
-		slide.appendChild(Object.assign(
-			document.createElement("img"),
-			{
-				src: obj.img,
-				style: "object-fit: cover; width: 100%; height: 100%; position: absolute"
-			}
-		));
-		slide.appendChild(Object.assign(
-			document.createElement("div"),
-			{
-				classList: ["slider-content"],
-				style: "width: 100%; position: absolute; bottom: 0",
-				innerHTML: [obj.content.title, obj.content.content].join("</br>")
-			}
-		));
-		return slide;
 	}
 }
 function increment(slider, forBack){
