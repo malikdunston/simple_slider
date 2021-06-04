@@ -36,11 +36,11 @@ window.cats = [
 			content: ";lkasjdfasdfajklj;aslkdfas;dlkfja"
 		}
 	},
-	{
-		img: "./assets/img/persian.jpg",
-		content: {
-			title: "Persian",
-			content: ";lkasjdfasdfajklj;aslkdfas;dlkfja"
-		}
-	}
+	// {
+	// 	img: "./assets/img/persian.jpg",
+	// 	content: {
+	// 		title: "Persian",
+	// 		content: ";lkasjdfasdfajklj;aslkdfas;dlkfja"
+	// 	}
+	// }
 ]

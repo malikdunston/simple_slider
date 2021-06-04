@@ -9,9 +9,7 @@ function render(slider){
 				style: `display: flex; height: 100%; flex-direction: ${slider.direction == "Y" ? "column" : "row"}`
 			}
 		)
-	// from old!!!!!!
 		feed.style.transform = `translate${slider.direction}(${-(slider.direction == "Y" ? slider.html.clientHeight : slider.html.clientWidth) * slider.index}px)`;
-	// move the feed above, then add data....
 		slider.data.forEach(function(obj){
 			feed.appendChild(makeSlides(slider, obj));
 		})
@@ -54,8 +52,6 @@ function render(slider){
 		return slide;
 	}
 }
-
-// up() and down()
 function increment(slider, forBack){
 	switch(forBack){
 		case"forward":
@@ -69,15 +65,12 @@ function increment(slider, forBack){
 	}
 	set(slider);
 }
-
 function set(slider){
 	animation(slider, "stop");
 	slider.html.querySelector(".slider-feed").style.transition = `${slider.transition + "ms"}`;
 	slider.html.querySelector(".slider-feed").style.transform = `translate${slider.direction}(${-(slider.direction == "Y" ? slider.html.clientHeight : slider.html.clientWidth) * slider.index}px)`;
 	animation(slider, "start");
 }
-
-// init() and clear()
 function animation(slider, startStop){
 	switch(startStop){
 		case"start":
@@ -90,20 +83,21 @@ function animation(slider, startStop){
 			break;
 	}
 }
-
 function makeDataList(arr){
-	return [arr[arr.length - 1], ...arr, arr[0]] || [
+	if (!arr) arr =  [
 		{
-			
+			img: "",
+			content: {
+				title: "Your Slider Has No Data!",
+				content: "Attach some data to your slider element to begin."
+			}
 		}
-	]
+	];
+	return [arr[arr.length - 1], ...arr, arr[0]];
 }
 function setDefault(elem, name, def){
 	return elem.attributes.hasOwnProperty(name) ? elem.attributes[name].value : def
 }
-
-
-
 window.addEventListener("load", function(){
 	document.querySelectorAll("*[slider-js]").forEach(function(elem){
 		let slider = {
