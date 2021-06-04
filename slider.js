@@ -7,7 +7,7 @@ window.sliderJSByMalikDunston = function(){
 			direction: setDefault(elem, "direction", "X"),
 			offset: parseInt(setDefault(elem, "offset", "1")),
 			index: parseInt(setDefault(elem, "offset", "1")),
-			transition: setDefault(elem, "transition", "0"),
+			transition: setDefault(elem, "transition", "1ms"),
 			interval: setDefault(elem, "interval", "1000")
 		}
 		render(slider);
@@ -34,7 +34,7 @@ window.sliderJSByMalikDunston = function(){
 	}
 	function set(slider){
 		animation(slider, "stop");
-		slider.html.querySelector(".slider-feed").style.transition = `${slider.transition + "ms"}`;
+		slider.html.querySelector(".slider-feed").style.transition = `${slider.transition}`;
 		slider.html.querySelector(".slider-feed").style.transform = `translate${slider.direction}(${-(slider.direction == "Y" ? slider.html.clientHeight : slider.html.clientWidth) * slider.index}px)`;
 		animation(slider, "start");
 	}
@@ -66,7 +66,7 @@ window.sliderJSByMalikDunston = function(){
 		return elem.attributes.hasOwnProperty(name) ? elem.attributes[name].value : def
 	}
 	function render(slider){
-		if (!slider.html.style.height) slider.html.style.height = "200px";
+		if (!slider.html.style.height) slider.html.style.height = "500px";
 		slider.html.style.cssText += "position: relative; overflow: hidden; ";
 		slider.html.appendChild(makeFeed(slider));
 	// should this go here?
