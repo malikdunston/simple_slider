@@ -1,3 +1,5 @@
+"use strict";
+
 function render(slider){
 	if (!slider.html.style.height) slider.html.style.height = "10em";
 	slider.html.style.cssText += "position: relative; overflow: hidden; ";
@@ -118,3 +120,13 @@ window.sliderJSByMalikDunston = function(){
 }
 
 window.addEventListener("load", sliderJSByMalikDunston);
+
+
+let malik = {
+	hey: "hello", 
+	whoThis: function (){
+		console.log(this);
+	}
+}
+
+malik.whoThis();

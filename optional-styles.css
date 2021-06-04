@@ -1,9 +1,9 @@
-@import "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css";
+/* @import "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"; */
 body{
 	font-family: "Roboto";
 	background: lightgray;
 }
-/* *[slider-js]{
+*[slider-js]{
 	height: 33vh;
 	background: gray;
 	transition: .5s;
@@ -15,4 +15,4 @@ body{
 	background: rgba(0, 0, 0, .25);
 	color: white;
 	padding: 1rem;
-} */
+}
