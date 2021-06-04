@@ -133,6 +133,16 @@ function add(){
 	return this.one + this.two
 }
 
+function subtract(){
+	console.log(this.one - this.two)
+	return this.one - this.two
+}
+
+let newobj = {
+	one: 10,
+	two: 5
+};
+
 let obj = {
 	one: 7,
 	two: 40,
@@ -149,5 +159,12 @@ let obj = {
 
 let addUpObject = add.bind(obj);
 
-console.log(addUpObject()); // f()
-addUpObject(); // 47
+console.log(addUpObject()); // runs twice (return via log, then log in function as it runs)
+addUpObject(); // 47 --- console.log
+
+// or you can use call or apply... call is better because of spread operator!!!!!
+subtract.call(obj);
+subtract.call(newobj);
+
+// bind is like... a more concrete way of using call
+// it exists so you can reuse it instead of calling again and again... 
