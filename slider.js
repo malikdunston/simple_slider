@@ -1,12 +1,6 @@
 function render(slider){
-	// console.log(slider.html.style);
-	slider.html.style.cssText += "position: relative; overflow: hidden;";
-	// slider.html.style.position = "relative";
-	// slider.html.style.overflow = "hidden";
-	// slider.html.style = {
-	// 	position: "relative",
-	// 	overflow: "hidden"
-	// }
+	if (!slider.html.style.height) slider.html.style.height = "10em";
+	slider.html.style.cssText += "position: relative; overflow: hidden; ";
 	slider.html.appendChild(makeFeed(slider));
 	function makeFeed(slider){
 		let feed = Object.assign(
@@ -120,6 +114,7 @@ window.sliderJSByMalikDunston = function(){
 		render(slider);
 		animation(slider, "start");
 	});
+	console.log("SliderJS by Malik Dunston");
 }
 
 window.addEventListener("load", sliderJSByMalikDunston);
