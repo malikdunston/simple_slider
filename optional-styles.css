@@ -1,20 +1,100 @@
 @import "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css";
 body{
 	font-family: "Roboto";
-	background: lightgray;
-	/* box-sizing: border-box; */
+	background: rgb(230, 230, 230);
 }
 *[slider-js]{
-	/* height: 33vh; */
 	background: gray;
-	transition: .5s;
 }
-*[slider-js]:hover{
-	height: 400px;
+div[slider-js] .slider-content{
+	backdrop-filter: blur(10px);
 }
 *[slider-js] .slider-content{
-	backdrop-filter: blur(10px);
 	background: rgba(0, 0, 0, .25);
-	color: white;
-	padding: 1rem;
+	color: rgba(255, 255, 255, 0.571);
+	padding: 1rem 1.5rem 1.5rem;
 }
+*[slider-js]:not(h1) .slider-content:first-line{
+	line-height: 1.75;
+	color: rgba(255, 255, 255, 1);
+	font-size: 1.5em;
+	margin-bottom: 200px;
+}
+br{
+	display: block;
+	height: 20px;
+}
+
+body#test-remote *[slider-js]{
+	height: 300px;
+	border-radius: 5px;
+	width: 80vw;
+	margin: 24px auto;
+}
+
+h1[slider-js]{
+	background: transparent;
+	height: 80px!important;
+}
+.pride [slider-js] img,
+h1[slider-js] img{
+	display: none;
+}
+h1[slider-js] .slider-content{
+	color: black;
+	padding: 0;
+	background: transparent;
+}
+
+.pride{
+	width: 50vw;
+	border-radius: 25px;
+	overflow: hidden;
+	height: 30px;
+	left: 10vw;
+	bottom: 109px;
+	position: fixed;
+}
+
+.pride .slider-content{
+	height: 100%;
+	background: transparent;
+	padding: 0;
+	line-height: 50px;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 8px;
+	letter-spacing: 3px;
+}
+
+.pride > *[slider-js]{
+	border-radius: 0!important;
+	position: absolute!important;
+	width: 100%!important;
+	height: 100%!important;
+	margin: 0!important;
+	padding: 0;
+}
+
+div[slider-js="pride"],
+div[slider-js="pride"] *{
+	background: transparent;
+}
+div[slider-js="pride"]{
+	top: 6px;
+}
+div[slider-js="pride"] *{
+	backdrop-filter: none!important;
+}
+
+.pride .colors .slider-feed > div:nth-child(1){background: rgb(170, 18, 220);}
+.pride .colors .slider-feed > div:nth-child(2){background: rgb(228, 68, 210);}
+.pride .colors .slider-feed > div:nth-child(3){background: red;}
+.pride .colors .slider-feed > div:nth-child(4){background: rgb(239, 112, 15);}
+.pride .colors .slider-feed > div:nth-child(5){background: rgb(255, 247, 0);}
+.pride .colors .slider-feed > div:nth-child(6){background: rgb(12, 159, 29);}
+.pride .colors .slider-feed > div:nth-child(7){background: rgb(43, 188, 205);}
+.pride .colors .slider-feed > div:nth-child(8){background: rgb(84, 25, 186);}
+.pride .colors .slider-feed > div:nth-child(9){background: rgb(170, 18, 220);}
+.pride .colors .slider-feed > div:nth-child(10){background: rgb(228, 68, 210);}

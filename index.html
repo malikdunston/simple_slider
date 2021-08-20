@@ -7,13 +7,14 @@
 	<script src="data.js"></script>
 	<script src="slider.js" defer="defer"></script>
 	<link rel="stylesheet" href="optional-styles.css">
+	<style>body{background: rgb(45, 45, 45);} [slider-js]{height: 225px;}</style>
 </head>
 <body>
-	<section slider-js="birds" axis="Y" interval="2000" direction="backward"></section>
+	<section slider-js="dogs" interval="1500" axis="Y" delay="0" offset="1" transition="500ms" direction="backward"></section>
+	<section slider-js="cats" interval="1500" axis="X" delay="100" offset="1" transition="500ms" direction="backward"></section>
+	<section slider-js="pets" interval="1500" axis="Y" delay="200" offset="1" transition="500ms" direction="backward"></section>
 	<script>
-		birds = [
-			...window.dogs,
-		];
+		pets = [...window.dogs, ...this.cats];
 	</script>
 </body>
 </html>
