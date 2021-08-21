@@ -108,7 +108,7 @@
 				this.html.style.transform = this.setTransformation(slider);
 			};
 		});
-		this.html.prepend("asldkjf;alskdjf;alksdjfa");
+		// this.html.prepend("asldkjf;alskdjf;alksdjfa");
 		// console.log(this);
 		return this;
 	}
