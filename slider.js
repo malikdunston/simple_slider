@@ -15,12 +15,13 @@
 
 // factories...
 	function Module(){
-		this.global = {
-			anim: 0,
-			scope: window
-		},
+		this.type = "module";
+		this.scope = window;
+		this.globalIndex = 0;
+		this.globalInterval = 1000;
+		this.direction = "forward";
+		this.globalAnimation = globalAnimation(this);
 		this.sliders = [];
-		this.currentIndex = 0;
 		Array.from(document.querySelectorAll("*[slider-js]")).forEach(elem => {
 			let slider = new Slider(elem, this);
 			slider.render();
@@ -42,7 +43,7 @@
 			return [arr[arr.length - 1], ...arr, arr[0]];
 		}
 		this.html = elem,
-		this.data =  this.makeDataList(Module.global.scope[elem.attributes["slider-js"].value]), // replace this w/this.slider.feed...
+		this.data =  this.makeDataList(Module.scope[elem.attributes["slider-js"].value]), // replace this w/this.slider.feed...
 		this.axis = this.setDefault(elem, "axis", "X"),
 		this.direction = this.setDefault(elem, "direction", "forward"),
 		this.index = parseInt(this.setDefault(elem, "offset", "1")),
@@ -93,7 +94,6 @@
 		});
 		this.html.style.transform = this.setTransformation(slider);
 		slider.data.forEach(d => {
-			console.log(slider, d);
 			this.html.appendChild(this.makeSlides(d));
 		})
 		this.html.addEventListener('transitionend', function () {
@@ -108,41 +108,57 @@
 				this.html.style.transform = this.setTransformation(slider);
 			};
 		});
-		// this.html.prepend("asldkjf;alskdjf;alksdjfa");
 		// console.log(this);
 		return this;
 	}
 	
 // unused functions from v1...
-	function animation(slider, startStop) {
-		console.log(slider, startStop);
-		switch (startStop) {
-			case "start":
-				slider.rotation = setInterval(function () {
-					increment(slider, slider.direction);
-				}, slider.interval)
-				break;
-			case "stop":
-				clearInterval(slider.rotation);
-				break;
-		}
-	}
-	function increment(slider, forBack) {
-		switch (forBack) {
-			case "forward":
-				if (slider.index >= slider.data.length - 1) return;
-				slider.index++;
-				break;
-			case "backward":
-				if (slider.index <= 0) return;
-				slider.index--;
-				break;
-		}
-		resetAnimation(slider);
+	function globalAnimation(module) {
+		console.log(module);
+		module.rotation ? clearInterval(module.rotation) : module.rotation = setInterval(function () {
+			module.globalIndex++;
+			console.log(module.globalIndex);
+			// switch (module.global.direction) {
+			// 	case "forward":
+			// 		if (module.index >= module.data.length - 1 || module.global.type == "module") return;
+			// 		module.index++;
+			// 		break;
+			// 	case "backward":
+			// 		if (module.index <= 0) return;
+			// 		module.index--;
+			// 		break;
+			// }
+		}, module.globalInterval)
 	}
 	function resetAnimation(slider) {
-		animation(slider, "stop");
+		globalAnimation(slider, "stop");
 		slider.html.querySelector(".slider-feed").style.transition = `${slider.transition}`;
 		slider.html.querySelector(".slider-feed").style.transform = setTransformation();
-		animation(slider, "start");
+		globalAnimation(slider, "start");
 	}
+	// function increment(slider, forBack) {
+	// 	switch (forBack) {
+	// 		case "forward":
+	// 			if (slider.index >= slider.data.length - 1) return;
+	// 			slider.index++;
+	// 			break;
+	// 		case "backward":
+	// 			if (slider.index <= 0) return;
+	// 			slider.index--;
+	// 			break;
+	// 	}
+	// 	resetAnimation(slider);
+	// }
+	// function animation(slider, startStop) {
+	// 	console.log(slider, startStop);
+	// 	switch (startStop) {
+	// 		case "start":
+	// 			slider.rotation = setInterval(function () {
+	// 				increment(slider, slider.direction);
+	// 			}, slider.interval)
+	// 			break;
+	// 		case "stop":
+	// 			clearInterval(slider.rotation);
+	// 			break;
+	// 	}
+	// }
