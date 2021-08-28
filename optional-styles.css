@@ -3,18 +3,18 @@ body{
 	font-family: "Roboto";
 	background: rgb(230, 230, 230);
 }
-*[slider-js]{
+*[sljs]{
 	background: gray;
 }
-div[slider-js] .slider-content{
+div[sljs] .slider-content{
 	backdrop-filter: blur(10px);
 }
-*[slider-js] .slider-content{
+*[sljs] .slider-content{
 	background: rgba(0, 0, 0, .25);
 	color: rgba(255, 255, 255, 0.571);
 	padding: 1rem 1.5rem 1.5rem;
 }
-*[slider-js]:not(h1) .slider-content:first-line{
+*[sljs]:not(h1) .slider-content:first-line{
 	line-height: 1.75;
 	color: rgba(255, 255, 255, 1);
 	font-size: 1.5em;
@@ -25,22 +25,22 @@ br{
 	height: 20px;
 }
 
-body#test-remote *[slider-js]{
+body#test-remote *[sljs]{
 	height: 300px;
 	border-radius: 5px;
 	width: 80vw;
 	margin: 24px auto;
 }
 
-h1[slider-js]{
+h1[sljs]{
 	background: transparent;
 	height: 80px!important;
 }
-.pride [slider-js] img,
-h1[slider-js] img{
+.pride [sljs] img,
+h1[sljs] img{
 	display: none;
 }
-h1[slider-js] .slider-content{
+h1[sljs] .slider-content{
 	color: black;
 	padding: 0;
 	background: transparent;
@@ -68,7 +68,7 @@ h1[slider-js] .slider-content{
 	letter-spacing: 3px;
 }
 
-.pride > *[slider-js]{
+.pride > *[sljs]{
 	border-radius: 0!important;
 	position: absolute!important;
 	width: 100%!important;
@@ -77,14 +77,14 @@ h1[slider-js] .slider-content{
 	padding: 0;
 }
 
-div[slider-js="pride"],
-div[slider-js="pride"] *{
+div[sljs="pride"],
+div[sljs="pride"] *{
 	background: transparent;
 }
-div[slider-js="pride"]{
+div[sljs="pride"]{
 	top: 6px;
 }
-div[slider-js="pride"] *{
+div[sljs="pride"] *{
 	backdrop-filter: none!important;
 }
 
