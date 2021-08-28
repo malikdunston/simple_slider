@@ -7,9 +7,6 @@
 	window.addEventListener("load", function(event){
 		sliderJS.module = Module(event);
 		sliderJS.module.render();
-		// window.addEventListener("resize", function () {
-		// })
-		// console.log(sliderJS);
 	});
 	const Module = event => {
 		this.scope = event.currentTarget, this.html = event.target;
@@ -96,7 +93,7 @@
 		this.animation = function(startStop,){
 			if (startStop == "start"){
 				this.rotation = setInterval(this.increment, this.interval)
-				console.log(this.index, this.scope.length);
+				console.log(this.index, this.data.length - 2);
 			}else if (startStop == "stop"){
 				clearInterval(this.rotation)
 			}
@@ -113,12 +110,13 @@
 		this.scope = Module.scope[this.id];
 		this.data =  makeDataList(this.scope); // replace this w/this.slider.feed...
 		this.axis = setDefault(elem, "axis", "X");
-		this.index = parseInt(setDefault(elem, "offset", "1"));
 		this.interval = setDefault(elem, "interval", "4000");
 		this.direction = setDefault(elem, "direction", "forward");
 		this.transition = setDefault(elem, "transition", "100ms");
-		this.controls = parseInt(setDefault(elem, "controls", "1"));
 		this.delay = setDefault(elem, "delay", "1");
+		this.index = parseInt(setDefault(elem, "offset", "0")) + 1;
+
+		this.controls = parseInt(setDefault(elem, "controls", "1"));
 		this.feed = Object.assign(document.createElement("div"), {
 			classList: ["slider-feed"],
 			style: `
@@ -139,6 +137,9 @@
 		});
 		this.render = () => {
 			if (this.controls == 1) {
+				this.html.append( Index(this) );
+			}
+			if (this.controls == 1) {
 				this.html.append( Controls(this) );
 			}
 			this.html.append( this.feed );
@@ -146,7 +147,7 @@
 		}
 		return this
 	}
-	const Controls = (slider) => {
+	const Controls = slider => {
 		this.viewBox = "0 0 100 100";
 		this.btnStyles = `
 			width: 2rem;
@@ -154,13 +155,11 @@
 		`;
 		this.backward = Object.assign(document.createElement("svg"), {
 			style: this.btnStyles,
-			title: "backward",
 			classList: ["backward"],
 			innerHTML: `<polyline points="100 0 50 50 100 100" />`,
 		});
 		this.forward = Object.assign(document.createElement("svg"), {
 			style: this.btnStyles,
-			title: "forward",
 			classList: ["forward"],
 			innerHTML: `<polyline points="0 100 50 50 0 0" style="pointer-events: none"/>`,
 		});
@@ -185,6 +184,42 @@
 			onclick: e => {
 				let x;
 				if(e.target.nodeName == "svg") {slider.increment(e.target.classList[0]);}
+			}
+		});
+		return this.html;
+	}
+	const Index = slider => {
+		this.length = slider.data.length - 2;
+		const btn = (x) => {
+			return Object.assign(document.createElement("div"), {
+				classList: [""],
+				style: `
+					height: 20px;
+					width: 40px;
+					margin-right: 10px;
+					background: purple;
+				`,
+			});
+		}	
+		this.btns = [];
+		for(let x = 0; x < this.length; x++){
+			this.btns.push(btn(x))
+		}
+		this.html = Object.assign(document.createElement("div"), {
+			classList: ["slider-index"],
+			style: `
+				position: absolute;
+				z-index: 550;
+				bottom: 1rem;
+				left: 1rem;
+				background: red;
+				display: flex;
+				padding: 10px;
+				padding-right: 0;
+			`,
+			innerHTML: this.btns.map(b => b.outerHTML).join(""),
+			onclick: e => {
+				
 			}
 		});
 		return this.html;
