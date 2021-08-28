@@ -1,11 +1,9 @@
 "use strict";
-// namespacing...
 	window.sliderJS = window.sliderJS || {};
 	sliderJS = {
 		...sliderJS,
 		module: {} // only 1 for now...
 	}
-// initialization...
 	window.addEventListener("load", function(event){
 		sliderJS.module = Module(event);
 		sliderJS.module.render();
@@ -13,7 +11,6 @@
 		// })
 		// console.log(sliderJS);
 	});
-// factories...
 	const Module = event => {
 		this.scope = event.currentTarget, this.html = event.target;
 		this.interval = 1000, this.counter = 0;
@@ -78,26 +75,27 @@
 			};
 			if (this.index == 0) {
 				this.feed.style.transition = "none";
-				this.index = slider.data.length - 2;
+				this.index = this.data.length - 2;
 				this.feed.style.transform = `translate${this.axis}(${-(this.axis == "Y" ? this.html.clientHeight : this.html.clientWidth) * this.index}px)`;
 			};
 		}
-		this.animation = function(startStop){
-			const increment = () => {
-				switch (this.direction) {
-					case "forward":
-						if (this.index >= this.data.length - 1) return;
-						this.index++;
-						break;
-					case "backward":
-						if (this.index <= 0) return;
-						this.index--;
-						break;
-				}
-				this.set();
+		this.increment = (forBack) => {
+			forBack ? forBack = forBack : forBack = this.direction;
+			switch (forBack) {
+				case "forward":
+					if (this.index >= this.data.length - 1) return;
+					this.index++;
+					break;
+				case "backward":
+					if (this.index <= 0) return;
+					this.index--;
+					break;
 			}
+			this.set();
+		}
+		this.animation = function(startStop,){
 			if (startStop == "start"){
-				this.rotation = setInterval(increment.bind(this), this.interval)
+				this.rotation = setInterval(this.increment, this.interval)
 				console.log(this.index, this.scope.length);
 			}else if (startStop == "stop"){
 				clearInterval(this.rotation)
@@ -119,7 +117,7 @@
 		this.interval = setDefault(elem, "interval", "4000");
 		this.direction = setDefault(elem, "direction", "forward");
 		this.transition = setDefault(elem, "transition", "100ms");
-		this.controls = setDefault(elem, "controls", "1");
+		this.controls = parseInt(setDefault(elem, "controls", "1"));
 		this.delay = setDefault(elem, "delay", "1");
 		this.feed = Object.assign(document.createElement("div"), {
 			classList: ["slider-feed"],
@@ -140,38 +138,34 @@
 			`
 		});
 		this.render = () => {
-			let controls = Controls();
-			console.log(controls);
-			this.html.append(
-				controls,
-				this.feed,
-			);
+			if (this.controls == 1) {
+				this.html.append( Controls(this) );
+			}
+			this.html.append( this.feed );
 			this.animation("start");
 		}
-		return this;
+		return this
 	}
-
-	const Controls = () => {
-		const viewBox = "0 0 100 100";
-		const btnStyles = `
+	const Controls = (slider) => {
+		this.viewBox = "0 0 100 100";
+		this.btnStyles = `
 			width: 2rem;
 			height: 2rem;
 		`;
 		this.backward = Object.assign(document.createElement("svg"), {
-			style: btnStyles,
+			style: this.btnStyles,
 			title: "backward",
+			classList: ["backward"],
 			innerHTML: `<polyline points="100 0 50 50 100 100" />`,
-			onclick: () => {
-				alert("bac");
-			}
 		});
 		this.forward = Object.assign(document.createElement("svg"), {
-			style: btnStyles,
+			style: this.btnStyles,
 			title: "forward",
+			classList: ["forward"],
 			innerHTML: `<polyline points="0 100 50 50 0 0" style="pointer-events: none"/>`,
 		});
-		this.backward.setAttribute("viewbox", viewBox)
-		this.forward.setAttribute("viewbox", viewBox)
+		this.backward.setAttribute("viewbox", this.viewBox)
+		this.forward.setAttribute("viewbox", this.viewBox)
 		this.html = Object.assign(document.createElement("div"), {
 			classList: ["slider-controls"],
 			style: `
@@ -190,14 +184,8 @@
 			innerHTML: [this.backward.outerHTML, this.forward.outerHTML].join(""),
 			onclick: e => {
 				let x;
-				if(e.target.nodeName == "svg") {
-					e.target.title == "backward" ? x = "bac" : x = "for"
-					console.dir(e.target)
-				}
+				if(e.target.nodeName == "svg") {slider.increment(e.target.classList[0]);}
 			}
 		});
-		// this.html.addEventListener("click", function(e){
-		// 	console.dir(e.target);
-		// })
 		return this.html;
 	}
