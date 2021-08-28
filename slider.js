@@ -64,7 +64,7 @@
 		this.setTransformation = () => {
 			return `translate${this.axis}(${-(this.axis == "Y" ? this.html.clientHeight : this.html.clientWidth) * this.index}px)`
 		}
-		this.loopFeed = function(){
+		this.loop = function(){
 			if (this.index == this.data.length - 1) {
 				this.feed.style.transition = "none";
 				this.index = 1;
@@ -78,6 +78,9 @@
 		}
 		this.increment = (forBack) => {
 			forBack ? forBack = forBack : forBack = this.direction;
+			if(typeof forBack == "number"){
+				this.index = forBack
+			}
 			switch (forBack) {
 				case "forward":
 					if (this.index >= this.data.length - 1) return;
@@ -93,7 +96,6 @@
 		this.animation = function(startStop,){
 			if (startStop == "start"){
 				this.rotation = setInterval(this.increment, this.interval)
-				console.log(this.index, this.data.length - 2);
 			}else if (startStop == "stop"){
 				clearInterval(this.rotation)
 			}
@@ -103,9 +105,22 @@
 			this.html.setAttribute("slider-index", this.index);
 			this.html.querySelector(".slider-feed").style.transition = `${this.transition}`;
 			this.html.querySelector(".slider-feed").style.transform = `translate${this.axis}(${-(this.axis == "Y" ? this.html.clientHeight : this.html.clientWidth) * this.index}px)`;
+		// index factors in 0 and pre/appended slides...
+			if(this.index > this.data.length - 2){
+				this.index = 1
+			}
+			console.log(this.index, this.data.length - 2);
+			this.html.querySelector(`.slider-index div`).style.background = `purple`;
+			this.html.querySelector(`.slider-index div:nth-of-type(${this.index})`).style.background = `red`;
 			this.animation("start");
 		}
-		this.html = elem;
+		this.html = Object.assign(elem, {
+			style: `
+				height: 325px; 
+				position: relative;
+				overflow: hidden;
+			`
+		});
 		this.id = elem.attributes["sljs"].value;
 		this.scope = Module.scope[this.id];
 		this.data =  makeDataList(this.scope); // replace this w/this.slider.feed...
@@ -115,7 +130,6 @@
 		this.transition = setDefault(elem, "transition", "100ms");
 		this.delay = setDefault(elem, "delay", "1");
 		this.index = parseInt(setDefault(elem, "offset", "0")) + 1;
-
 		this.controls = parseInt(setDefault(elem, "controls", "1"));
 		this.feed = Object.assign(document.createElement("div"), {
 			classList: ["slider-feed"],
@@ -126,24 +140,17 @@
 				transform: ${this.setTransformation()};
 			`,
 			innerHTML: this.data.map(d => makeSlides(d).outerHTML).join(""),
-			ontransitionend: (e)=>{this.loopFeed(e)}
-		});
-		this.html = Object.assign(elem, {
-			style: `
-				height: 325px; 
-				position: relative;
-				overflow: hidden;
-			`
+			ontransitionend: (e)=>{this.loop(e)}
 		});
 		this.render = () => {
 			if (this.controls == 1) {
-				this.html.append( Index(this) );
+				this.html.append( Counter(this) );
 			}
 			if (this.controls == 1) {
 				this.html.append( Controls(this) );
 			}
 			this.html.append( this.feed );
-			this.animation("start");
+			this.set();
 		}
 		return this
 	}
@@ -188,22 +195,27 @@
 		});
 		return this.html;
 	}
-	const Index = slider => {
-		this.length = slider.data.length - 2;
-		const btn = (x) => {
-			return Object.assign(document.createElement("div"), {
-				classList: [""],
+	const Counter = slider => {
+		this.btns = [];
+		for(let x = 1; x < slider.data.length - 1; x++){
+			let btn = Object.assign(document.createElement("div"), {
+				classList: [`counter-btn-${x}`],
 				style: `
 					height: 20px;
 					width: 40px;
 					margin-right: 10px;
 					background: purple;
 				`,
+				innerHTML: x,
+				onclick: e => {
+					slider.increment(x)
+				}
 			});
-		}	
-		this.btns = [];
-		for(let x = 0; x < this.length; x++){
-			this.btns.push(btn(x))
+
+			btn.addEventListener("click", () => {
+				console.log("alkdsjfa ");
+			})
+
 		}
 		this.html = Object.assign(document.createElement("div"), {
 			classList: ["slider-index"],
@@ -219,7 +231,10 @@
 			`,
 			innerHTML: this.btns.map(b => b.outerHTML).join(""),
 			onclick: e => {
-				
+				if(e.target.classList[0] == "counter-btn"){
+					console.log("asdfas");
+				}
+				// slider.increment(slider.)
 			}
 		});
 		return this.html;
