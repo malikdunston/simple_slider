@@ -106,12 +106,12 @@
 			this.html.querySelector(".slider-feed").style.transition = `${this.transition}`;
 			this.html.querySelector(".slider-feed").style.transform = `translate${this.axis}(${-(this.axis == "Y" ? this.html.clientHeight : this.html.clientWidth) * this.index}px)`;
 		// index factors in 0 and pre/appended slides...
-			if(this.index > this.data.length - 2){
-				this.index = 1
-			}
-			console.log(this.index, this.data.length - 2);
-			this.html.querySelector(`.slider-index div`).style.background = `purple`;
-			this.html.querySelector(`.slider-index div:nth-of-type(${this.index})`).style.background = `red`;
+			// if(this.index > this.data.length - 2){
+			// 	this.index = 1
+			// }
+			// console.log(this.index, this.data.length - 2);
+			// this.html.querySelector(`.slider-index div`).style.background = `purple`;
+			// this.html.querySelector(`.slider-index div:nth-of-type(${this.index})`).style.background = `red`;
 			this.animation("start");
 		}
 		this.html = Object.assign(elem, {
@@ -143,9 +143,9 @@
 			ontransitionend: (e)=>{this.loop(e)}
 		});
 		this.render = () => {
-			if (this.controls == 1) {
-				this.html.append( Counter(this) );
-			}
+			// if (this.controls == 1) {
+			// 	this.html.append( Counter(this) );
+			// }
 			if (this.controls == 1) {
 				this.html.append( Controls(this) );
 			}
