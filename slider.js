@@ -103,7 +103,6 @@
 			}
 		}
 		this.resetSlider = function() {
-			console.log(this);
 			this.animation("stop");
 			this.html.setAttribute("slider-index", this.index);
 			this.html.querySelector(".slider-feed").style.transition = `${this.transition}`;
