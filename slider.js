@@ -11,7 +11,7 @@
 	const Module = event => {
 		this.scope = event.currentTarget, this.html = event.target;
 		this.interval = 1000, this.counter = 0;
-		this.render = () =>{
+		this.render = () => {
 			const childNodes = "sljs";
 			const count = () => this.counter++;
 			const sliders = Array.from(this.html.querySelectorAll(`*[${childNodes}]`)).map(elem => {
@@ -19,6 +19,8 @@
 				slider.render();
 				return slider;
 			});
+		// works, but unused yet.
+		// intended to be "global" counter, from which Slider counters are updated...
 			this.rotation ? clearInterval(this.rotation) : this.rotation = setInterval(count.bind(this), this.interval);
 		};
 		return this
@@ -116,10 +118,10 @@
 		}
 		this.html = Object.assign(elem, {
 			style: `
-				height: 325px; 
+				height: 325px;
 				position: relative;
 				overflow: hidden;
-			`
+			` // height: ...
 		});
 		this.id = elem.attributes["sljs"].value;
 		this.scope = Module.scope[this.id];
@@ -130,7 +132,7 @@
 		this.transition = setDefault(elem, "transition", "100ms");
 		this.delay = setDefault(elem, "delay", "1");
 		this.index = parseInt(setDefault(elem, "offset", "0")) + 1;
-		this.controls = parseInt(setDefault(elem, "controls", "1"));
+		this.controls = setDefault(elem, "controls", "0");
 		this.feed = Object.assign(document.createElement("div"), {
 			classList: ["slider-feed"],
 			style: `
@@ -143,10 +145,9 @@
 			ontransitionend: (e)=>{this.loop(e)}
 		});
 		this.render = () => {
-			// if (this.controls == 1) {
-			// 	this.html.append( Counter(this) );
-			// }
-			if (this.controls == 1) {
+			if ( this.controls == 1 ||
+				this.controls == "true" ||
+				this.controls == true ) {
 				this.html.append( Controls(this) );
 			}
 			this.html.append( this.feed );

@@ -9,7 +9,13 @@
 	<link rel="stylesheet" href="optional-styles.css">
 </head>
 <body>
-	<section sljs="dogs" interval="2500"></section>
+	<h1>controls = 'true'</h1>
+	<section sljs="dogs" interval="2500" controls="true"></section>
+	<h1>controls = 'false'</h1>
+	<section sljs="pets" axis="Y" delay="0" offset="1" transition="1000ms" direction="backward"></section>
+	<section sljs="pets" axis="Y" delay="100" offset="2" transition="1000ms" direction="backward"></section>
+	<section sljs="pets" axis="Y" delay="200" offset="3" transition="1000ms" direction="backward"></section>
+	<section sljs="pets" axis="Y" delay="300" offset="4" transition="1000ms" direction="backward"></section>
 	<script>pets = [...window.dogs, ...this.cats];</script>
 </body>
 </html>
