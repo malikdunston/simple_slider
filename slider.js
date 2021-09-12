@@ -93,7 +93,7 @@
 					this.index--;
 					break;
 			}
-			this.set();
+			this.resetSlider();
 		}
 		this.animation = function(startStop,){
 			if (startStop == "start"){
@@ -102,12 +102,12 @@
 				clearInterval(this.rotation)
 			}
 		}
-		this.set = function() {
+		this.resetSlider = function() {
+			console.log(this);
 			this.animation("stop");
 			this.html.setAttribute("slider-index", this.index);
 			this.html.querySelector(".slider-feed").style.transition = `${this.transition}`;
 			this.html.querySelector(".slider-feed").style.transform = `translate${this.axis}(${-(this.axis == "Y" ? this.html.clientHeight : this.html.clientWidth) * this.index}px)`;
-		// index factors in 0 and pre/appended slides...
 			// if(this.index > this.data.length - 2){
 			// 	this.index = 1
 			// }
@@ -151,7 +151,13 @@
 				this.html.append( Controls(this) );
 			}
 			this.html.append( this.feed );
-			this.set();
+			let slider = this;
+			setTimeout(function(){
+				slider.resetSlider();
+			}, this.delay)
+			window.addEventListener("resize", function () {
+				slider.resetSlider();
+			})
 		}
 		return this
 	}
