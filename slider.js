@@ -164,6 +164,7 @@
 				slider.resetSlider();
 			})
 		}
+		console.log(this);
 		return this
 	}
 	const Controls = slider => {
