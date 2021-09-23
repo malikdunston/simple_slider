@@ -4,6 +4,7 @@
 		...sliderJS,
 		module: {} // only 1 for now...
 	}
+	console.log("SLIDER J S");
 	window.addEventListener("load", function(event){
 		sliderJS.module = Module(event);
 		sliderJS.module.render();
@@ -17,6 +18,7 @@
 			const count = () => this.counter++;
 			const sliders = Array.from(this.html.querySelectorAll(`*[${childNodes}]`)).map(elem => {
 				let slider = new Slider(elem, this.scope);
+				// console.log(slider);
 				slider.render();
 				return slider;
 			});
@@ -24,12 +26,14 @@
 		// intended to be "global" counter, from which Slider counters are updated...
 			this.rotation ? clearInterval(this.rotation) : this.rotation = setInterval(count.bind(this), this.interval);
 		};
-		return {
+		let x = {
 			scope: this.scope,
 			interval: this.interval,
 			render: this.render,
 			sliders: this.scope.sliders
 		}
+		console.dir("module: ", x, this)
+		return x
 	}
 	function Slider(elem, Module) {
 		const setDefault = (elem, name, def) => {
@@ -164,7 +168,7 @@
 				slider.resetSlider();
 			})
 		}
-		console.log(this);
+		console.log("slider", this);
 		return this
 	}
 	const Controls = slider => {
