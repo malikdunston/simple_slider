@@ -1,47 +1,5 @@
 "use strict";
 
-// from import.js...
-	// import {Module} from './import.js';
-	// console.log(Module());
-
-// ...
-	window.sliderJS = window.sliderJS || {};
-	sliderJS = {
-		...sliderJS,
-		module: {} // only 1 for now...
-	}
-	console.log("SLIDER J S");
-	window.addEventListener("load", function(event){
-		sliderJS.module = Module(event);
-		sliderJS.module.render();
-		console.dir(sliderJS)
-	});
-	const Module = event => {
-		console.log(event);
-		this.scope = event.currentTarget, this.html = event.target;
-		this.interval = 1000, this.counter = 0;
-		this.render = () => {
-			const childNodes = "sljs";
-			const count = () => this.counter++;
-			const sliders = Array.from(this.html.querySelectorAll(`*[${childNodes}]`)).map(elem => {
-				let slider = new Slider(elem, this.scope);
-				// console.log(slider);
-				slider.render();
-				return slider;
-			});
-		// works, but unused yet.
-		// intended to be "global" counter, from which Slider counters are updated...
-			this.rotation ? clearInterval(this.rotation) : this.rotation = setInterval(count.bind(this), this.interval);
-		};
-		let x = {
-			scope: this.scope,
-			interval: this.interval,
-			render: this.render,
-			sliders: this.scope.sliders
-		}
-		console.dir("module: ", x, this)
-		return x
-	}
 	function Slider(elem, Module) {
 		const setDefault = (elem, name, def) => {
 			return elem.attributes.hasOwnProperty(name) ? elem.attributes[name].value : def
