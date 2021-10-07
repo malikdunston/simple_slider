@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import Slider from './Components/Slider/Slider';
 
 export default function App() {

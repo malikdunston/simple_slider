@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import BtnSlider from './BtnSlider'
 
-export default function Slider(dataSlider) {
+export default function Slider({dataSlider}) {
 	const [slideIndex, setSlideIndex] = useState(1);
 	const nextSlide = () => {
 		if (slideIndex !== dataSlider.length) {
