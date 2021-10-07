@@ -22,7 +22,7 @@ export default function Slider({dataSlider}) {
 	const moveDot = index => {
 		setSlideIndex(index)
 	}
-	return <div className="container-slider">
+	return <div className="container-slider" sljs="testing">
 		{dataSlider.map((obj, index) => (<div key={obj.id} className={slideIndex === index + 1 ? "active-anim" : ""}>
 			<img src={process.env.PUBLIC_URL + `/Imgs/img${index + 1}.jpg`} alt={obj.subTitle}/>
 		</div>))}
