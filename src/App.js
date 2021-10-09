@@ -68,6 +68,6 @@ export default function App() {
 		}
 	];
 	return <div className="App">
-		<Slider dataSlider={ZiratsuData}/>
+		<Slider dataSlider={ZiratsuData} axis="Z"/>
 	</div>
 }

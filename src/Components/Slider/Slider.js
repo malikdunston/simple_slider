@@ -1,13 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import BtnSlider from './BtnSlider'
+import Feed from './Feed'
 
-export default function Slider({dataSlider}) {
+export default function Slider(props) {
 	const [slideIndex, setSlideIndex] = useState(1);
+	const [config, setConfig] = useState({
+		axis: "X",
+		interval: "4000",
+		direction: "forward",
+		transition: "100ms",
+		delay: "1",
+		controls: "1",
+	});
 	const nextSlide = () => {
-		if (slideIndex !== dataSlider.length) {
+		if (slideIndex !== props.dataSlider.length) {
 			setSlideIndex(slideIndex + 1)
 		}
-		else if (slideIndex === dataSlider.length) {
+		else if (slideIndex === props.dataSlider.length) {
 			setSlideIndex(1)
 		}
 	}
@@ -16,20 +25,33 @@ export default function Slider({dataSlider}) {
 			setSlideIndex(slideIndex - 1)
 		}
 		else if (slideIndex === 1) {
-			setSlideIndex(dataSlider.length)
+			setSlideIndex(props.dataSlider.length)
 		}
 	}
 	const moveDot = index => {
 		setSlideIndex(index)
 	}
-	return <div className="container-slider" sljs="testing">
-		{dataSlider.map((obj, index) => (<div key={obj.id} className={slideIndex === index + 1 ? "active-anim" : ""}>
-			<img src={process.env.PUBLIC_URL + `/Imgs/img${index + 1}.jpg`} alt={obj.subTitle}/>
-		</div>))}
+	const updateSettings = props => {
+		let settings = {
+			css: {
+				height: "325px",
+				position: "relative",
+				overflow: "hidden",
+			}, 
+			...Object.assign(config, props)
+		}
+		setConfig(settings);
+	}
+	useEffect(() => {
+		console.log("useEffect called...");
+		updateSettings(props);
+	}, [])
+	return <div sljs="testing" style={config.css}>
+		<Feed slides={props.dataSlider} slideIndex={slideIndex}/>
 		<BtnSlider moveSlide={nextSlide} direction={"next"} />
 		<BtnSlider moveSlide={prevSlide} direction={"prev"} />
 		<div className="container-dots">
-			{dataSlider.map((obj, index) => (
+			{props.dataSlider.map((obj, index) => (
 				<div onClick={() => moveDot(index + 1)}className={slideIndex === index + 1 ? "active" : ""}></div>
 			))}
 		</div>
