@@ -13,6 +13,7 @@ export default function Slider(props) {
 		controls: "1",
 	});
 	const nextSlide = () => {
+		console.log("next");
 		if (slideIndex !== props.dataSlider.length) {
 			setSlideIndex(slideIndex + 1)
 		}
@@ -21,6 +22,7 @@ export default function Slider(props) {
 		}
 	}
 	const prevSlide = () => {
+		console.log("prev");
 		if (slideIndex !== 1) {
 			setSlideIndex(slideIndex - 1)
 		}

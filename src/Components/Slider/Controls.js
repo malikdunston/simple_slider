@@ -16,7 +16,7 @@ export default function Controls({moveSlider}) {
 		justifyContent: "space-between"
 	}
 	return <div className="slider-controls" style={css}>
-		<BtnSlider moveSlide={moveSlider.next} direction={"next"} />
 		<BtnSlider moveSlide={moveSlider.prev} direction={"prev"} />
+		<BtnSlider moveSlide={moveSlider.next} direction={"next"} />
 	</div>
 }
