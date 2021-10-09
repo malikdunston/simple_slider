@@ -1,8 +1,7 @@
 import React from 'react'
-import BtnSlider from './BtnSlider'
-import Index from './Index'
-
-export default function Controls({moveSlider, data}) {
+	import BtnSlider from './BtnSlider'
+	import Index from './Index'
+export default function Controls({moveSlide, slides}) {
 	const css = {
 		fill: "none",
 		stroke: "white",
@@ -17,8 +16,8 @@ export default function Controls({moveSlider, data}) {
 		justifyContent: "space-between"
 	}
 	return <div className="slider-controls" style={css}>
-		<BtnSlider moveSlide={moveSlider.prev} direction={"prev"} />
-		<BtnSlider moveSlide={moveSlider.next} direction={"next"} />
-		<Index moveSlide={moveSlider.index} data={data}/>
+		<BtnSlider moveSlide={moveSlide.prev} direction={"prev"} />
+		<BtnSlider moveSlide={moveSlide.next} direction={"next"} />
+		<Index moveSlide={moveSlide.select} slides={slides}/>
 	</div>
 }

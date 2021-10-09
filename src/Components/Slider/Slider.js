@@ -11,29 +11,7 @@ export default function Slider(props) {
 		delay: "1",
 		controls: "1",
 	});
-	const nextSlide = () => {
-		console.log("next");
-		if (slideIndex !== props.dataSlider.length) {
-			setSlideIndex(slideIndex + 1)
-		}
-		else if (slideIndex === props.dataSlider.length) {
-			setSlideIndex(1)
-		}
-	}
-	const prevSlide = () => {
-		console.log("prev");
-		if (slideIndex !== 1) {
-			setSlideIndex(slideIndex - 1)
-		}
-		else if (slideIndex === 1) {
-			setSlideIndex(props.dataSlider.length)
-		}
-	}
-	const moveDot = index => {
-		console.log("indexSlide");
-		setSlideIndex(index)
-	}
-	const updateSettings = props => {
+	const resetConfig = props => {
 		let settings = {
 			css: {
 				height: "325px",
@@ -44,12 +22,32 @@ export default function Slider(props) {
 		}
 		setConfig(settings);
 	}
+	const moveSlide = {
+		next: () => {
+			if (slideIndex !== props.dataSlider.length) {
+				setSlideIndex(slideIndex + 1)
+			}
+			else if (slideIndex === props.dataSlider.length) {
+				setSlideIndex(1)
+			}
+		},
+		prev: () => {
+			if (slideIndex !== 1) {
+				setSlideIndex(slideIndex - 1)
+			}
+			else if (slideIndex === 1) {
+				setSlideIndex(props.dataSlider.length)
+			}
+		},
+		select: newIndex => {
+			setSlideIndex(newIndex)
+		}
+	}
 	useEffect(() => {
-		console.log("useEffect called...");
-		updateSettings(props);
+		resetConfig(props);
 	}, [])
 	return <div sljs="testing" style={config.css}>
-		<Controls moveSlider={{next: nextSlide, prev: prevSlide, index: moveDot}} data={config.dataSlider}/>
+		<Controls moveSlide={moveSlide} slides={config.dataSlider}/>
 		{/* <Feed slides={props.dataSlider} slideIndex={slideIndex}/> */}
 	</div>
 }
