@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 	import Controls from './Controls'
 	import Feed from './Feed'
 export default function Slider(props) {
-	const defHeight = 500;
+	const defHeight = 300;
 	const slider = useRef(null);
 	const [slideIndex, setSlideIndex] = useState(1);
 	const [config, setConfig] = useState({
