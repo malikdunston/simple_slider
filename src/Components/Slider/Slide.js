@@ -1,9 +1,9 @@
 import React from 'react'
 export default function Slide({slide, config}) {
-	const css = {position: "relative"};
-	const axisMinValue = config.axis === "Y" ? "min-height" : "min-width";
-	css[axisMinValue] = "50%";
-	return <div className="slide" style={css}>
+	return <div className="slide" style={{
+		position: "relative",
+		[config.axis === "Y" ? "minHeight" : "minWidth"]: "50%"
+	}}>
 		<img src={process.env.PUBLIC_URL + ( slide.img.split(".")[1] + "." + slide.img.split(".")[2])} 
 			style={{
 				objectFit:"cover",

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React from 'react'
 	import Slide from './Slide'
 export default function Feed({slides, slideIndex, config}) {
 	const setTransformation = () => {
@@ -16,9 +16,7 @@ export default function Feed({slides, slideIndex, config}) {
 	}
 	css.transform = setTransformation();
 	console.log(config);
-	useEffect(() => {
-	}, [])
 	return <div className="slider-feed" style={css}>
-		{slides.map((slide, index) => <Slide slide={slide} config={config}/>)}
+		{slides.map((slide, index) => <Slide key={index} slide={slide} config={config}/>)}
 	</div>
 }

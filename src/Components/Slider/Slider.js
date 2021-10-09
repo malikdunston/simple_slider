@@ -2,22 +2,16 @@ import React, { useState, useEffect, useRef } from 'react'
 	import Controls from './Controls'
 	import Feed from './Feed'
 export default function Slider(props) {
-	const defHeight = 300;
 	const slider = useRef(null);
 	const [slideIndex, setSlideIndex] = useState(1);
 	const [config, setConfig] = useState({
 		axis: "X",
-		height: defHeight + "px",
-		interval: "4000",
+		height: 300,
+		interval: 4000,
 		direction: "forward",
-		transition: "100ms",
-		delay: "1",
-		controls: "1",
-		css: {
-			height: defHeight + "px",
-			position: "relative",
-			overflow: "hidden",
-		}
+		transition: 100,
+		delay: 1,
+		controls: true,
 	});
 	const moveSlide = {
 		next: () => {
@@ -42,17 +36,23 @@ export default function Slider(props) {
 	}
 	useEffect(() => {
 		setConfig(Object.assign(config, {
-			width: slider.current.offsetWidth + "px",
+			width: slider.current.offsetWidth,
+			height: slider.current.offsetHeight,
 			...props
 		}));
 		window.addEventListener("resize", ()=>{
 			setConfig(Object.assign(config, {
-				width: slider.current.offsetWidth + "px",
+				width: slider.current.offsetWidth,
+				height: slider.current.offsetHeight,
 				...props
 			}));
 		})
 	}, [])
-	return <div sljs="testing" style={config.css} ref={slider}>
+	return <div sljs="testing" style={{
+		height: config.height + "px",
+		position: "relative",
+		overflow: "hidden",
+	}} ref={slider}>
 		<Controls moveSlide={moveSlide} slides={props.data}/>
 		<Feed slides={props.data} slideIndex={slideIndex} config={config}/>
 	</div>
