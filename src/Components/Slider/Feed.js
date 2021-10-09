@@ -9,8 +9,8 @@ export default function Feed({slides, slideIndex}) {
 		// transform: `${this.setTransformation()};`
 	}
 	return <div className="slider-feed" style={css}>
-		{slides.map((obj, index) => (<div key={obj.id} className={slideIndex === index + 1 ? "active-anim" : ""}>
+		{slides.map((obj, index) => <div key={obj.id} className={slideIndex === index + 1 ? "active-anim" : ""}>
 			<img src={process.env.PUBLIC_URL + `/Imgs/img${index + 1}.jpg`} alt={obj.subTitle}/>
-		</div>))}
+		</div>)}
 	</div>
 }

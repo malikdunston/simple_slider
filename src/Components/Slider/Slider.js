@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import BtnSlider from './BtnSlider'
+import Controls from './Controls'
 import Feed from './Feed'
 
 export default function Slider(props) {
@@ -37,7 +37,7 @@ export default function Slider(props) {
 				height: "325px",
 				position: "relative",
 				overflow: "hidden",
-			}, 
+			},
 			...Object.assign(config, props)
 		}
 		setConfig(settings);
@@ -47,9 +47,8 @@ export default function Slider(props) {
 		updateSettings(props);
 	}, [])
 	return <div sljs="testing" style={config.css}>
-		<Feed slides={props.dataSlider} slideIndex={slideIndex}/>
-		<BtnSlider moveSlide={nextSlide} direction={"next"} />
-		<BtnSlider moveSlide={prevSlide} direction={"prev"} />
+		<Controls moveSlider={{next: nextSlide, prev: prevSlide}}/>
+		{/* <Feed slides={props.dataSlider} slideIndex={slideIndex}/> */}
 		<div className="container-dots">
 			{props.dataSlider.map((obj, index) => (
 				<div onClick={() => moveDot(index + 1)}className={slideIndex === index + 1 ? "active" : ""}></div>
