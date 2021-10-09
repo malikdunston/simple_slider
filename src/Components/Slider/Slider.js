@@ -13,12 +13,19 @@ export default function Slider(props) {
 		delay: 1,
 		controls: true,
 	});
-	const moveSlide = {
+	const [data, setData] = useState(props.data.map((slide, index) => {
+		return {
+			...slide,
+			thisSlideIndex: index + 1
+		}
+	}));
+	
+	const moveSlide = { // 3 slides, on 1
 		next: () => {
-			if (slideIndex !== props.data.length) {
-				setSlideIndex(slideIndex + 1)
+			if (slideIndex !== props.data.length) { // if 1 !== 3
+				setSlideIndex(slideIndex + 1) // move forward... now 2/3
 			}
-			else if (slideIndex === props.data.length) {
+			else if (slideIndex === props.data.length) { // if 1 === 3
 				setSlideIndex(1)
 			}
 		},
@@ -32,20 +39,32 @@ export default function Slider(props) {
 		},
 		select: newIndex => {
 			setSlideIndex(newIndex)
+		},
+		loop: () => {
+			let feedCSS = {
+				transition: "none",
+				transform: `translate${config.axis}(${-(config.axis === "Y" ? config.height : config.width) * slideIndex}px)`
+			}
+			// setSlideIndex([currentIndex, length])
+			console.log("animateSlide . loop");
+			return {
+
+				feedCSS: feedCSS
+			};
 		}
 	}
-	useEffect(() => {
-		setConfig(Object.assign(config, {
+	const initialConfig = () => {
+		let newConfig = Object.assign(config, {
 			width: slider.current.offsetWidth,
 			height: slider.current.offsetHeight,
-			...props
-		}));
+			...props,
+		})
+		return newConfig
+	}
+	useEffect(() => {
+		setConfig(initialConfig);
 		window.addEventListener("resize", ()=>{
-			setConfig(Object.assign(config, {
-				width: slider.current.offsetWidth,
-				height: slider.current.offsetHeight,
-				...props
-			}));
+			setConfig(initialConfig());
 		})
 	}, [])
 	return <div sljs="testing" style={{
@@ -53,7 +72,7 @@ export default function Slider(props) {
 		position: "relative",
 		overflow: "hidden",
 	}} ref={slider}>
-		<Controls moveSlide={moveSlide} slides={props.data}/>
-		<Feed slides={props.data} slideIndex={slideIndex} config={config}/>
+		<Controls moveSlide={moveSlide} slides={data}/>
+		<Feed slides={[data[data.length - 1], ...data, data[0]]} slideIndex={slideIndex} config={config} onTransitionEnd={(e)=>moveSlide.loop()}/>
 	</div>
 }
