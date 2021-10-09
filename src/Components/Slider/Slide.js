@@ -18,7 +18,7 @@ export default function Slide({slide, config}) {
 				width:"100%",
 				position:"absolute",
 			}}>
-			<h2>{slide.thisSildeIndex}{slide.content.title}</h2>
+			<h2>{slide.thisSlideIndex}: {slide.content.title}</h2>
 			<p>{slide.content.content}</p>
 		</div>
 	</div>

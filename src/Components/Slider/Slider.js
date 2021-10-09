@@ -18,8 +18,7 @@ export default function Slider(props) {
 			...slide,
 			thisSlideIndex: index + 1
 		}
-	}));
-	
+	}));	
 	const moveSlide = { // 3 slides, on 1
 		next: () => {
 			if (slideIndex !== props.data.length) { // if 1 !== 3
@@ -54,15 +53,18 @@ export default function Slider(props) {
 		}
 	}
 	const initialConfig = () => {
-		let newConfig = Object.assign(config, {
+		return Object.assign(config, {
 			width: slider.current.offsetWidth,
 			height: slider.current.offsetHeight,
-			...props,
+			...Object.keys(props).map(prop => {
+				if(config[prop]){
+					return {[prop]: props[prop]}
+				}
+			}),
 		})
-		return newConfig
 	}
 	useEffect(() => {
-		setConfig(initialConfig);
+		setConfig(initialConfig());
 		window.addEventListener("resize", ()=>{
 			setConfig(initialConfig());
 		})

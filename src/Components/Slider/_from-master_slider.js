@@ -33,35 +33,35 @@ function Slider(elem, Module) {
 				content: "Attach some data to your slider element to begin."
 			}
 		}];
-		return [arr[arr.length - 1], ...arr, arr[0]];
+		// return [arr[arr.length - 1], ...arr, arr[0]];
 	};
-	const makeSlides = (obj) => {
-		let slide = Object.assign(
-			document.createElement("div"),
-			{
-				style: `${this.axis == "Y" ? "min-height": "min-width"}: 100%; position: relative;`
-			}
-		)
-		slide.appendChild(Object.assign(
-			document.createElement("img"),
-			{
-				src: obj.img,
-				style: "object-fit: cover; width: 100%; height: 100%; position: absolute"
-			}
-		));
-		slide.appendChild(Object.assign(
-			document.createElement("div"),
-			{
-				classList: ["slider-content"],
-				style: "width: 100%; position: absolute; bottom: 0",
-				innerHTML: [obj.content.title, obj.content.content].join("</br>")
-			}
-		));
-		return slide;
-	};
-	this.setTransformation = () => {
-		return `translate${this.axis}(${-(this.axis == "Y" ? this.html.clientHeight : this.html.clientWidth) * this.index}px)`
-	}
+	// const makeSlides = (obj) => {
+		// let slide = Object.assign(
+		// 	document.createElement("div"),
+		// 	{
+		// 		style: `${this.axis == "Y" ? "min-height": "min-width"}: 100%; position: relative;`
+		// 	}
+		// )
+		// slide.appendChild(Object.assign(
+		// 	document.createElement("img"),
+		// 	{
+		// 		src: obj.img,
+		// 		style: "object-fit: cover; width: 100%; height: 100%; position: absolute"
+		// 	}
+		// ));
+		// slide.appendChild(Object.assign(
+		// 	document.createElement("div"),
+		// 	{
+		// 		classList: ["slider-content"],
+		// 		style: "width: 100%; position: absolute; bottom: 0",
+		// 		innerHTML: [obj.content.title, obj.content.content].join("</br>")
+		// 	}
+		// ));
+		// return slide;
+	// };
+	// this.setTransformation = () => {
+	// 	return `translate${this.axis}(${-(this.axis == "Y" ? this.html.clientHeight : this.html.clientWidth) * this.index}px)`
+	// }
 	this.loop = function(){
 		if (this.index == this.data.length - 1) {
 			this.feed.style.transition = "none";
@@ -115,25 +115,25 @@ function Slider(elem, Module) {
 	// });
 	// this.id = elem.attributes["sljs"].value;
 	// this.scope = Module.scope[this.id];
-	this.axis = setDefault(elem, "axis", "X");
-	this.interval = setDefault(elem, "interval", "4000");
-	this.direction = setDefault(elem, "direction", "forward");
-	this.transition = setDefault(elem, "transition", "100ms");
-	this.delay = setDefault(elem, "delay", "1");
-	this.index = parseInt(setDefault(elem, "offset", "0")) + 1;
-	this.controls = setDefault(elem, "controls", "0");
+	// this.axis = setDefault(elem, "axis", "X");
+	// this.interval = setDefault(elem, "interval", "4000");
+	// this.direction = setDefault(elem, "direction", "forward");
+	// this.transition = setDefault(elem, "transition", "100ms");
+	// this.delay = setDefault(elem, "delay", "1");
+	// this.index = parseInt(setDefault(elem, "offset", "0")) + 1;
+	// this.controls = setDefault(elem, "controls", "0");
 	
-	this.feed = Object.assign(document.createElement("div"), {
-		classList: ["slider-feed"],
-		style: `
-			display: flex; 
-			height: 100%; 
-			flex-direction: ${this.axis == "Y" ? "column" : "row"};
-			transform: ${this.setTransformation()};
-		`,
-		innerHTML: this.data.map(d => makeSlides(d).outerHTML).join(""),
+	// this.feed = Object.assign(document.createElement("div"), {
+	// 	classList: ["slider-feed"],
+	// 	style: `
+	// 		display: flex; 
+	// 		height: 100%; 
+	// 		flex-direction: ${this.axis == "Y" ? "column" : "row"};
+	// 		transform: ${this.setTransformation()};
+	// 	`,
+	// 	innerHTML: this.data.map(d => makeSlides(d).outerHTML).join(""),
 		ontransitionend: (e)=>{this.loop(e)}
-	});
+	// });
 	this.data =  makeDataList(this.scope); 
 	this.render = () => {
 		if ( this.controls == 1 ||
@@ -141,8 +141,8 @@ function Slider(elem, Module) {
 			this.controls == true ) {
 			this.html.append( Controls(this) );
 		}
-		this.html.append( this.feed );
-		let slider = this;
+		// this.html.append( this.feed );
+		// let slider = this;
 		setTimeout(function(){
 			slider.resetSlider();
 		}, this.delay)
@@ -150,26 +150,26 @@ function Slider(elem, Module) {
 			slider.resetSlider();
 		})
 	}
-	return this
+	// return this
 }
 const Controls = slider => {
-	this.viewBox = "0 0 100 100";
-	this.btnStyles = `
-		width: 2rem;
-		height: 2rem;
-	`;
-	this.backward = Object.assign(document.createElement("svg"), {
-		style: this.btnStyles,
-		classList: ["backward"],
-		innerHTML: `<polyline points="100 0 50 50 100 100" />`,
-	});
-	this.forward = Object.assign(document.createElement("svg"), {
-		style: this.btnStyles,
-		classList: ["forward"],
-		innerHTML: `<polyline points="0 100 50 50 0 0" style="pointer-events: none"/>`,
-	});
-	this.backward.setAttribute("viewbox", this.viewBox)
-	this.forward.setAttribute("viewbox", this.viewBox)
+	// this.viewBox = "0 0 100 100";
+	// this.btnStyles = `
+	// 	width: 2rem;
+	// 	height: 2rem;
+	// `;
+	// this.backward = Object.assign(document.createElement("svg"), {
+	// 	style: this.btnStyles,
+	// 	classList: ["backward"],
+	// 	innerHTML: `<polyline points="100 0 50 50 100 100" />`,
+	// });
+	// this.forward = Object.assign(document.createElement("svg"), {
+	// 	style: this.btnStyles,
+	// 	classList: ["forward"],
+	// 	innerHTML: `<polyline points="0 100 50 50 0 0" style="pointer-events: none"/>`,
+	// });
+	// this.backward.setAttribute("viewbox", this.viewBox)
+	// this.forward.setAttribute("viewbox", this.viewBox)
 	this.html = Object.assign(document.createElement("div"), {
 		classList: ["slider-controls"],
 		style: `
@@ -191,7 +191,7 @@ const Controls = slider => {
 			if(e.target.nodeName == "svg") {slider.increment(e.target.classList[0]);}
 		}
 	});
-	return this.html;
+	// return this.html;
 }
 const Counter = slider => {
 	this.btns = [];

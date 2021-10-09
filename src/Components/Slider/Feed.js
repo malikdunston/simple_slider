@@ -8,6 +8,6 @@ export default function Feed({slides, slideIndex, config}) {
 		flexDirection: config.axis === "Y" ? "column" : "row",
 		transform: `translate${config.axis}(${-(config.axis === "Y" ? config.height : config.width) * slideIndex}px)`
 	}}>
-		{slides.map((slide) => <Slide key={slide.thisSlideIndex} slide={slide} config={config}/>)}
+		{slides.map((slide, key) => <Slide key={key + "-" + slide.thisSlideIndex} slide={{...slide, feedOrder: key}} config={config}/>)}
 	</div>
 }
