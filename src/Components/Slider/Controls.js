@@ -1,6 +1,6 @@
 import React from 'react'
 	import BtnSlider from './BtnSlider'
-	import Index from './Index'
+	import Select from './Select'
 export default function Controls({moveSlide, slides}) {
 	const css = {
 		fill: "none",
@@ -18,6 +18,6 @@ export default function Controls({moveSlide, slides}) {
 	return <div className="slider-controls" style={css}>
 		<BtnSlider moveSlide={moveSlide.prev} direction={"prev"} />
 		<BtnSlider moveSlide={moveSlide.next} direction={"next"} />
-		<Index moveSlide={moveSlide.select} slides={slides}/>
+		<Select moveSlide={moveSlide.select} slides={slides}/>
 	</div>
 }

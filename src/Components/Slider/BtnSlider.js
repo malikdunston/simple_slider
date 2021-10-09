@@ -6,7 +6,7 @@ export default function BtnSlider({ direction, moveSlide }) {
 		width: "2rem",
 		height: "2rem",
 	}
-	return <svg class={direction === "next" ? "next" : "prev"}
+	return <svg className={direction === "next" ? "next" : "prev"}
 		viewBox={viewBox} 
 		style={css}
 		onClick={moveSlide}>

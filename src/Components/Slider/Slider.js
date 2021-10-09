@@ -10,18 +10,12 @@ export default function Slider(props) {
 		transition: "100ms",
 		delay: "1",
 		controls: "1",
-	});
-	const resetConfig = props => {
-		let settings = {
-			css: {
-				height: "325px",
-				position: "relative",
-				overflow: "hidden",
-			},
-			...Object.assign(config, props)
+		css: {
+			height: "125px",
+			position: "relative",
+			overflow: "hidden",
 		}
-		setConfig(settings);
-	}
+	});
 	const moveSlide = {
 		next: () => {
 			if (slideIndex !== props.dataSlider.length) {
@@ -44,10 +38,10 @@ export default function Slider(props) {
 		}
 	}
 	useEffect(() => {
-		resetConfig(props);
+		setConfig(Object.assign(config, props))
 	}, [])
 	return <div sljs="testing" style={config.css}>
-		<Controls moveSlide={moveSlide} slides={config.dataSlider}/>
-		{/* <Feed slides={props.dataSlider} slideIndex={slideIndex}/> */}
+		<Controls moveSlide={moveSlide} slides={props.data}/>
+		<Feed slides={props.data} slideIndex={slideIndex}/>
 	</div>
 }
