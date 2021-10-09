@@ -50,6 +50,6 @@ export default function App() {
 		]
 	}
 	return <div className="App">
-		<Slider data={pets.cats}/>
+		<Slider data={pets.cats} controls={true} axis={"Y"} />
 	</div>
 }

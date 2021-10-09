@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 	import Feed from './Feed'
 export default function Slider(props) {
 	const slider = useRef(null);
+	const [interval, setSliderInterval] = useState(null);
 	const [slideIndex, setSlideIndex] = useState(1);
 	const [config, setConfig] = useState({
 		axis: "X",
@@ -10,8 +11,8 @@ export default function Slider(props) {
 		interval: 4000,
 		direction: "forward",
 		transition: 100,
-		delay: 1,
-		controls: true,
+		delay: 2000,
+		controls: false,
 	});
 	const [data, setData] = useState(props.data.map((slide, index) => {
 		return {
@@ -52,21 +53,43 @@ export default function Slider(props) {
 			};
 		}
 	}
-	const initialConfig = () => {
+	const animSlide = {
+		startStopInterval: (startStop) => {
+			console.log(startStop)
+			switch(startStop){
+				case "start":
+					setSliderInterval(setInterval(()=>{
+						moveSlide.next()
+					}, 2000));
+					break;
+				case "stop":
+					clearInterval(interval)
+					break;
+				default:
+					break;
+			}
+		},
+	}
+	const newConfigFromProps = () => {
 		return Object.assign(config, {
 			width: slider.current.offsetWidth,
 			height: slider.current.offsetHeight,
-			...Object.keys(props).map(prop => {
-				if(config[prop]){
-					return {[prop]: props[prop]}
+			...Object.fromEntries(Object.keys(props).map(prop => {
+				let tuple = [prop, props[prop]]
+				if((props[prop] !== config[prop]) && config[prop]){
+					console.log(tuple);
+					return tuple
 				}
-			}),
+			}).filter(e => e !== undefined))
 		})
 	}
 	useEffect(() => {
-		setConfig(initialConfig());
+		setConfig(newConfigFromProps());
+		setTimeout(()=>{
+			animSlide.startStopInterval("start");
+		}, config.delay)
 		window.addEventListener("resize", ()=>{
-			setConfig(initialConfig());
+			setConfig(newConfigFromProps());
 		})
 	}, [])
 	return <div sljs="testing" style={{
@@ -74,7 +97,7 @@ export default function Slider(props) {
 		position: "relative",
 		overflow: "hidden",
 	}} ref={slider}>
-		<Controls moveSlide={moveSlide} slides={data}/>
-		<Feed slides={[data[data.length - 1], ...data, data[0]]} slideIndex={slideIndex} config={config} onTransitionEnd={(e)=>moveSlide.loop()}/>
+		{config.controls ? <Controls moveSlide={moveSlide} slides={data}/> : ""}
+		<Feed slides={[data[data.length - 1], ...data, data[0]]} slideIndex={slideIndex} config={config} loop={moveSlide.loop}/>
 	</div>
 }
