@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import Controls from './Controls'
-import Feed from './Feed'
-
+	import Controls from './Controls'
+	import Feed from './Feed'
 export default function Slider(props) {
 	const [slideIndex, setSlideIndex] = useState(1);
 	const [config, setConfig] = useState({
@@ -31,6 +30,7 @@ export default function Slider(props) {
 		}
 	}
 	const moveDot = index => {
+		console.log("indexSlide");
 		setSlideIndex(index)
 	}
 	const updateSettings = props => {
@@ -49,12 +49,7 @@ export default function Slider(props) {
 		updateSettings(props);
 	}, [])
 	return <div sljs="testing" style={config.css}>
-		<Controls moveSlider={{next: nextSlide, prev: prevSlide}}/>
+		<Controls moveSlider={{next: nextSlide, prev: prevSlide, index: moveDot}} data={config.dataSlider}/>
 		{/* <Feed slides={props.dataSlider} slideIndex={slideIndex}/> */}
-		<div className="container-dots">
-			{props.dataSlider.map((obj, index) => (
-				<div onClick={() => moveDot(index + 1)}className={slideIndex === index + 1 ? "active" : ""}></div>
-			))}
-		</div>
 	</div>
 }
