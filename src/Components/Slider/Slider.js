@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 	import Feed from './Feed'
 export default function Slider(props) {
 	const slider = useRef(null);
-	const [interval, setSliderInterval] = useState(null);
+	// const [interval, setSliderInterval] = useState(null);
 	const [slideIndex, setSlideIndex] = useState(1);
 	const [config, setConfig] = useState({
 		axis: "X",
@@ -11,7 +11,7 @@ export default function Slider(props) {
 		interval: 4000,
 		direction: "forward",
 		transition: 100,
-		delay: 2000,
+		delay: undefined,
 		controls: false,
 	});
 	const [data, setData] = useState(props.data.map((slide, index) => {
@@ -22,8 +22,14 @@ export default function Slider(props) {
 	}));	
 	const moveSlide = { // 3 slides, on 1
 		next: () => {
+			let oldIndex = slideIndex;
 			if (slideIndex !== props.data.length) { // if 1 !== 3
 				setSlideIndex(slideIndex + 1) // move forward... now 2/3
+				console.log(
+					"oldIndex = " + oldIndex,
+					"now on index: " + slideIndex,
+					"length is: " + props.data.length
+				)
 			}
 			else if (slideIndex === props.data.length) { // if 1 === 3
 				setSlideIndex(1)
@@ -54,21 +60,31 @@ export default function Slider(props) {
 		}
 	}
 	const animSlide = {
+		interval: null,
 		startStopInterval: (startStop) => {
 			console.log(startStop)
 			switch(startStop){
 				case "start":
-					setSliderInterval(setInterval(()=>{
+					animSlide.interval = setInterval(()=>{
 						moveSlide.next()
-					}, 2000));
+					}, 2000);
 					break;
 				case "stop":
-					clearInterval(interval)
+					clearInterval(animSlide.interval)
 					break;
 				default:
 					break;
 			}
 		},
+		initializeAnimation: () => {
+			if(config.delay){
+				setTimeout(()=>{
+					animSlide.startStopInterval("start");
+				}, config.delay)
+			}else{
+				animSlide.startStopInterval("start");
+			}
+		}
 	}
 	const newConfigFromProps = () => {
 		return Object.assign(config, {
@@ -85,12 +101,10 @@ export default function Slider(props) {
 	}
 	useEffect(() => {
 		setConfig(newConfigFromProps());
-		setTimeout(()=>{
-			animSlide.startStopInterval("start");
-		}, config.delay)
 		window.addEventListener("resize", ()=>{
 			setConfig(newConfigFromProps());
 		})
+		animSlide.initializeAnimation();
 	}, [])
 	return <div sljs="testing" style={{
 		height: config.height + "px",
@@ -98,6 +112,7 @@ export default function Slider(props) {
 		overflow: "hidden",
 	}} ref={slider}>
 		{config.controls ? <Controls moveSlide={moveSlide} slides={data}/> : ""}
-		<Feed slides={[data[data.length - 1], ...data, data[0]]} slideIndex={slideIndex} config={config} loop={moveSlide.loop}/>
+		<Feed slides={data} slideIndex={slideIndex} config={config} loop={moveSlide.loop}/>
+		{/* <Feed slides={[data[data.length - 1], ...data, data[0]]} slideIndex={slideIndex} config={config} loop={moveSlide.loop}/> */}
 	</div>
 }
