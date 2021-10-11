@@ -22,9 +22,9 @@ const Module = event => {
 	}
 }
 function Slider(elem, Module) {
-	const setDefault = (elem, name, def) => {
-		return elem.attributes.hasOwnProperty(name) ? elem.attributes[name].value : def
-	};
+	// const setDefault = (elem, name, def) => {
+	// 	return elem.attributes.hasOwnProperty(name) ? elem.attributes[name].value : def
+	// };
 	const makeDataList = (arr) => {
 		if (!arr) arr = [{
 			img: "",
@@ -100,11 +100,11 @@ function Slider(elem, Module) {
 		}
 	}
 	this.resetSlider = function() {
-		this.animation("stop");
+		// this.animation("stop");
 		this.html.setAttribute("slider-index", this.index);
 		this.html.querySelector(".slider-feed").style.transition = `${this.transition}`;
 		this.html.querySelector(".slider-feed").style.transform = `translate${this.axis}(${-(this.axis == "Y" ? this.html.clientHeight : this.html.clientWidth) * this.index}px)`;
-		this.animation("start");
+		// this.animation("start");
 	}
 	// this.html = Object.assign(elem, {
 	// 	style: `
@@ -132,27 +132,27 @@ function Slider(elem, Module) {
 	// 		transform: ${this.setTransformation()};
 	// 	`,
 	// 	innerHTML: this.data.map(d => makeSlides(d).outerHTML).join(""),
-		ontransitionend: (e)=>{this.loop(e)}
+		// ontransitionend: (e)=>{this.loop(e)}
 	// });
 	this.data =  makeDataList(this.scope); 
 	this.render = () => {
-		if ( this.controls == 1 ||
-			this.controls == "true" ||
-			this.controls == true ) {
-			this.html.append( Controls(this) );
-		}
+		// if ( this.controls == 1 ||
+		// 	this.controls == "true" ||
+		// 	this.controls == true ) {
+		// 	this.html.append( Controls(this) );
+		// }
 		// this.html.append( this.feed );
 		// let slider = this;
-		setTimeout(function(){
+		// setTimeout(function(){
 			slider.resetSlider();
-		}, this.delay)
+		// }, this.delay)
 		window.addEventListener("resize", function () {
 			slider.resetSlider();
 		})
 	}
 	// return this
 }
-const Controls = slider => {
+// const Controls = slider => {
 	// this.viewBox = "0 0 100 100";
 	// this.btnStyles = `
 	// 	width: 2rem;
@@ -170,29 +170,29 @@ const Controls = slider => {
 	// });
 	// this.backward.setAttribute("viewbox", this.viewBox)
 	// this.forward.setAttribute("viewbox", this.viewBox)
-	this.html = Object.assign(document.createElement("div"), {
-		classList: ["slider-controls"],
-		style: `
-			fill: none;
-			stroke: white;
-			stroke-miterlimit: 10;
-			stroke-width: 10px;
-			position: absolute;
-			z-index: 500;
-			width: 100%;				
-			height: 100%;		
-			display: flex;
-			align-items: center;
-			justify-content: space-between;	
-		`,
-		innerHTML: [this.backward.outerHTML, this.forward.outerHTML].join(""),
-		onclick: e => {
-			let x;
-			if(e.target.nodeName == "svg") {slider.increment(e.target.classList[0]);}
-		}
-	});
+	// this.html = Object.assign(document.createElement("div"), {
+	// 	classList: ["slider-controls"],
+	// 	style: `
+	// 		fill: none;
+	// 		stroke: white;
+	// 		stroke-miterlimit: 10;
+	// 		stroke-width: 10px;
+	// 		position: absolute;
+	// 		z-index: 500;
+	// 		width: 100%;				
+	// 		height: 100%;		
+	// 		display: flex;
+	// 		align-items: center;
+	// 		justify-content: space-between;	
+	// 	`,
+	// 	innerHTML: [this.backward.outerHTML, this.forward.outerHTML].join(""),
+	// 	onclick: e => {
+	// 		let x;
+	// 		if(e.target.nodeName == "svg") {slider.increment(e.target.classList[0]);}
+	// 	}
+	// });
 	// return this.html;
-}
+// }
 const Counter = slider => {
 	this.btns = [];
 	for(let x = 1; x < slider.data.length - 1; x++){
@@ -205,9 +205,9 @@ const Counter = slider => {
 				background: purple;
 			`,
 			innerHTML: x,
-			onclick: e => {
-				slider.increment(x)
-			}
+			// onclick: e => {
+			// 	slider.increment(x)
+			// }
 		});
 
 		btn.addEventListener("click", () => {
