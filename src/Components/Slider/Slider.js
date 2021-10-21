@@ -3,8 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 	import Feed from './Feed'
 export default function Slider(props) {
 	const slider = useRef(null);
-	const [animInterval, setAnimInterval] = useState(null);
-	const [slideIndex, setSlideIndex] = useState(1);
+	const [index, setIndex] = useState(0);
 	const [config, setConfig] = useState({
 		axis: "X",
 		height: 300,
@@ -14,75 +13,39 @@ export default function Slider(props) {
 		delay: undefined,
 		controls: false,
 	});
-	const [data, setData] = useState(props.data.map((slide, index) => {
-		return {
-			...slide,
-			thisSlideIndex: index + 1
-		}
-	}));	
-	const moveSlide = {
-		increment: (forBack) => {
-			forBack ? forBack = forBack : forBack = config.direction;
-			switch (forBack) {
-				case "next":
-					if (slideIndex >= props.data.length - 1) return;
-					setSlideIndex(slideIndex + 1)
-					break;
-				case "prev":
-					if (slideIndex <= 0) return;
-					setSlideIndex(slideIndex - 1)
-					break;
-				default:
-					break;
-			}
-		},
-		next: () => {
-			if (slideIndex >= 78) return;
-			setSlideIndex(slideIndex + 1)
-		// handled by loop()...
-			// else if (slideIndex >= props.data.length) {
-			// 	setSlideIndex(1)
-			// }
-		},
-		prev: () => {
-			if (slideIndex !== 1) {
-				setSlideIndex(slideIndex - 1)
-			}
-			else if (slideIndex === 1) {
-				setSlideIndex(props.data.length)
-			}
-		},
-		select: newIndex => {
-			setSlideIndex(newIndex)
-		},
-		loop: () => {
-			let feedCSS = {
-				transition: "none",
-				transform: `translate${config.axis}(${-(config.axis === "Y" ? config.height : config.width) * slideIndex}px)`
-			}
-			return {
-				feedCSS: feedCSS
-			};
-		}
+	const [slides, setSlides] = useState([
+		props.slides[props.slides.length - 1],
+		...props.slides,
+		props.slides[0]
+	]);
+	const move = (index, direction) => {
+		console.log(index);
+		let newIndex = index;
+		if (typeof direction == "number") newIndex = direction;
+		if(direction === "next" || direction === undefined) newIndex = index + 1;
+		if (direction === "prev") newIndex = index -1;
+		setIndex(newIndex);
+		return newIndex;
+	};
+	const reset = () => {
+		anim.stop();
+
+		anim.start();
 	}
-	const animSlide = {
-		set: () => {
-			setAnimInterval(setInterval(()=>{
-				moveSlide.next()
-			}, config.interval))
-		},
+	const anim = {
 		start: () => {
-			if(config.delay){
-				setTimeout(()=>{
-					animSlide.set();
-				}, config.delay)
-			}else{
-				animSlide.set();
-			}
+			setTimeout(()=>{
+				anim.interval = setInterval(move, config.interval)
+			}, config.delay)
+		},
+		stop: () => {
+			clearInterval(anim.interval);
 		}
 	}
 	const newConfigFromProps = () => {
-		return Object.assign(config, {
+	// lets try to use this in config/setConfig... and just
+	// add event listener to root elem on mount...
+		let newConfig = Object.assign(config, {
 			width: slider.current.offsetWidth,
 			height: slider.current.offsetHeight,
 			...Object.fromEntries(Object.keys(props).map(prop => {
@@ -92,20 +55,25 @@ export default function Slider(props) {
 				}
 			}).filter(e => e !== undefined))
 		})
+		setConfig(oldConfig => { return {
+			...oldConfig,
+			newConfig
+		}})
 	}
 	useEffect(() => {
-		setConfig(newConfigFromProps());
-		window.addEventListener("resize", ()=>{
-			setConfig(newConfigFromProps());
-		})
-		animSlide.start();
+		newConfigFromProps();
+		window.addEventListener("resize", newConfigFromProps)
+		reset();
 	}, [])
 	return <div sljs="testing" style={{
 		height: config.height + "px",
 		position: "relative",
 		overflow: "hidden",
 	}} ref={slider}>
-		{config.controls ? <Controls moveSlide={moveSlide} slides={data}/> : ""}
-		<Feed slides={[data[data.length - 1], ...data, data[0]]} slideIndex={slideIndex} config={config} loop={moveSlide.loop}/>
+		{/* {config.controls ? <Controls move={move} slides={data}/> : ""} */}
+		<Feed slides={slides} 
+			index={index} 
+			move={move}
+			config={config}/>
 	</div>
 }

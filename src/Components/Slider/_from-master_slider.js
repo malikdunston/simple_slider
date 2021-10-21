@@ -89,6 +89,7 @@ function Slider(elem, Module) {
 				this.index--;
 				console.log(this.index);
 				break;
+			default: break;
 		}
 		this.resetSlider();
 	}
@@ -101,7 +102,7 @@ function Slider(elem, Module) {
 	}
 	this.resetSlider = function() {
 		// this.animation("stop");
-		this.html.setAttribute("slider-index", this.index);
+		// this.html.setAttribute("slider-index", this.index);
 		this.html.querySelector(".slider-feed").style.transition = `${this.transition}`;
 		this.html.querySelector(".slider-feed").style.transform = `translate${this.axis}(${-(this.axis == "Y" ? this.html.clientHeight : this.html.clientWidth) * this.index}px)`;
 		// this.animation("start");
