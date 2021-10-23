@@ -47,9 +47,29 @@ export default function App() {
 					content: "A lovely breed, indeed"
 				}
 			}
+		],
+		sample: [
+			{
+				img: "./assets/img/siamese.jpg",
+				content: {
+					title: "1/3",
+				}
+			},
+			{
+				img: "./assets/img/bengal.jpg",
+				content: {
+					title: "2/3",
+				}
+			},
+			{
+				img: "./assets/img/persian.jpg",
+				content: {
+					title: "3/3",
+				}
+			}
 		]
 	}
 	return <div className="App">
-		<Slider slides={pets.cats} controls={true}/>
+		<Slider slides={pets.sample} controls={true}/>
 	</div>
 }

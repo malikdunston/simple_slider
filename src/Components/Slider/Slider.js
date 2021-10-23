@@ -12,30 +12,44 @@ export default function Slider(props) {
 		transition: 400,
 		delay: undefined,
 		controls: false,
+		offset: 1
 	});
 	const [slides, setSlides] = useState([
 		props.slides[props.slides.length - 1],
 		...props.slides,
 		props.slides[0]
 	]);
+	const setUserProps = () => {
+		let newConfig = Object.assign(config, {
+			width: slider.current.offsetWidth,
+			height: slider.current.offsetHeight,
+			...Object.fromEntries(Object.keys(props).map(prop => {
+				let userAddedProp = [prop, props[prop]]
+				if((props[prop] !== config[prop]) && config[prop]){
+					return userAddedProp
+				}
+			}).filter(e => e !== undefined))
+		})
+		setConfig(oldConfig => {
+			return { ...oldConfig, ...newConfig }
+		})
+	}
 	const move = () => {
 		setIndex(currentIndex => {
 			if(config.direction === "next"){
-				if(currentIndex >= slides.length - 1) return 0
+				if(currentIndex >= slides.length - 1) return 1
 				else return currentIndex + 1;
 			}
 			if(config.direction === "prev"){
-				if(currentIndex <= 0) return slides.length - 1;
+				if(currentIndex <= 1) return slides.length - 1;
 				else return currentIndex - 1;
 			}
 		})
 	}
-	const reset = () => {
-		anim.stop();
-
-		anim.start();
-	}
 	const anim = {
+		transformFeed: (slideLength) => {
+			return `translate${config.axis}(${  -(config.axis === "Y" ? config.height : config.width) * slideLength}px)`
+		},
 		start: () => {
 			setTimeout(()=>{
 				anim.interval = setInterval(move, config.interval)
@@ -43,26 +57,15 @@ export default function Slider(props) {
 		},
 		stop: () => { clearInterval(anim.interval); }
 	}
-	const newConfigFromProps = () => {
-		let newConfig = Object.assign(config, {
-			width: slider.current.offsetWidth,
-			height: slider.current.offsetHeight,
-			...Object.fromEntries(Object.keys(props).map(prop => {
-				let tuple = [prop, props[prop]]
-				if((props[prop] !== config[prop]) && config[prop]){
-					return tuple
-				}
-			}).filter(e => e !== undefined))
-		})
-		setConfig(oldConfig => { return {
-			...oldConfig,
-			...newConfig
-		}})
-	}
 	useEffect(() => {
-		newConfigFromProps();
-		window.addEventListener("resize", newConfigFromProps)
-		reset();
+		setUserProps();
+		window.addEventListener("resize", setUserProps)
+
+	// initial transformation...
+		let feed = slider.current.querySelector(".slider-feed");
+		feed.style.transform = anim.transformFeed(config.offset);
+
+		anim.start();
 	}, [])
 	return <div sljs="testing" style={{
 		height: config.height + "px",
@@ -70,9 +73,6 @@ export default function Slider(props) {
 		overflow: "hidden",
 	}} ref={slider}>
 		{/* {config.controls ? <Controls move={move} slides={data}/> : ""} */}
-		<Feed slides={slides} 
-			index={index} 
-			move={move}
-			config={config}/>
+		<Feed slides={slides} index={index} config={config} transformFeed={anim.transformFeed}/>
 	</div>
 }
