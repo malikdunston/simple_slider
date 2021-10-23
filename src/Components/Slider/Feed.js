@@ -6,7 +6,10 @@ export default function Feed({slides, index, config, transformFeed}) {
 		height: "100%",
 		flexDirection: config.axis === "Y" ? "column" : "row",
 	});
-	useEffect(() => {
+	useEffect(() => { // this is loop()
+		// if(index === slides.length - 1){
+		// 	transition = "none";
+		// }
 		setCSS(oldCSS => {
 			return {
 				...oldCSS,

@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 	import Feed from './Feed'
 export default function Slider(props) {
 	const slider = useRef(null);
-	const [index, setIndex] = useState(0);
+	const [index, setIndex] = useState(1);
 	const [config, setConfig] = useState({ // defaults
 		axis: "X",
 		height: 300,
@@ -12,9 +12,9 @@ export default function Slider(props) {
 		transition: 400,
 		delay: undefined,
 		controls: false,
-		offset: 1
+		startAt: 1
 	});
-	const [slides, setSlides] = useState([
+	const [slides, setSlides] = useState([ // this.data...
 		props.slides[props.slides.length - 1],
 		...props.slides,
 		props.slides[0]
@@ -34,37 +34,67 @@ export default function Slider(props) {
 			return { ...oldConfig, ...newConfig }
 		})
 	}
-	const move = () => {
+	const move = () => { // increment...
+	// make to sure to include config.direction
+	// as a number...
+
 		setIndex(currentIndex => {
 			if(config.direction === "next"){
-				if(currentIndex >= slides.length - 1) return 1
+				if(currentIndex >= slides.length - 1){ 
+					return 1
+				}
 				else return currentIndex + 1;
 			}
+		// don't worry about this rn.
 			if(config.direction === "prev"){
-				if(currentIndex <= 1) return slides.length - 1;
+				if(currentIndex <= 1)  return slides.length - 1;
 				else return currentIndex - 1;
 			}
 		})
 	}
+	const checkLoop = () => {
+		console.log("checking for loop...");
+		let origTransition = config.transition;
+		if(index === slides.length - 1 || index === 0){
+			config.transition = 0;
+			if (index === slides.length - 1) {
+				console.log("end of loop");
+			};
+			if (index === 0) {
+				console.log("beginning of loop");
+			};
+		} else config.transition = origTransition;
+	}
 	const anim = {
-		transformFeed: (slideLength) => {
-			return `translate${config.axis}(${  -(config.axis === "Y" ? config.height : config.width) * slideLength}px)`
+		transformFeed: (index) => {
+			// if(index === slides.length - 1){
+			// 	config.transition = 0
+			// 	console.log(index, "the end");
+			// };
+			return `translate${config.axis}(${  -(config.axis === "Y" ? config.height : config.width) * index}px)`
 		},
 		start: () => {
 			setTimeout(()=>{
 				anim.interval = setInterval(move, config.interval)
 			}, config.delay)
 		},
-		stop: () => { clearInterval(anim.interval); }
+		stop: () => { clearInterval(anim.interval); },
+		// reset: () => {
+		// }
+	}
+	const reset = () => {
+		anim.stop();
+		checkLoop();
+		console.log(index);
+
+
+		anim.start();
 	}
 	useEffect(() => {
 		setUserProps();
 		window.addEventListener("resize", setUserProps)
-
-	// initial transformation...
-		let feed = slider.current.querySelector(".slider-feed");
-		feed.style.transform = anim.transformFeed(config.offset);
-
+		const feed = slider.current.querySelector(".slider-feed");
+		feed.style.transform = anim.transformFeed(config.startAt);
 		anim.start();
 	}, [])
 	return <div sljs="testing" style={{

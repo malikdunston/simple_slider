@@ -93,13 +93,13 @@ function Slider(elem, Module) {
 		}
 		this.resetSlider();
 	}
-	this.animation = function(startStop,){
-		if (startStop == "start"){
-			this.rotation = setInterval(this.increment, this.interval)
-		}else if (startStop == "stop"){
-			clearInterval(this.rotation)
-		}
-	}
+	// this.animation = function(startStop,){
+	// 	if (startStop == "start"){
+	// 		this.rotation = setInterval(this.increment, this.interval)
+	// 	}else if (startStop == "stop"){
+	// 		clearInterval(this.rotation)
+	// 	}
+	// }
 	this.resetSlider = function() {
 		// this.animation("stop");
 		// this.html.setAttribute("slider-index", this.index);

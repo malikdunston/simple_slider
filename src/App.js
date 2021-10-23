@@ -70,6 +70,6 @@ export default function App() {
 		]
 	}
 	return <div className="App">
-		<Slider slides={pets.sample} controls={true}/>
+		<Slider slides={pets.cats} controls={true} startAt={1}/>
 	</div>
 }
