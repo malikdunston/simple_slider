@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react'
 export default function Slider(props) {
 	const slider = useRef(null);
 	const [index, setIndex] = useState(0);
-	const [config, setConfig] = useState({
+	const [config, setConfig] = useState({ // defaults
 		axis: "X",
 		height: 300,
 		interval: 2000,
@@ -18,20 +18,16 @@ export default function Slider(props) {
 		...props.slides,
 		props.slides[0]
 	]);
-	// const move = (index, direction) => {
-	// 	let newIndex = index;
-	// 	if (typeof direction == "number") newIndex = direction;
-	// 	if(direction === "next" || direction === undefined) {
-	// 		newIndex = index + 1
-	// 		console.log(newIndex);
-	// 	};
-	// 	if (direction === "prev") newIndex = index -1;
-	// 	setIndex(newIndex);
-	// 	return newIndex;
-	// };
 	const move = () => {
-		setIndex(oldIndex => {
-			return oldIndex + 1;
+		setIndex(currentIndex => {
+			if(config.direction === "next"){
+				if(currentIndex >= slides.length - 1) return 0
+				else return currentIndex + 1;
+			}
+			if(config.direction === "prev"){
+				if(currentIndex <= 0) return slides.length - 1;
+				else return currentIndex - 1;
+			}
 		})
 	}
 	const reset = () => {
@@ -45,13 +41,9 @@ export default function Slider(props) {
 				anim.interval = setInterval(move, config.interval)
 			}, config.delay)
 		},
-		stop: () => {
-			clearInterval(anim.interval);
-		}
+		stop: () => { clearInterval(anim.interval); }
 	}
 	const newConfigFromProps = () => {
-	// lets try to use this in config/setConfig... and just
-	// add event listener to root elem on mount...
 		let newConfig = Object.assign(config, {
 			width: slider.current.offsetWidth,
 			height: slider.current.offsetHeight,
@@ -64,7 +56,7 @@ export default function Slider(props) {
 		})
 		setConfig(oldConfig => { return {
 			...oldConfig,
-			newConfig
+			...newConfig
 		}})
 	}
 	useEffect(() => {
