@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 	import Slide from './Slide'
 export default function Feed({slides, index, move, config}) {
 	const [css, setCSS] = useState({

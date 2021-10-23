@@ -18,15 +18,22 @@ export default function Slider(props) {
 		...props.slides,
 		props.slides[0]
 	]);
-	const move = (index, direction) => {
-		console.log(index);
-		let newIndex = index;
-		if (typeof direction == "number") newIndex = direction;
-		if(direction === "next" || direction === undefined) newIndex = index + 1;
-		if (direction === "prev") newIndex = index -1;
-		setIndex(newIndex);
-		return newIndex;
-	};
+	// const move = (index, direction) => {
+	// 	let newIndex = index;
+	// 	if (typeof direction == "number") newIndex = direction;
+	// 	if(direction === "next" || direction === undefined) {
+	// 		newIndex = index + 1
+	// 		console.log(newIndex);
+	// 	};
+	// 	if (direction === "prev") newIndex = index -1;
+	// 	setIndex(newIndex);
+	// 	return newIndex;
+	// };
+	const move = () => {
+		setIndex(oldIndex => {
+			return oldIndex + 1;
+		})
+	}
 	const reset = () => {
 		anim.stop();
 
