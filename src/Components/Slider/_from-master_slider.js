@@ -25,16 +25,16 @@ function Slider(elem, Module) {
 	// const setDefault = (elem, name, def) => {
 	// 	return elem.attributes.hasOwnProperty(name) ? elem.attributes[name].value : def
 	// };
-	const makeDataList = (arr) => {
-		if (!arr) arr = [{
-			img: "",
-			content: {
-				title: "Your Slider Has No Data!",
-				content: "Attach some data to your slider element to begin."
-			}
-		}];
-		// return [arr[arr.length - 1], ...arr, arr[0]];
-	};
+	// const makeDataList = (arr) => {
+	// 	if (!arr) arr = [{
+	// 		img: "",
+	// 		content: {
+	// 			title: "Your Slider Has No Data!",
+	// 			content: "Attach some data to your slider element to begin."
+	// 		}
+	// 	}];
+	// 	// return [arr[arr.length - 1], ...arr, arr[0]];
+	// };
 	// const makeSlides = (obj) => {
 		// let slide = Object.assign(
 		// 	document.createElement("div"),
@@ -62,28 +62,28 @@ function Slider(elem, Module) {
 	// this.setTransformation = () => {
 	// 	return `translate${this.axis}(${-(this.axis == "Y" ? this.html.clientHeight : this.html.clientWidth) * this.index}px)`
 	// }
-	this.loop = function(){
-		if (this.index == this.data.length - 1) {
-			this.feed.style.transition = "none";
-			this.index = 1;
-			this.feed.style.transform = `translate${this.axis}(${-(this.axis == "Y" ? this.html.clientHeight : this.html.clientWidth) * this.index}px)`;
-		};
-		if (this.index == 0) {
-			this.feed.style.transition = "none";
-			this.index = this.data.length - 2;
-			this.feed.style.transform = `translate${this.axis}(${-(this.axis == "Y" ? this.html.clientHeight : this.html.clientWidth) * this.index}px)`;
-		};
-	}
+	// this.loop = function(){
+	// 	if (this.index == this.data.length - 1) {
+	// 		this.feed.style.transition = "none";
+	// 		this.index = 1;
+	// 		this.feed.style.transform = `translate${this.axis}(${-(this.axis == "Y" ? this.html.clientHeight : this.html.clientWidth) * this.index}px)`;
+	// 	};
+	// 	if (this.index == 0) {
+	// 		this.feed.style.transition = "none";
+	// 		this.index = this.data.length - 2;
+	// 		this.feed.style.transform = `translate${this.axis}(${-(this.axis == "Y" ? this.html.clientHeight : this.html.clientWidth) * this.index}px)`;
+	// 	};
+	// }
 	this.increment = (forBack) => {
 		forBack ? forBack = forBack : forBack = this.direction;
 		if(typeof forBack == "number"){
 			this.index = forBack
 		}
 		switch (forBack) {
-			case "forward":
-				if (this.index >= this.data.length - 1) return;
-				this.index++;
-				break;
+			// case "forward":
+				// if (this.index >= this.data.length - 1) return;
+				// this.index++;
+				// break;
 			case "backward":
 				if (this.index <= 0) return;
 				this.index--;
@@ -91,7 +91,7 @@ function Slider(elem, Module) {
 				break;
 			default: break;
 		}
-		this.resetSlider();
+		// this.resetSlider();
 	}
 	// this.animation = function(startStop,){
 	// 	if (startStop == "start"){
@@ -100,13 +100,13 @@ function Slider(elem, Module) {
 	// 		clearInterval(this.rotation)
 	// 	}
 	// }
-	this.resetSlider = function() {
-		// this.animation("stop");
-		// this.html.setAttribute("slider-index", this.index);
-		this.html.querySelector(".slider-feed").style.transition = `${this.transition}`;
-		this.html.querySelector(".slider-feed").style.transform = `translate${this.axis}(${-(this.axis == "Y" ? this.html.clientHeight : this.html.clientWidth) * this.index}px)`;
-		// this.animation("start");
-	}
+	// this.resetSlider = function() {
+	// 	// this.animation("stop");
+	// 	// this.html.setAttribute("slider-index", this.index);
+	// 	this.html.querySelector(".slider-feed").style.transition = `${this.transition}`;
+	// 	this.html.querySelector(".slider-feed").style.transform = `translate${this.axis}(${-(this.axis == "Y" ? this.html.clientHeight : this.html.clientWidth) * this.index}px)`;
+	// 	// this.animation("start");
+	// }
 	// this.html = Object.assign(elem, {
 	// 	style: `
 	// 		height: 325px;
@@ -135,7 +135,7 @@ function Slider(elem, Module) {
 	// 	innerHTML: this.data.map(d => makeSlides(d).outerHTML).join(""),
 		// ontransitionend: (e)=>{this.loop(e)}
 	// });
-	this.data =  makeDataList(this.scope); 
+	// this.data =  makeDataList(this.scope); 
 	this.render = () => {
 		// if ( this.controls == 1 ||
 		// 	this.controls == "true" ||
@@ -145,11 +145,11 @@ function Slider(elem, Module) {
 		// this.html.append( this.feed );
 		// let slider = this;
 		// setTimeout(function(){
-			slider.resetSlider();
+			// slider.resetSlider();
 		// }, this.delay)
-		window.addEventListener("resize", function () {
-			slider.resetSlider();
-		})
+		// window.addEventListener("resize", function () {
+		// 	slider.resetSlider();
+		// })
 	}
 	// return this
 }
@@ -194,47 +194,47 @@ function Slider(elem, Module) {
 	// });
 	// return this.html;
 // }
-const Counter = slider => {
-	this.btns = [];
-	for(let x = 1; x < slider.data.length - 1; x++){
-		let btn = Object.assign(document.createElement("div"), {
-			classList: [`counter-btn-${x}`],
-			style: `
-				height: 20px;
-				width: 40px;
-				margin-right: 10px;
-				background: purple;
-			`,
-			innerHTML: x,
-			// onclick: e => {
-			// 	slider.increment(x)
-			// }
-		});
+// const Counter = slider => {
+// 	this.btns = [];
+// 	for(let x = 1; x < slider.data.length - 1; x++){
+// 		let btn = Object.assign(document.createElement("div"), {
+// 			classList: [`counter-btn-${x}`],
+// 			style: `
+// 				height: 20px;
+// 				width: 40px;
+// 				margin-right: 10px;
+// 				background: purple;
+// 			`,
+// 			innerHTML: x,
+// 			// onclick: e => {
+// 			// 	slider.increment(x)
+// 			// }
+// 		});
 
-		btn.addEventListener("click", () => {
-			console.log("alkdsjfa ");
-		})
+// 		btn.addEventListener("click", () => {
+// 			console.log("alkdsjfa ");
+// 		})
 
-	}
-	this.html = Object.assign(document.createElement("div"), {
-		classList: ["slider-index"],
-		style: `
-			position: absolute;
-			z-index: 550;
-			bottom: 1rem;
-			left: 1rem;
-			background: red;
-			display: flex;
-			padding: 10px;
-			padding-right: 0;
-		`,
-		innerHTML: this.btns.map(b => b.outerHTML).join(""),
-		onclick: e => {
-			if(e.target.classList[0] == "counter-btn"){
-				console.log("asdfas");
-			}
-			// slider.increment(slider.)
-		}
-	});
-	return this.html;
-}
+// 	}
+// 	this.html = Object.assign(document.createElement("div"), {
+// 		classList: ["slider-index"],
+// 		style: `
+// 			position: absolute;
+// 			z-index: 550;
+// 			bottom: 1rem;
+// 			left: 1rem;
+// 			background: red;
+// 			display: flex;
+// 			padding: 10px;
+// 			padding-right: 0;
+// 		`,
+// 		innerHTML: this.btns.map(b => b.outerHTML).join(""),
+// 		onclick: e => {
+// 			if(e.target.classList[0] == "counter-btn"){
+// 				console.log("asdfas");
+// 			}
+// 			// slider.increment(slider.)
+// 		}
+// 	});
+// 	return this.html;
+// }
