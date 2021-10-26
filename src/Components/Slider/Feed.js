@@ -6,14 +6,18 @@ export default function Feed({slides, index, config, transformFeed}) {
 		height: "100%",
 		flexDirection: config.axis === "Y" ? "column" : "row",
 	});
-	useEffect(() => { // this is loop()
-		// if(index === slides.length - 1){
-		// 	transition = "none";
-		// }
+	useEffect(() => {
 		setCSS(oldCSS => {
+			let transitionCSS;
+			if(config.direction === "next"){
+				if(index === 1){ 
+					transitionCSS = "none";
+				}
+				else transitionCSS = config.transition + "ms";
+			}
 			return {
 				...oldCSS,
-				transition: (index === slides.length - 1 || index === 0) ? "none" : config.transition + "ms",
+				transition: transitionCSS,
 				transform: transformFeed(index)
 			}
 		})

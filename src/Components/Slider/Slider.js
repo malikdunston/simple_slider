@@ -37,7 +37,6 @@ export default function Slider(props) {
 	const move = () => { // increment...
 	// make to sure to include config.direction
 	// as a number...
-
 		setIndex(currentIndex => {
 			if(config.direction === "next"){
 				if(currentIndex >= slides.length - 1){ 
