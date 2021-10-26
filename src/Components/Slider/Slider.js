@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 	import Controls from './Controls'
 	import Feed from './Feed'
+	import Slide from './Slide'
 export default function Slider(props) {
 	const slider = useRef(null);
 	const [index, setIndex] = useState(1);
@@ -12,8 +13,14 @@ export default function Slider(props) {
 		transition: 400,
 		delay: undefined,
 		controls: false,
-		startAt: 1
+		startAt: 1,
 	});
+	const [feedCSS, setFeedCSS] = useState({
+		display: "flex",
+		height: "100%",
+		flexDirection: props.axis === "Y" ? "column" : "row",
+		translate: `translate${config.axis}(${  -(config.axis === "Y" ? config.height : config.width) * index}px)`
+	})
 	const [slides, setSlides] = useState([ // this.data...
 		props.slides[props.slides.length - 1],
 		...props.slides,
@@ -50,6 +57,27 @@ export default function Slider(props) {
 				else return currentIndex - 1;
 			}
 		})
+	// stuff from Feed.js...
+		setConfig(oldConfig => {
+			if(oldConfig.direction === "next" && index === 1){ 
+				return {
+					...oldConfig,
+					feedCSS: {
+						...oldConfig.feedCSS,
+						transition: "none",
+						transform: anim.transformFeed(index)
+					}
+				}
+			}else return {
+				...oldConfig,
+				feedCSS: {
+					...oldConfig.feedCSS,
+					transition: oldConfig.transition + "ms",
+					transform: anim.transformFeed(index)
+				}
+			}
+		})
+
 	}
 	const checkLoop = () => {
 		console.log("checking for loop...");
@@ -70,7 +98,9 @@ export default function Slider(props) {
 			// 	config.transition = 0
 			// 	console.log(index, "the end");
 			// };
-			return `translate${config.axis}(${  -(config.axis === "Y" ? config.height : config.width) * index}px)`
+			let translate = `translate${config.axis}(${  -(config.axis === "Y" ? config.height : config.width) * index}px)`;
+			console.log(translate);
+			return translate;
 		},
 		start: () => {
 			setTimeout(()=>{
@@ -93,6 +123,7 @@ export default function Slider(props) {
 		setUserProps();
 		window.addEventListener("resize", setUserProps)
 		const feed = slider.current.querySelector(".slider-feed");
+	// won't be needing this...
 		feed.style.transform = anim.transformFeed(config.startAt);
 		anim.start();
 	}, [])
@@ -102,6 +133,15 @@ export default function Slider(props) {
 		overflow: "hidden",
 	}} ref={slider}>
 		{/* {config.controls ? <Controls move={move} slides={data}/> : ""} */}
-		<Feed slides={slides} index={index} config={config} transformFeed={anim.transformFeed}/>
+		{/* <Feed slides={slides} index={index} config={{...config, feedCSS: feedCSS}}/> */}
+		<div className="slider-feed" style={{
+			display: "flex",
+			height: "100%",
+			flexDirection: props.axis === "Y" ? "column" : "row",
+			transform: `translate${config.axis}(${  -(config.axis === "Y" ? config.height : config.width) * index}px)`,
+			transition: config.transition + "ms" 
+		}}>
+			{slides.map((slide, index) => <Slide key={index}slide={{...slide, index: index, axis: config.axis}}/>)}
+		</div>
 	</div>
 }
