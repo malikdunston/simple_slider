@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Slide from './Slide'
+import Controls from './Controls'
 export default function Slider(props) {
 	const slider = useRef(null);
 	const [config, setConfig] = useState({
@@ -29,27 +30,29 @@ export default function Slider(props) {
 			}
 		})
 	}
-	const [anim, setAnim] = useState({
-		move: () => { 
+	const [move, setMove] = useState({
+		next: () => { 
 			setConfig(oldConfig => {
-				if(config.direction === "next"){
-					return {
-						...oldConfig,
-						index: oldConfig.index >= props.slides.length + 1 ? 1 : oldConfig.index + 1
-					}
-				}
-				if(config.direction === "prev"){
-					return {
-						...oldConfig,
-						index: oldConfig.index === 0 ? props.slides.length : oldConfig.index - 1
-					}
+				return {
+					...oldConfig,
+					index: oldConfig.index >= props.slides.length + 1 ? 1 : oldConfig.index + 1
 				}
 			})
 		},
+		prev: () => { 
+			setConfig(oldConfig => {
+				return {
+					...oldConfig,
+					index: oldConfig.index === 0 ? props.slides.length : oldConfig.index - 1
+				}
+			})
+		}
+	})
+	const [anim, setAnim] = useState({
 		start: () => {
 			anim.stop();
 			setTimeout(()=>{
-				anim.interval = setInterval(anim.move, config.interval)
+				anim.interval = setInterval(move[ config.direction ], config.interval)
 			}, config.delay)
 		},
 		stop: () => { clearInterval(anim.interval); },
@@ -66,6 +69,9 @@ export default function Slider(props) {
 		anim.start();
 	}, [])
 	return <div sljs="testing" style={{ height: config.height + "px", position: "relative", overflow: "hidden" }} ref={slider}>
+		{!config.controls ? "" : <Controls 
+			move={move} 
+			slides={props.slides}/>}
 		<div className="slider-feed" 
 			style={{
 				display: "flex",

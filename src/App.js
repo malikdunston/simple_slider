@@ -71,8 +71,12 @@ export default function App() {
 	}
 	return <div className="App">
 		<Slider 
-			slides={[...pets.cats, ...pets.dogs]} 
+			slides={pets.cats} 
 			direction={"next"} 
 			axis="Y"/>
+		<Slider 
+			slides={pets.dogs} 
+			direction={"prev"} 
+			axis="X"/>
 	</div>
 }
