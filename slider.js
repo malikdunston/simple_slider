@@ -1,16 +1,12 @@
 "use strict";
 
-// from import.js...
-	// import {Module} from './import.js';
-	// console.log(Module());
-
 // ...
 	window.sliderJS = window.sliderJS || {};
 	sliderJS = {
 		...sliderJS,
 		module: {} // only 1 for now...
 	}
-	console.log("SLIDER J S");
+	console.log("SLIDER JS");
 	window.addEventListener("load", function(event){
 		sliderJS.module = Module(event);
 		sliderJS.module.render();
