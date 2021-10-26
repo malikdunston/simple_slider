@@ -8,25 +8,26 @@ export default function Slider(props) {
 		axis: "X",
 		height: 300,
 		interval: 2000,
-		direction: props.direction,
+		direction: props.direction ? props.direction : "next",
 		transition: 400,
 		delay: undefined,
 		controls: true,
 	});
 	const configFromProps = () => {
-		let newConfig = Object.assign({}, {
-			...config,
-			width: slider.current.offsetWidth,
-			height: slider.current.offsetHeight,
-			...Object.fromEntries(Object.keys(props).map(prop => {
-				let userAddedProp = [prop, props[prop]]
-				if((props[prop] !== config[prop]) && config[prop]){
-					return userAddedProp
-				}
-			}).filter(e => e !== undefined))
-		})
 		setConfig(oldConfig => {
-			return { ...oldConfig, ...newConfig }
+			return { 
+				...oldConfig, 
+				...Object.fromEntries(
+					Object.keys(props).map(key => {
+						let userAddedProp = [key, props[key]]
+						if(  config[key] && ( props[key] !== config[key] )  ){
+							return userAddedProp
+						}
+					}).filter(e => e !== undefined)
+				),
+				width: slider.current.offsetWidth,
+				height: slider.current.offsetHeight
+			}
 		})
 	}
 	const anim = {
@@ -58,20 +59,17 @@ export default function Slider(props) {
 		window.addEventListener("resize", configFromProps)
 		anim.start();
 	}, [])
-	return <div sljs="testing" style={{
-		height: config.height + "px",
-		position: "relative",
-		overflow: "hidden",
-	}} ref={slider}>
+	return <div sljs="testing" style={{ height: config.height + "px", position: "relative", overflow: "hidden" }} ref={slider}>
 		{/* {config.controls ? <Controls move={move} slides={data}/> : ""} */}
-		<div className="slider-feed" style={{
-			display: "flex",
-			height: "100%",
-			flexDirection: config.axis === "Y" ? "column" : "row",
-			transform: `translate${config.axis}(${  -(config.axis === "Y" ? config.height : config.width) * index}px)`,
-			transition: (props.direction === "next" && index === 1) || (props.direction === "prev" && index === props.slides.length) ? "none" : config.transition + "ms"
-		}}>
-			{[
+		<div className="slider-feed" 
+			style={{
+				display: "flex",
+				height: "100%",
+				flexDirection: config.axis === "Y" ? "column" : "row",
+				transform: `translate${config.axis}(${  -(config.axis === "Y" ? config.height : config.width) * index}px)`,
+				transition: (props.direction === "next" && index === 1) || (props.direction === "prev" && index === props.slides.length) ? "none" : config.transition + "ms"
+			}}>
+			{[ // slides
 				props.slides[props.slides.length - 1],
 				...props.slides,
 				props.slides[0]

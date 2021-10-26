@@ -70,6 +70,9 @@ export default function App() {
 		]
 	}
 	return <div className="App">
-		<Slider slides={pets.cats} controls={true} direction={"prev"}/>
+		<Slider 
+			slides={[...pets.cats, ...pets.dogs]} 
+			direction={"next"} 
+			axis="Y"/>
 	</div>
 }
