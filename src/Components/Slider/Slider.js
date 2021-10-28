@@ -13,10 +13,6 @@ export default function Slider(props) {
 		controls: true,
 		startAt: 1,
 	});
-// Very important. We are using mid-level user's "i" value (0-4)
-	// end-user: 1, 2, 3
-	// mid-user: 4, 1, 2, 3, 1
-	// pro-user: 0, 1, 2, 3, 4  <-----
 	const [ index, setIndex ] = useState(1); 
 	const [ slideData, setSlideData ] = useState({
 		slides: props.slides,
@@ -66,12 +62,16 @@ export default function Slider(props) {
 		},
 		stop: () => { clearInterval(anim.interval); },
 		loop: (index) => {
-			setTransitionProp(oldTransitionProp => {
-				return (config.direction === "next" && index >= slideData.feed.length-1)
-					|| (config.direction === "prev" && index <= 0) 
-						? "none" 
-						: config.transition + "ms"
-			})
+			// if( (config.direction === "next" && index >= slideData.feed.length-1)
+			// || (config.direction === "prev" && index <= 0) ){
+				setTransitionProp(oldTransitionProp => {
+					// if( (config.direction === "next" && index >= slideData.feed.length-1)
+					// || (config.direction === "prev" && index <= 0) ){
+					if( (config.direction === "next" && index >= slideData.feed.length-1) ){
+						return "none" 
+					}else return config.transition + "ms"
+				})
+			// }
 		}
 	})
 	useEffect(() => {
