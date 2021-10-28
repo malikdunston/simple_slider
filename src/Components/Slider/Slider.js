@@ -3,6 +3,7 @@ import Slide from './Slide'
 import Controls from './Controls'
 export default function Slider(props) {
 	const slider = useRef(null);
+	const [ index, setIndex ] = useState(1); 
 	const [ config, setConfig ] = useState({
 		axis: "X",
 		height: 300,
@@ -13,19 +14,12 @@ export default function Slider(props) {
 		controls: true,
 		startAt: 1,
 	});
-// Very important. We are using mid-level user's "i" value (0-4)
-	// end-user: 1, 2, 3
-	// mid-user: 4, 1, 2, 3, 1
-	// pro-user: 0, 1, 2, 3, 4  <-----
-	const [ index, setIndex ] = useState(1); 
-	const [ slideData, setSlideData ] = useState({
-		slides: props.slides,
-		feed: [
-			props.slides[props.slides.length - 1],
-			...props.slides,
-			props.slides[0]
-		]
-	})
+	const [ feed, setFeed ] = useState([
+		props.slides[props.slides.length - 1],
+		...props.slides,
+		props.slides[0]
+	])
+	const [ transitionProp, setTransitionProp ] = useState("none")
 	const configFromProps = () => {
 		setConfig(oldConfig => {
 			return { 
@@ -50,30 +44,36 @@ export default function Slider(props) {
 			if( newDirection === "next" || newDirection === "prev" ){
 				setIndex(oldIndex => {
 					anim.loop(oldIndex);
-					console.log(oldIndex + " to " + (oldIndex + 1));
-					return oldIndex >= slideData.feed.length - 1 ? 1 : oldIndex + 1
+					return oldIndex >= feed.length - 1 ? 1 : oldIndex + 1
 				})
 			}
 		}
 	})
-	const [ transitionProp, setTransitionProp ] = useState("none")
 	const [ anim, setAnim ] = useState({
 		start: () => {
 			anim.stop();
 			setTimeout(()=>{
-				anim.interval = setInterval(move[ config.direction ], config.interval)
+				anim.interval = setInterval( move[ config.direction ], config.interval )
 			}, config.delay)
 		},
 		stop: () => { clearInterval(anim.interval); },
 		loop: (index) => {
-			setTransitionProp(oldTransitionProp => {
-				return (config.direction === "next" && index >= slideData.feed.length-1)
-					|| (config.direction === "prev" && index <= 0) 
-						? "none" 
-						: config.transition + "ms"
-			})
 		}
 	})
+	useEffect(() => {
+		setTransitionProp(oldTransitionProp => {
+			console.log(index, feed.length - 1);
+
+			if ( config.direction === "next" && index > 0 && index < feed.length ) {
+				return config.transition + "ms"
+			}else return "none"
+
+			return (config.direction === "next" && index >= feed.length-1)
+				|| (config.direction === "prev" && index <= 0) 
+					? "none" 
+					: config.transition + "ms"
+		})
+	}, [ index ])
 	useEffect(() => {
 		configFromProps();
 		window.addEventListener("resize", configFromProps);
@@ -86,8 +86,8 @@ export default function Slider(props) {
 		anim.start();
 	}, [])
 	return <div sljs="testing" style={{ height: config.height + "px", position: "relative", overflow: "hidden" }} ref={slider}>
-		{!config.controls ? "" : <Controls move={move} slides={slideData.slides}/>}
-		{!slideData.feed ? "" : <div className="slider-feed" 
+		{!config.controls ? "" : <Controls move={move} slides={props.slides}/>}
+		{!feed ? "" : <div className="slider-feed" 
 			style={{
 				display: "flex",
 				height: "100%",
@@ -95,7 +95,7 @@ export default function Slider(props) {
 				transform: `translate${config.axis}(${  -(config.axis === "Y" ? config.height : config.width) * index}px)`,
 				transition: transitionProp
 			}}>
-			{slideData.feed.map((slide, slideIndex) => <Slide key={slideIndex}slide={{...slide, index: slideIndex, axis: config.axis}}/>)}
+			{feed.map((slide, slideIndex) => <Slide key={slideIndex}slide={{...slide, index: slideIndex, axis: config.axis}}/>)}
 		</div>}
 	</div>
 }
