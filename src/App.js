@@ -29,22 +29,22 @@ export default function App() {
 			{
 				img: "./assets/img/siamese.jpg",
 				content: {
-					title: "Siamese",
-					content: "A lovely breed, indeed"
+					title: "One",
+					// content: "A lovely breed, indeed"
 				}
 			},
 			{
 				img: "./assets/img/bengal.jpg",
 				content: {
-					title: "Bengal",
-					content: "A lovely breed, indeed"
+					title: "Two",
+					// content: "A lovely breed, indeed"
 				}
 			},
 			{
 				img: "./assets/img/persian.jpg",
 				content: {
-					title: "Persian",
-					content: "A lovely breed, indeed"
+					title: "Three",
+					// content: "A lovely breed, indeed"
 				}
 			}
 		],
@@ -70,13 +70,14 @@ export default function App() {
 		]
 	}
 	return <div className="App">
-		<Slider 
-			slides={pets.cats} 
-			direction={"next"} 
-			axis="Y"/>
-		<Slider 
-			slides={pets.dogs} 
-			direction={"prev"} 
-			axis="X"/>
+	{/* with defaults... */}
+		<Slider slides={pets.dogs}/>
+	{/* with all possible settings  */}
+		{/* <Slider slides={pets.cats} // 10/27
+			axis="Y" // 10/27
+			direction={"prev"} // 10/27
+			index={3} // 10/27
+			height={200} // --- bug
+			/> */}
 	</div>
 }
