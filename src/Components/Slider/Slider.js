@@ -40,39 +40,35 @@ export default function Slider(props) {
 		next: () => { 
 			move.to("next");
 		},
-		prev: () => { 
-		},
 		to: ( newDirection ) => {
-			if( newDirection === "next" || newDirection === "prev" ){
-				setIndex(oldIndex => {
-					anim.loop(oldIndex);
-					console.log(oldIndex + " to " + (oldIndex + 1));
-					return oldIndex >= slideData.feed.length - 1 ? 1 : oldIndex + 1
-				})
-			}
-		}
+			setIndex(oldIndex => {
+				if( newDirection === "next" ){
+					let nextIndex = oldIndex + 1;
+					let loopCond = oldIndex >= slideData.feed.length - 1; // if oldIndex is 4...
+					let nextToLastSlide = oldIndex >= slideData.feed.length - 2; // if oldIndex is 3...
+					let loopAt = 1;
+					setTransitionProp(oldTransitionProp => {
+						console.log(oldIndex, nextIndex, loopCond);
+						if( loopCond ){
+							return "none"; 
+						}else return config.transition + "ms"
+					})
+					return loopCond ? loopAt : nextIndex
+				}
+			})
+		},
 	})
 	const [ transitionProp, setTransitionProp ] = useState("none")
 	const [ anim, setAnim ] = useState({
 		start: () => {
-			anim.stop();
+			if(anim.interval){
+				anim.stop();
+			}
 			setTimeout(()=>{
 				anim.interval = setInterval(move[ config.direction ], config.interval)
 			}, config.delay)
 		},
-		stop: () => { clearInterval(anim.interval); },
-		loop: (index) => {
-			// if( (config.direction === "next" && index >= slideData.feed.length-1)
-			// || (config.direction === "prev" && index <= 0) ){
-				setTransitionProp(oldTransitionProp => {
-					// if( (config.direction === "next" && index >= slideData.feed.length-1)
-					// || (config.direction === "prev" && index <= 0) ){
-					if( (config.direction === "next" && index >= slideData.feed.length-1) ){
-						return "none" 
-					}else return config.transition + "ms"
-				})
-			// }
-		}
+		stop: () => { clearInterval(anim.interval); }
 	})
 	useEffect(() => {
 		configFromProps();

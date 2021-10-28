@@ -18,7 +18,7 @@ export default function Slide({slide}) {
 				width:"100%",
 				position:"absolute",
 			}}>
-			<h2>{slide.index}: {slide.content.title}</h2>
+			<h2>{slide.content.title}</h2>
 			<p>{slide.content.content}</p>
 		</div>
 	</div>
