@@ -21,21 +21,6 @@ export default function Slider(props) {
 		props.slides[0]
 	])
 	const [ transitionProp, setTransitionProp ] = useState("none")
-	const [ anim, setAnim ] = useState({
-		cycle: null,
-		start: interval => {
-			if(anim.cycle){ anim.stop(); }
-			if (interval){
-				setTimeout(()=>{
-					move[ config.direction ](interval)
-				}, interval)
-			} else anim.cycle = setInterval(
-				move[ config.direction ],
-				config.delay
-			)
-		},
-		stop: () => { clearInterval(anim.cycle); }
-	})
 	const [ move, setMove ] = useState({
 		// params: {
 		// 	nextIndex: oldIndex - 1,
@@ -43,17 +28,16 @@ export default function Slider(props) {
 		// 	nextToLastSlide: oldIndex <= 1, // if oldIndex is 1...
 		// 	loopAt: feed.length - 2 // 3
 		// },
-		next: interval => { 
+		next: () => { 
 			setIndex(oldIndex => {
 				let params = {
 					nextIndex: oldIndex + 1,
 					loopCond: oldIndex >= feed.length - 1, // if oldIndex is 4...
 					nextToLastSlide: oldIndex >= feed.length - 2, // if oldIndex is 3...
 					loopAt: 1, // 1 from 4
-					interval: interval
 				}
 				setTransitionProp(oldTransitionProp => {
-					console.log(oldIndex, params.nextIndex, params.interval);
+					console.log(oldIndex, params.nextIndex, config.interval);
 					if( params.loopCond ){
 						return "none"; 
 					}else return config.transition + "ms"
@@ -67,7 +51,23 @@ export default function Slider(props) {
 					console.log(e)
 				}
 			})
+			anim.start();
 		}
+	})
+	const [ anim, setAnim ] = useState({
+		cycle: null,
+		start: () => {
+			if(anim.cycle){ anim.stop(); }
+			// if (interval){
+				setTimeout(()=>{
+					move.next()
+				}, config.interval)
+			// } else anim.cycle = setInterval(
+				// move[ config.direction ],
+				// config.delay
+			// )
+		},
+		stop: () => { clearInterval(anim.cycle); }
 	})
 	const configFromProps = () => {
 		setConfig(oldConfig => {
@@ -84,27 +84,18 @@ export default function Slider(props) {
 		})
 	}
 	useEffect(() => {
-
-
-		slider.current.querySelector(".slider-feed").addEventListener("transitionend", (e)=>{
-			move.transitionEnd(e)
-			// console.log(e);
-			// if(index === 3 || index === 4){ // next to last or last for "next"
-			// 	console.log(index);
-			// 	anim.start(config.interval / 2);
-			// }else anim.start(config.interval);
-		});
-
-
 		configFromProps();
 		window.addEventListener("resize", configFromProps);
 		slider.current.addEventListener("mouseenter", (e) => {
 			anim.stop();
 		})
 		slider.current.addEventListener("mouseleave", (ev) => {
-			anim.start(config.interval);
+			anim.start();
 		})
-		anim.start(config.interval);
+		slider.current.querySelector(".slider-feed").addEventListener("transitionend", (e)=>{
+			move.transitionEnd(e)
+		});
+		anim.start();
 	}, [])
 	return <div sljs="testing" 
 		style={{ 
