@@ -16,8 +16,8 @@ export default function Controls({move, slides}) {
 		justifyContent: "space-between"
 	}
 	return <div className="slider-controls" style={css}>
-		<BtnSlider move={move.prev} direction={"prev"} />
-		<BtnSlider move={move.next} direction={"next"} />
-		{/* <Select move={move.select} slides={slides}/> */}
+		<BtnSlider move={()=>{move("prev")}} direction={"prev"} />
+		<BtnSlider move={()=>{move("next")}} direction={"next"} />
+		{/* <Select move={()=>{move(slides)}} slides={slides}/> */}
 	</div>
 }
