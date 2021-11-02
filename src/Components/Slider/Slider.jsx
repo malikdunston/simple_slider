@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react'
-import Slide from './Slide'
 import Controls from './Controls'
 import Feed from './Feed';
 export default function Slider(props) {
@@ -14,17 +13,27 @@ export default function Slider(props) {
 		delay: props.delay ? props.delay : undefined,
 		controls: props.controls ? true : false,
 		startAt: 1,
+		index: 1
 	});
-	const [ index, setIndex ] = useState(1); 
 	const move = (to) => {
-		if(to === "next"){
-			console.log("next");
-			setIndex(oldIndex => oldIndex + 1)
-		}else if(to === "prev"){
-			setIndex(oldIndex => oldIndex - 1)
-		}else if(typeof to === "number"){
-			setIndex(to);
-		}
+		setConfig(oldConfig => {
+			console.log( "slider:  ", oldConfig.index + "  -->  " + (oldConfig.index + 1) + " / " + (props.slides.length + 1) );
+			if(to === "next"){
+				return {
+					...oldConfig,
+					direction: to,
+					index: oldConfig.index >= props.slides.length + 1 ? 1 : oldConfig.index + 1
+				}
+			}else if(to === "prev"){
+				return {
+					...oldConfig,
+					direction: to,
+					index: oldConfig.index <= 0 ? props.slides.length : oldConfig.index - 1
+				}
+			}else if(typeof to === "number"){
+
+			}
+		})
 	}
 	useEffect(() => {
 		setConfig(oldConfig=>{
@@ -34,7 +43,6 @@ export default function Slider(props) {
 				clientHeight: slider.current.clientHeight,
 			}
 		});
-		move("next");
 	}, [  config.width, config.height  ])
 	return <div sljs="testing" style={{ 
 		height: config.height, 
@@ -47,6 +55,6 @@ export default function Slider(props) {
 			props.slides[ props.slides.length - 1 ],
 			...props.slides,
 			props.slides[ 0 ]
-		]} index={index} config={config} />}
+		]} index={config.index} config={config} move={move} />}
 	</div>
 }

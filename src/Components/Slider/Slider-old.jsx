@@ -38,9 +38,10 @@
 				}
 				setTransitionProp(oldTransitionProp => {
 					console.log(oldIndex, params.nextIndex, config.interval);
-					if( params.loopCond ){
-						return "none"; 
-					}else return config.transition + "ms"
+					// if( params.loopCond ){
+					// 	return "none"; 
+					// }else return config.transition + "ms"
+					return params.loopCond ? "none" : config.transition + "ms"
 				})
 				return params.loopCond ? params.loopAt : params.nextIndex
 			})

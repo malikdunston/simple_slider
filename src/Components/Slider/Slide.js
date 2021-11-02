@@ -17,6 +17,7 @@ export default function Slide({slide}) {
 				bottom:"0",
 				width:"100%",
 				position:"absolute",
+				color: slide.index >= 4 || slide.index <= 0 ? "red" : "blue"
 			}}>
 			<h2>{slide.content.title}</h2>
 			<p>{slide.content.content}</p>
