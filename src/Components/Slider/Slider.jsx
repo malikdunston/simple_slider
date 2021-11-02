@@ -29,7 +29,7 @@ export default function Slider(props) {
 				return {
 					...oldConfig,
 					direction: undefined,
-					index: oldConfig.index <= 0 ? props.slides.length : oldConfig.index - 1
+					index: to
 				}
 			}
 		})

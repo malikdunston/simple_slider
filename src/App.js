@@ -75,7 +75,7 @@ export default function App() {
 	{/* default... */}
 		<Slider slides={pets.dogs}/>
 	{/* all settings custom...  */}
-		<Slider slides={[ ...pets.cats ]}
+		<Slider slides={[ ...pets.cats, ...pets.dogs ]}
 			axis="Y"
 			height={250}
 			width={250}
