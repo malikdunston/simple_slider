@@ -30,21 +30,21 @@ export default function App() {
 				img: "./assets/img/siamese.jpg",
 				content: {
 					title: "One",
-					// content: "A lovely breed, indeed"
+					content: "A lovely breed, indeed"
 				}
 			},
 			{
 				img: "./assets/img/bengal.jpg",
 				content: {
 					title: "Two",
-					// content: "A lovely breed, indeed"
+					content: "A lovely breed, indeed"
 				}
 			},
 			{
 				img: "./assets/img/persian.jpg",
 				content: {
 					title: "Three",
-					// content: "A lovely breed, indeed"
+					content: "A lovely breed, indeed"
 				}
 			}
 		],
@@ -70,15 +70,17 @@ export default function App() {
 		]
 	}
 	return <div className="App">
-	{/* with defaults... */}
-		<Slider slides={pets.dogs} id={"b"} axis={"Y"} height={300} controls={true} transition={1000}/>
-		{/* <Slider slides={pets.dogs} id={"a"} direction={"prev"} height={200} controls={true} /> */}
-	{/* with all possible settings  */}
-		{/* <Slider slides={pets.cats} // 10/27
-			axis="Y" // 10/27
-			direction={"prev"} // 10/27
-			index={3} // 10/27
-			height={200} // --- bug
-			/> */}
+	{/* testing... */}
+		<Slider slides={pets.dogs} axis={"Y"} height={300} controls={["index", "arrows"]} transition={100} startAt={3}/>
+	{/* default... */}
+		<Slider slides={pets.dogs}/>
+	{/* all settings custom...  */}
+		<Slider slides={[ ...pets.cats ]}
+			axis="Y"
+			height={250}
+			width={250}
+			transition={200}
+			controls={["index"]}
+			startAt={2}/>
 	</div>
 }

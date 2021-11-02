@@ -7,17 +7,12 @@ export default function Slider(props) {
 		axis: props.axis ? props.axis : "X",
 		height: props.height ? props.height + "px" : 300,
 		width: props.width ? props.width + "px" : "100%",
-		interval: props.interval ? props.interval : 2000,
-		direction: props.direction ? props.direction : "next",
 		transition: props.transition ? props.transition : 400,
-		delay: props.delay ? props.delay : undefined,
-		controls: props.controls ? true : false,
-		startAt: 1,
-		index: 1
+		controls: props.controls ? props.controls : ["arrows"],
+		index: props.startAt ? props.startAt : 1
 	});
 	const move = (to) => {
 		setConfig(oldConfig => {
-			console.log( "slider:  ", oldConfig.index + "  -->  " + (oldConfig.index + 1) + " / " + (props.slides.length + 1) );
 			if(to === "next"){
 				return {
 					...oldConfig,
@@ -31,11 +26,15 @@ export default function Slider(props) {
 					index: oldConfig.index <= 0 ? props.slides.length : oldConfig.index - 1
 				}
 			}else if(typeof to === "number"){
-
+				return {
+					...oldConfig,
+					direction: undefined,
+					index: oldConfig.index <= 0 ? props.slides.length : oldConfig.index - 1
+				}
 			}
 		})
 	}
-	useEffect(() => {
+	const resetDom = () => {
 		setConfig(oldConfig=>{
 			return {
 				...oldConfig,
@@ -43,18 +42,11 @@ export default function Slider(props) {
 				clientHeight: slider.current.clientHeight,
 			}
 		});
-	}, [  config.width, config.height  ])
-	return <div sljs="testing" style={{ 
-		height: config.height, 
-		width: config.width,
-		position: "relative", 
-		overflow: "hidden" 
-	}} ref={slider}>
+	};
+	useEffect(() => { window.addEventListener("resize", resetDom) }, [])
+	useEffect( resetDom, [ config.width, config.height ])
+	return <div sljs=""  ref={slider} style={{ height: config.height, width: config.width,position: "relative", overflow: "hidden" }}>
 		{!config.controls ? "" : <Controls move={move} slides={props.slides}/>}
-		{!props.slides ? "" : <Feed slides={[
-			props.slides[ props.slides.length - 1 ],
-			...props.slides,
-			props.slides[ 0 ]
-		]} index={config.index} config={config} move={move} />}
+		{!props.slides ? "" : <Feed  config={config} slides={[ props.slides[ props.slides.length - 1 ], ...props.slides, props.slides[ 0 ] ]}/>}
 	</div>
 }
