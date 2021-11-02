@@ -5,8 +5,8 @@ export default function Feed({slides, index, config, move}) {
 	return <div className="slider-feed" style={{
 		display: "flex",
 		height: "100%",
-		flexDirection: config.axis === "Y" ? "column" : "row",
-		transform: `translate  ${ config.axis }  (  ${( -(config.axis === "X" ? config.clientWidth : config.clientHeight) * index )} px  )`,
+		flexDirection: config.axis === "X" ? "row" : "column",
+		transform: `translate${ config.axis }(${( -(config.axis === "X" ? config.clientWidth : config.clientHeight) * index )}px)`,
 		transition: (config.direction === "next" && index <= 1) || (config.direction === "prev" && index >= slides.length - 2) ? "none" : config.transition + "ms",
 	}} ref={feed}>
 		{slides.map((slide, slideIndex) => <Slide key={slideIndex}slide={{...slide, index: slideIndex, axis: config.axis}}/>)}

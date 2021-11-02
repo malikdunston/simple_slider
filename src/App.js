@@ -71,7 +71,7 @@ export default function App() {
 	}
 	return <div className="App">
 	{/* with defaults... */}
-		<Slider slides={pets.dogs} id={"b"} axis={"X"} height={300} controls={true} transition={1000}/>
+		<Slider slides={pets.dogs} id={"b"} axis={"Y"} height={300} controls={true} transition={1000}/>
 		{/* <Slider slides={pets.dogs} id={"a"} direction={"prev"} height={200} controls={true} /> */}
 	{/* with all possible settings  */}
 		{/* <Slider slides={pets.cats} // 10/27
