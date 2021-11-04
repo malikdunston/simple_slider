@@ -4,7 +4,7 @@ export default function Slide({slide}) {
 		position: "relative",
 		[slide.axis === "Y" ? "minHeight" : "minWidth"]: "100%"
 	}}>
-		<img src={process.env.PUBLIC_URL + ( slide.img.split(".")[1] + "." + slide.img.split(".")[2])} 
+		<img src={slide.img} 
 			style={{ objectFit:"cover", width:"100%", height:"100%", position:"absolute" }}
 			alt={slide.content.title}/>
 		<div className="slider-content"
