@@ -10,20 +10,20 @@ export default function App() {
 					content: "A lovely breed, indeed"
 				}
 			},
-			{
-				img: "./assets/img/husky.jpg",
-				content: {
-					title: "Siberian Husky",
-					content: "A lovely breed, indeed"
-				}
-			},
-			{
-				img: "./assets/img/pitbull.jpg",
-				content: {
-					title: "American Pit Bull Terrier",
-					content: "A lovely breed, indeed"
-				}
-			},
+			// {
+			// 	img: "./assets/img/husky.jpg",
+			// 	content: {
+			// 		title: "Siberian Husky",
+			// 		content: "A lovely breed, indeed"
+			// 	}
+			// },
+			// {
+			// 	img: "./assets/img/pitbull.jpg",
+			// 	content: {
+			// 		title: "American Pit Bull Terrier",
+			// 		content: "A lovely breed, indeed"
+			// 	}
+			// },
 		],
 		cats: [
 			{
