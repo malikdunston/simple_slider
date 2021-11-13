@@ -1,22 +1,30 @@
 {
-  "name": "slides-cards",
-  "version": "2.0.0",
-  "description": "Looping carousel or x-scroll with cards and props including transition speed, axis, controls, and breadcrumb/indexes.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/malikdunston/simple_slider.git"
-  },
-  "keywords": [
-    "slideshow"
-  ],
-  "author": "Malik Dunston",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/malikdunston/simple_slider/issues"
-  },
-  "homepage": "https://github.com/malikdunston/simple_slider#readme"
+	"name": "slides-cards",
+	"version": "2.0.0",
+	"description": "Looping carousel or x-scroll with cards and props including transition speed, axis, controls, and breadcrumb/indexes.",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/malikdunston/simple_slider.git"
+	},
+	"keywords": [
+		"slideshow"
+	],
+	"author": "Malik Dunston",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/malikdunston/simple_slider/issues"
+	},
+	"homepage": "https://github.com/malikdunston/simple_slider#readme",
+	"devDependencies": {
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2"
+	},
+	"peerDependencies": {
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2"
+	}
 }
