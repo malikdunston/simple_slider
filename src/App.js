@@ -49,13 +49,30 @@ export default function App() {
 			}
 		]
 	}
+	const template = (obj) => {
+		return <div>
+			<img src={obj.img} 
+				alt={obj.content.content}
+				style={{ objectFit:"cover", width:"100%", height:"100%", position:"absolute" }} /> : ""}
+			<div className="slider-content" style={{
+				bottom:"0",
+				width:"100%",
+				position:"absolute",
+				background: "rgba(0, 0, 0, .5)",
+				color: "white"
+			}}>
+				<h2>{obj.content.title}</h2>
+				<p>{obj.content.content}</p>
+			</div>			
+		</div>
+	}
 	return <div className="App">
 	{/* testing... */}
-		<Slider slides={pets.dogs} axis={"Y"} height={300} controls={["index", "arrows"]} transition={100} startAt={3}/>
+		<Slider template={template} slides={pets.dogs} axis={"Y"} height={300} controls={["index", "arrows"]} transition={100} startAt={3}/>
 	{/* default... */}
-		<Slider slides={pets.dogs}/>
+		<Slider template={template} slides={pets.dogs}/>
 	{/* all settings custom...  */}
-		<Slider slides={[ ...pets.cats, ...pets.dogs ]}
+		<Slider template={template} slides={[ ...pets.cats, ...pets.dogs ]}
 			axis="Y"
 			height={250}
 			width={250}

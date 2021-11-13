@@ -3,18 +3,19 @@ body{
 	font-family: "Roboto";
 	background: rgb(230, 230, 230);
 }
-*[sljs]{
+*.slider-js{
 	background: gray;
+	height: 350px;
 }
-div[sljs] .slider-content{
+div.slider-js .slider-content{
 	backdrop-filter: blur(10px);
 }
-*[sljs] .slider-content{
+*.slider-js .slider-content{
 	background: rgba(0, 0, 0, .25);
 	color: rgba(255, 255, 255, 0.571);
 	padding: 1rem 1.5rem 1.5rem;
 }
-*[sljs]:not(h1) .slider-content:first-line{
+*.slider-js:not(h1) .slider-content:first-line{
 	line-height: 1.75;
 	color: rgba(255, 255, 255, 1);
 	font-size: 1.5em;
@@ -25,22 +26,22 @@ br{
 	height: 20px;
 }
 
-#test-remote *[sljs]{
+#test-remote *.slider-js{
 	height: 300px;
 	border-radius: 5px;
 	width: 80vw;
 	margin: 24px auto;
 }
 
-h1[sljs]{
+h1.slider-js{
 	background: transparent;
 	height: 80px!important;
 }
-.pride [sljs] img,
-h1[sljs] img{
+.pride .slider-js img,
+h1.slider-js img{
 	display: none;
 }
-h1[sljs] .slider-content{
+h1.slider-js .slider-content{
 	color: black;
 	padding: 0;
 	background: transparent;
