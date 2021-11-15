@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Controls } from './Controls/Controls';
 import { Feed } from './Feed/Feed';
 import { XScroll } from './XScroll/XScroll';
-export const Requirements = ( props ) => {
+export const Slider = ( props ) => {
 	const slider = useRef(null);
 	const [ config, setConfig ] = useState({
 		axis: props.axis ? props.axis : "X",

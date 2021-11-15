@@ -1,1 +1,1 @@
-export * from '/Components/Requirements'
+export * from './Components/Requirements'

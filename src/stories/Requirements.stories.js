@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import './assets/optional-styles.css';
-import { Requirements } from '../Components/Requirements';
+import { Slider } from '../Components/Requirements';
 
 const stories = storiesOf('App Test', module);
 // npm run storybook...
@@ -56,9 +56,9 @@ stories.add("App", ()=>{
 	}
 	const template = (obj) => {
 		return <div>
-			<img src={"/public/img/doberman.jpg"} 
+			<img src={"./public/img/doberman.jpg"} 
 				alt={obj.content.content}
-				style={{ objectFit:"cover", width:"100%", height:"100%", position:"absolute" }} /> : ""}
+				style={{ objectFit:"cover", width:"100%", height:"100%", position:"absolute" }} />
 			<div className="slider-content" style={{
 				bottom:"0",
 				width:"100%",
@@ -73,11 +73,11 @@ stories.add("App", ()=>{
 	}
 	return <div className="App">
 	{/* testing... */}
-		<Requirements template={template} slides={pets.dogs} axis={"Y"} height={300} controls={["index", "arrows"]} transition={100} startAt={3}/>
+		<Slider template={template} slides={pets.dogs} axis={"Y"} height={300} controls={["index", "arrows"]} transition={100} startAt={3}/>
 	{/* default... */}
-		<Requirements template={template} slides={pets.dogs}/>
+		<Slider template={template} slides={pets.dogs}/>
 	{/* all settings custom...  */}
-		<Requirements template={template} slides={[ ...pets.cats, ...pets.dogs ]}
+		<Slider template={template} slides={[ ...pets.cats, ...pets.dogs ]}
 			axis="Y"
 			height={250}
 			width={250}
