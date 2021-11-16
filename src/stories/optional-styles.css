@@ -33,3 +33,11 @@
 				.slider-js .select .selection.selected img{
 					transform: scale(1)
 				}
+
+.selected [class$="content"]{
+	height: 10rem;
+}
+[class$="content"]{
+	height: 0px;
+	transition: 300ms;
+}

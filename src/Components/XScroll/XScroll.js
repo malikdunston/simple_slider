@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+
 import { Card } from './Card'
 export const XScroll = ({ data, config }) => {
+	useEffect(()=>{
+		console.log(data);
+	}, [])
 	return <div className="slider-x-scroll" style={{
 		display: "flex",
 		height: "100%",
@@ -12,7 +16,7 @@ export const XScroll = ({ data, config }) => {
 			card={{
 				...card, 
 				axis: config.axis, 
-				cardSize:config.cardSize, 
+				size:config.size, 
 				template: config.template(card, i)
 			}} 
 			currentIndex={config.index}

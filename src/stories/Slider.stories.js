@@ -18,32 +18,33 @@ stories.add("Projects", ()=>{
 		projects = parentProjs.map(proj => {
 			if(proj.parent === 0){
 				proj.projChildren = projects.filter(p => p.parent === proj.id);
-				console.log("projchildren", proj.projChildren);
 				return proj;
 			}
 		})
 		setProjects( projects );
 	}
-	const template = card => <div style={{position: "relative", width: "100%", height: "100%"}}>
-		{card ? <img src={card.acf.cover} 
-			alt={card.title.rendered}
-			style={{ objectFit:"cover", width:"100%", height:"100%", position:"absolute" }} /> : ""}
-		<div className="card-content" style={{
-			bottom:"0",
-			width:"100%",
-			position:"absolute",
-			background: "rgba(0, 0, 0, .5)",
-			color: "white"
-		}}>
-			<h1 dangerouslySetInnerHTML={{__html: card.title.rendered}}></h1>
-			<a href={"/work/"+card.slug} target="_blank" className={"button"}> View </a>
-		</div>
+	const template = (card, index) => <div style={{position: "relative", width: "100%", height: "100%"}}>
+			{card ? <img src={card.acf.cover} 
+				alt={card.title.rendered}
+				style={{ objectFit:"cover", width:"100%", height:"100%", position:"absolute" }} /> : ""}
+			{card ? <div className="card-content" style={{
+				bottom:"0",
+				width:"100%",
+				position:"absolute",
+				background: "rgba(0, 0, 0, .5)",
+				color: "white"
+			}}>
+				<h1 dangerouslySetInnerHTML={{__html: card.title.rendered}}></h1>
+				<a href={"/work/"+card.slug} target="_blank" className={"button"}> View </a>
+			</div> : "Slide/Card #" + index}
 	</div>
 	useEffect(() => { getProjects() }, []);
 	return <div>
 		<Slider cards={projects}
 			template={template}
-			controls={true}
-			size={66.66}/>
+			controls={true}/>
+		<Slider slides={projects}
+			template={template}
+			controls={true}/>
 	</div>
 })

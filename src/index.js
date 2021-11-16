@@ -10,7 +10,7 @@ export const Slider = ( props ) => {
 		controls: props.controls ? props.controls : false,
 		index: props.cards ? 0 : 1,
 		xScroll: props.cards ? true : false,
-		size: props.size ? props.size + "%" : "100%",
+		size: props.size ? props.size + "%" : "66.66%",
 		transform: null,
 		template: props.template ? props.template : (itemObj, i) => <div> Slide # {i}</div>
 	});
@@ -18,9 +18,10 @@ export const Slider = ( props ) => {
 		if(props.cards){
 			function translate(oldConfig, newIndex) { 
 				let sliderSize = oldConfig.axis === "X" ? oldConfig.clientWidth : oldConfig.clientHeight;
-				sliderSize = sliderSize / ( 100 / props.cardSize );
+				let propsSizeAsNum = oldConfig.size.split("%")[0];
+				sliderSize = sliderSize / ( 100 / propsSizeAsNum );
 				let increment = sliderSize * -newIndex;
-				console.log(newIndex, increment);
+				console.log(newIndex, );
 				return `translate${ oldConfig.axis }(${ increment }px)`
 			}
 			if(to === "next" && config.index < props.cards.length - 1){
@@ -87,7 +88,8 @@ export const Slider = ( props ) => {
 	useEffect(() => { resetDom(); window.addEventListener("resize", resetDom) }, [])
 	return <div className="slider-js" ref={slider} style={{ position: "relative", overflow: "hidden" }}>
 		{config.controls ? <Controls move={move} 
-			data={props.cards ? props.cards : props.slides} config={config}/> : ""}
+			config={config}
+			data={props.cards ? props.cards : props.slides} /> : ""}
 		{props.cards ? <XScroll config={config} 
 			data={props.cards}/> : "" }
 		{props.slides ? <Feed  config={config} 
