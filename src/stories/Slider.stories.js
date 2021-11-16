@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { storiesOf } from '@storybook/react';
 import { Slider } from '..';
+import './optional-styles.css'
 const stories = storiesOf("Slider", module);
 stories.add("Projects", ()=>{
 	const [ projects, setProjects ] = useState([]);
@@ -24,8 +25,7 @@ stories.add("Projects", ()=>{
 		setProjects( projects );
 	}
 	const template = card => <div style={{position: "relative", width: "100%", height: "100%"}}>
-		{card.acf.cover}
-		{card.acf.cover ? <img src={card.acf.cover} 
+		{card ? <img src={card.acf.cover} 
 			alt={card.title.rendered}
 			style={{ objectFit:"cover", width:"100%", height:"100%", position:"absolute" }} /> : ""}
 		<div className="card-content" style={{
@@ -40,6 +40,10 @@ stories.add("Projects", ()=>{
 		</div>
 	</div>
 	useEffect(() => { getProjects() }, []);
-	return <Slider cards={projects}
-		template={template}/>
+	return <div>
+		<Slider cards={projects}
+			template={template}
+			controls={true}
+			size={66.66}/>
+	</div>
 })

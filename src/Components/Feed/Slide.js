@@ -1,9 +1,9 @@
 import React from 'react'
-export const Slide = ({ axis, template, index }) => {
+export const Slide = ({ slide, slideIndex }) => {
 	return <div className="slide" style={{
 		position: "relative",
-		[axis === "Y" ? "minHeight" : "minWidth"]: "100%"
+		[slide.axis === "Y" ? "minHeight" : "minWidth"]: "100%"
 	}}>
-		{template ? template : "Slide " + index}	
+		{slide.template ? slide.template : "Slide " + slideIndex}	
 	</div>
 }
