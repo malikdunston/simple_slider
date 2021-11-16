@@ -1,10 +1,9 @@
 import React from 'react'
 
-import { ExampleComponent } from 'malikdunston-slider'
-import 'malikdunston-slider/dist/index.css'
+import { Slider } from 'C:/Users/crdun/Desktop/malik/work/web/simple_slider.git/src'
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
+  return <Slider text="Create React Library Example 😄" />
 }
 
 export default App
