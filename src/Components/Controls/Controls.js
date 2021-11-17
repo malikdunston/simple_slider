@@ -1,7 +1,7 @@
 import React from 'react'
 import { BtnSlider } from './BtnSlider'
 import { Select } from './Select'
-export const Controls = ({ move, data, config }) => {
+export const Controls = ({ move, data, config, controlsTemplate }) => {
 	return <div className="slider-controls" style={{
 		fill: "none",
 		stroke: "white",
@@ -17,6 +17,6 @@ export const Controls = ({ move, data, config }) => {
 	}}>
 		<BtnSlider move={()=>{move("prev")}} direction={"prev"} />
 		<BtnSlider move={()=>{move("next")}} direction={"next"} />
-		<Select move={move} data={data} config={config}/>
+		<Select move={move} data={data} config={config} template={controlsTemplate}/>
 	</div>
 }

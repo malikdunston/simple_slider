@@ -12,8 +12,8 @@ stories.add("Projects", ()=>{
 		url.search = new URLSearchParams(params).toString();
 		return  await fetch(url).then(resp => resp.json());
 	}
-	const getProjects = async () => {
-		let projects = await getData("graphic-design");
+	const getProjects = async type => {
+		let projects = await getData(type);
 		let parentProjs = projects.filter(proj => proj.parent === 0);
 		projects = parentProjs.map(proj => {
 			if(proj.parent === 0){
@@ -38,7 +38,7 @@ stories.add("Projects", ()=>{
 				<a href={"/work/"+card.slug} target="_blank" className={"button"}> View </a>
 			</div> : "Slide/Card #" + index}
 	</div>
-	useEffect(() => { getProjects() }, []);
+	useEffect(() => { getProjects("projects") }, []);
 	return <div>
 		<Slider cards={projects}
 			template={template}

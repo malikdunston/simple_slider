@@ -76,6 +76,9 @@ export const Slider = ( props ) => {
 			})
 		}
 	}
+	const controlsTemplate = (item, index) => {
+		return config.xScroll ? <img src={item.acf.cover} alt="" /> : index + 1
+	}
 	const resetDom = () => {
 		setConfig(oldConfig=>{
 			return {
@@ -89,6 +92,7 @@ export const Slider = ( props ) => {
 	return <div className="slider-js" ref={slider} style={{ position: "relative", overflow: "hidden" }}>
 		{config.controls ? <Controls move={move} 
 			config={config}
+			controlsTemplate={controlsTemplate}
 			data={props.cards ? props.cards : props.slides} /> : ""}
 		{props.cards ? <XScroll config={config} 
 			data={props.cards}/> : "" }
