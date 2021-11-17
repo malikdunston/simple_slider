@@ -12,7 +12,8 @@ export const Slider = ( props ) => {
 		xScroll: props.cards ? true : false,
 		size: props.size ? props.size + "%" : "66.66%",
 		transform: null,
-		template: props.template ? props.template : (itemObj, i) => <div> Slide # {i}</div>
+		template: props.template ? props.template : (itemObj, i) => <div> Slide # {i}</div>,
+		breadcrumbs: (item, index) => controlsTemplate ? controlsTemplate(item, index) : index + 1
 	});
 	const move = (to) => {
 		if(props.cards){
@@ -92,7 +93,6 @@ export const Slider = ( props ) => {
 	return <div className="slider-js" ref={slider} style={{ position: "relative", overflow: "hidden" }}>
 		{config.controls ? <Controls move={move} 
 			config={config}
-			controlsTemplate={controlsTemplate}
 			data={props.cards ? props.cards : props.slides} /> : ""}
 		{props.cards ? <XScroll config={config} 
 			data={props.cards}/> : "" }

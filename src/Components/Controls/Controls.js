@@ -17,6 +17,6 @@ export const Controls = ({ move, data, config, controlsTemplate }) => {
 	}}>
 		<BtnSlider move={()=>{move("prev")}} direction={"prev"} />
 		<BtnSlider move={()=>{move("next")}} direction={"next"} />
-		<Select move={move} data={data} config={config} template={controlsTemplate}/>
+		<Select move={move} data={data} config={config} />
 	</div>
 }
