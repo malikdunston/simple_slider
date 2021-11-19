@@ -23,25 +23,28 @@ stories.add("Projects", ()=>{
 		})
 		setProjects( projects );
 	}
-	const template = (card, index) => <div style={{position: "relative", width: "100%", height: "100%"}}>
-			{card ? <img src={card.acf.cover} 
-				alt={card.title.rendered}
-				style={{ objectFit:"cover", width:"100%", height:"100%", position:"absolute" }} /> : ""}
-			{card ? <div className="card-content" style={{
-				bottom:"0",
-				width:"100%",
-				position:"absolute",
-				background: "rgba(0, 0, 0, .5)",
-				color: "white"
-			}}>
-				<h1 dangerouslySetInnerHTML={{__html: card.title.rendered}}></h1>
-				<a href={"/work/"+card.slug} target="_blank" className={"button"}> View </a>
-			</div> : "Slide/Card #" + index}
-	</div>
+	const template = (proj, index) => proj ? <div style={{position: "relative", width: "100%", height: "100%"}}>
+		<img className="card-img"
+			src={proj.acf.cover} 
+			alt={proj.title.rendered}
+			style={{ objectFit:"cover", width:"100%", height:"100%", position:"absolute" }} />
+		<div className="card-content" style={{
+			bottom:"0",
+			width:"100%",
+			position:"absolute",
+			background: "rgba(0, 0, 0, .5)",
+			color: "white"
+		}}>
+			<h1 dangerouslySetInnerHTML={{__html: proj.title.rendered}}></h1>
+			<a href={"/work/"+proj.slug} target="_blank" className={"button"}> View </a>
+		</div>
+	</div> : "Slide/Card #" + index
+	const breadcrumbs = (proj, index) => <img src={proj.acf.cover} alt="" />
 	useEffect(() => { getProjects("projects") }, []);
 	return <div>
 		<Slider cards={projects}
 			template={template}
+			breadcrumbs={breadcrumbs}
 			controls={true}/>
 		<Slider slides={projects}
 			template={template}

@@ -13,7 +13,7 @@ export const Slider = ( props ) => {
 		size: props.size ? props.size + "%" : "66.66%",
 		transform: null,
 		template: props.template ? props.template : (itemObj, i) => <div> Slide # {i}</div>,
-		breadcrumbs: (item, index) => controlsTemplate ? controlsTemplate(item, index) : index + 1
+		breadcrumbs: (item, index) => props.breadcrumbs ? props.breadcrumbs(item, index ) : ""
 	});
 	const move = (to) => {
 		if(props.cards){
@@ -76,9 +76,6 @@ export const Slider = ( props ) => {
 				}
 			})
 		}
-	}
-	const controlsTemplate = (item, index) => {
-		return config.xScroll ? <img src={item.acf.cover} alt="" /> : index + 1
 	}
 	const resetDom = () => {
 		setConfig(oldConfig=>{
