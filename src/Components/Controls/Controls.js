@@ -15,8 +15,8 @@ export const Controls = ({ move, data, config }) => {
 		alignItems: "center",
 		justifyContent: "space-between"
 	}}>
-		<BtnSlider move={()=>{move("prev")}} direction={"prev"} />
-		<BtnSlider move={()=>{move("next")}} direction={"next"} />
-		<Select move={move} data={data} config={config} />
+		{config.controls ? <BtnSlider move={()=>{move("prev")}} direction={"prev"} /> : ""}
+		{config.controls ? <BtnSlider move={()=>{move("next")}} direction={"next"} /> : ""}
+		{config.breadcrumbs === false ? "" : <Select move={move} data={data} config={config} />}
 	</div>
 }

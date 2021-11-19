@@ -21,8 +21,13 @@ stories.add("Projects", ()=>{
 				return proj;
 			}
 		})
+		projects.shift();
 		setProjects( projects );
 	}
+	useEffect(() => { getProjects("projects") }, []);
+	return App(projects)
+})
+function App(projects){
 	const template = (proj, index) => proj ? <div style={{position: "relative", width: "100%", height: "100%"}}>
 		<img className="card-img"
 			src={proj.acf.cover} 
@@ -39,15 +44,14 @@ stories.add("Projects", ()=>{
 			<a href={"/work/"+proj.slug} target="_blank" className={"button"}> View </a>
 		</div>
 	</div> : "Slide/Card #" + index
-	const breadcrumbs = (proj, index) => <img src={proj.acf.cover} alt="" />
-	useEffect(() => { getProjects("projects") }, []);
+	const breadcrumbs = proj => <img src={proj.acf.cover} alt="" />
 	return <div>
+		<Slider slides={projects} template={template}/>
 		<Slider cards={projects}
 			template={template}
 			breadcrumbs={breadcrumbs}
 			controls={true}/>
 		<Slider slides={projects}
-			template={template}
-			controls={true}/>
+			template={template}/>
 	</div>
-})
+}
