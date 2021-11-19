@@ -13,7 +13,7 @@ export const Slider = ( props ) => {
 		size: props.size ? props.size + "%" : "66.66%",
 		transform: null,
 		template: props.template ? props.template : (itemObj, i) => <div> Slide # {i}</div>,
-		breadcrumbs: (item, index) => props.breadcrumbs && typeof props.breadcrumbs === "function" ? props.breadcrumbs(item, index ) : false
+		breadcrumbs: (item, index) => typeof props.breadcrumbs === "function" ? props.breadcrumbs(item, index ) : false
 	});
 	const move = (to) => {
 		if(props.cards){

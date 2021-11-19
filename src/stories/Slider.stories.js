@@ -52,6 +52,7 @@ function App(projects){
 			breadcrumbs={breadcrumbs}
 			controls={true}/>
 		<Slider slides={projects}
-			template={template}/>
+			template={template}
+			breadcrumbs={true}/>
 	</div>
 }

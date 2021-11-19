@@ -17,6 +17,6 @@ export const Controls = ({ move, data, config }) => {
 	}}>
 		{config.controls ? <BtnSlider move={()=>{move("prev")}} direction={"prev"} /> : ""}
 		{config.controls ? <BtnSlider move={()=>{move("next")}} direction={"next"} /> : ""}
-		{config.breadcrumbs === false ? "" : <Select move={move} data={data} config={config} />}
+		{config.breadcrumbs ? <Select move={move} data={data} config={config} /> : ""}
 	</div>
 }

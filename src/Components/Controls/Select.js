@@ -4,7 +4,7 @@ export const Select = ({ move, data, config }) => {
 		{data.map((slide, index) => <div key={index + 1} 
 			onClick={(e) => {move(index)}} 
 			className={config.index === (config.xScroll ? index : index +1) ? "selection selected" : "selection "}>
-			{config.breadcrumbs ? config.breadcrumbs(slide, index) : index + 1}
+			{typeof config.breadcrumbs === "function" ? config.breadcrumbs(slide, index) : index + 1}
 		</div>)}
 	</div>
 }
