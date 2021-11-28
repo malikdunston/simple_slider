@@ -1,36 +1,38 @@
-.slider-js{
+.slider{
 	height: 300px;
+	position: relative;
+	overflow: hidden;
 }
-	.slider-js .card{
-		padding: 2em 0em 2em 1em;
+	.slider .card{
+		/* padding: 2em 0em 2em 1em; */
 		opacity: .25;
 		transition: 300ms;
 	}
-		.slider-js .card.selected{
+		.slider .card.selected{
 			bottom: 0;
 			opacity: 1;
 		}
-	.slider-js .select{
+	.slider .select{
 		bottom: 0;
 		background: purple;
 		display: flex;
 		line-height: 1;
 		height: 20px;
 	}
-		.slider-js .select .selection {
+		.slider .select .selection {
 			width: 20px;
 			overflow: hidden;
 		}
-			.slider-js .select .selection img{
+			.slider .select .selection img{
 				width: 100%;
 				height: 100%;
 				transform: scale(5);
 				transition: 200ms;
 			}
-			.slider-js .select .selection.selected{
+			.slider .select .selection.selected{
 				background: blue;
 			}
-				.slider-js .select .selection.selected img{
+				.slider .select .selection.selected img{
 					transform: scale(1)
 				}
 

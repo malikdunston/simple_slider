@@ -11,6 +11,7 @@ export const Slider = ( props ) => {
 		index: props.cards ? 0 : 1,
 		xScroll: props.cards ? true : false,
 		size: props.size ? props.size + "%" : "66.66%",
+		mouseEffect: props.mouseEffect,
 		transform: null,
 		template: props.template ? props.template : (itemObj, i) => <div> Slide # {i}</div>,
 		breadcrumbs: (item, index) => typeof props.breadcrumbs === "function" ? props.breadcrumbs(item, index ) : false
@@ -85,9 +86,10 @@ export const Slider = ( props ) => {
 				clientHeight: slider.current.clientHeight,
 			}
 		});
+		move(config.index)
 	};
 	useEffect(() => { resetDom(); window.addEventListener("resize", resetDom) }, [])
-	return <div className="slider-js" ref={slider} style={{ position: "relative", overflow: "hidden" }}>
+	return <div className="slider" ref={slider}>
 		<Controls move={move} 
 			config={{...config, breadcrumbs: props.breadcrumbs}}
 			data={props.cards ? props.cards : props.slides} />

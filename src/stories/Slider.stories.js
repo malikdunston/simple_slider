@@ -5,6 +5,7 @@ import './optional-styles.css'
 const stories = storiesOf("Slider", module);
 stories.add("Projects", ()=>{
 	const [ projects, setProjects ] = useState([]);
+	const [ direction, setDirection ] = useState("Y");
 	const getData = async ( lookFor, params ) =>{
 		params = params || {};
 		params["per_page"] = params.perPage || "100";
@@ -25,9 +26,9 @@ stories.add("Projects", ()=>{
 		setProjects( projects );
 	}
 	useEffect(() => { getProjects("projects") }, []);
-	return App(projects)
+	return App(projects, direction)
 })
-function App(projects){
+function App(projects, direction){
 	const template = (proj, index) => proj ? <div style={{position: "relative", width: "100%", height: "100%"}}>
 		<img className="card-img"
 			src={proj.acf.cover} 
@@ -45,14 +46,26 @@ function App(projects){
 		</div>
 	</div> : "Slide/Card #" + index
 	const breadcrumbs = proj => <img src={proj.acf.cover} alt="" />
+	window.addEventListener("resize", (e)=>{
+		if(e.innerWidth > 1000){
+			direction = "X"
+		}else direction = "Y"
+	})
 	return <div>
-		<Slider slides={projects} template={template}/>
-		<Slider cards={projects}
+		{/* <Slider slides={projects} template={template}/> */}
+		<Slider slides={projects}
+			axis={direction}
+			template={template}
+			breadcrumbs={breadcrumbs}
+			mouseEffect={true}
+			controls={true}/>
+		<Slider slides={projects}
+			axis={direction}
 			template={template}
 			breadcrumbs={breadcrumbs}
 			controls={true}/>
-		<Slider slides={projects}
+		{/* <Slider slides={projects}
 			template={template}
-			breadcrumbs={true}/>
+			breadcrumbs={true}/> */}
 	</div>
 }
